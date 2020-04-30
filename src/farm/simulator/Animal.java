@@ -8,7 +8,7 @@ package farm.simulator;
 public abstract class Animal {
 	
 	private float price;
-	private String animalType;
+	private String type;
 	private int happiness;
 	private int health;
 	private boolean isAlive = true;
@@ -20,9 +20,9 @@ public abstract class Animal {
 	 * @param happiness the happiness status of the animal
 	 * @param health the health status of the animal
 	 */
-	public Animal(float price, String animalType, int happiness, int health) {
+	public Animal(float price, String type, int happiness, int health) {
 		this.price = price;
-		this.animalType = animalType;
+		this.type = type;
 		this.happiness = happiness;
 		this.health = health;
 	}
@@ -33,7 +33,7 @@ public abstract class Animal {
 	 */
 	@Override
 	public String toString() {
-		return "Type: " + this.animalType + "\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
+		return "Type: " + this.type + "\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
 	}
 	
 	/**
