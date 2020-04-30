@@ -45,6 +45,14 @@ public abstract class Animal {
 	}
 	
 	/**
+	 * Returns the type of an animal.
+	 * @return Type of the animal.
+	 */
+	public String getType() {
+		return this.type;
+	}
+	
+	/**
 	 * Returns the price of an animal.
 	 * @return Price of the animal.
 	 */

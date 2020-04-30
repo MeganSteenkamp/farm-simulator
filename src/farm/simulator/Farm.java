@@ -84,11 +84,11 @@ public abstract class Farm {
 	/**
 	 * Prints the details of the animals on the farm.
 	 */
-	public void printAnimalStatus() {
+	public void printAnimals() {
 		System.out.println("Number of animals owned: " + this.animals.size());
 		System.out.println();
-		for (int i = 0; i < this.animals.size(); i++) {
-			System.out.println(this.animals.get(i).toString());
+		for (Animal a : animals) {
+			System.out.println(a.toString());
 			System.out.println();
 		}
 	}
@@ -96,11 +96,11 @@ public abstract class Farm {
 	/**
 	 * Prints the details of the crops on the farm.
 	 */
-	public void printCropStatus() {
+	public void printCrops() {
 		System.out.println("Number of crops owned: " + this.crops.size());
 		System.out.println();
-		for (int i = 0; i < this.crops.size(); i++) {
-			System.out.println(this.crops.get(i).toString());
+		for (Crop c : crops) {
+			System.out.println(c.toString());
 			System.out.println();
 		}
 	}
