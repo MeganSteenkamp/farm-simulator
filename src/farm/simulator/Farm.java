@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * This abstract class implements the base class for all farms.
+ * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
  */
@@ -18,13 +19,14 @@ public abstract class Farm {
 	private ArrayList<Animal> animals = new ArrayList<Animal>();
 	private int cropGrowthFactor;
 	private int animalHappinessFactor;
-	
+
 	/**
 	 * Class constructor for the Farm class
-	 * @param name Name of farm.
-	 * @param type Type of farm selected.
-	 * @param balance Starting monetary balance for farm.
-	 * @param cropGrowthFactor Scale factor to apply to growth time of crops.
+	 * 
+	 * @param name                  Name of farm.
+	 * @param type                  Type of farm selected.
+	 * @param balance               Starting monetary balance for farm.
+	 * @param cropGrowthFactor      Scale factor to apply to growth time of crops.
 	 * @param animalHappinessFactor Scale factor to apply to happiness of animals.
 	 */
 	public Farm(String name, String type, float balance, int cropGrowthFactor, int animalHappinessFactor) {
@@ -35,52 +37,57 @@ public abstract class Farm {
 		this.cropGrowthFactor = cropGrowthFactor;
 		this.animalHappinessFactor = animalHappinessFactor;
 	}
-	
+
 	/**
 	 * String representation of an animal.
+	 * 
 	 * @return String representation of animal attributes.
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: " + this.balance +
-				"\nAvailable crop plots: " + this.numAvailableCrops;
+		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: " + this.balance + "\nAvailable crop plots: "
+				+ this.numAvailableCrops;
 	}
-	
+
 	/**
 	 * Returns the name of a farm.
+	 * 
 	 * @return Name of the farm.
 	 */
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/**
 	 * Adds to monetary balance of the farm.
+	 * 
 	 * @param amount Amount of money to add.
 	 */
 	public float addToBalance(float amount) {
 		this.balance += amount;
 		return this.balance;
 	}
-	
+
 	/**
 	 * Adds a new crop to the farm.
+	 * 
 	 * @param crop Crop to be added.
 	 */
 	public void addCrop(Crop crop) {
 		// TODO: Scale this
 		this.crops.add(crop);
 	}
-	
+
 	/**
 	 * Adds a new animal to the farm.
+	 * 
 	 * @param animal Animal to be added.
 	 */
 	public void addAnimal(Animal animal) {
 		animal.scaleHappiness(this.animalHappinessFactor);
 		this.animals.add(animal);
 	}
-	
+
 	/**
 	 * Prints the details of the animals on the farm.
 	 */
@@ -92,7 +99,7 @@ public abstract class Farm {
 			System.out.println();
 		}
 	}
-	
+
 	/**
 	 * Prints the details of the crops on the farm.
 	 */
@@ -103,5 +110,5 @@ public abstract class Farm {
 			System.out.println(c.toString());
 			System.out.println();
 		}
-	}atu
+	}
 }
