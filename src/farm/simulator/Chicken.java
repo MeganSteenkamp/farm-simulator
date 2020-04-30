@@ -1,7 +1,7 @@
 package farm.simulator;
 
 /**
- * This class implements a Chicken, which is of subclass Animal.
+ * This class instantiates a Chicken.
  * @author Megan Steenkamp
  * @author Lewis Marshall
  */

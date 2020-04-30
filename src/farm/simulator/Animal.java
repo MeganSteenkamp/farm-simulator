@@ -14,7 +14,7 @@ public abstract class Animal {
 	private boolean isAlive = true;
 	
 	/**
-	 * Create a class constructor for the Animal class
+	 * Class constructor for the Animal class
 	 * @param price the price of the animal
 	 * @param animalType the breed of the animal
 	 * @param happiness the happiness status of the animal
