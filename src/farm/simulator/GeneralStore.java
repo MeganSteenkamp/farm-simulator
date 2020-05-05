@@ -12,6 +12,7 @@ import java.util.ArrayList;
 //TODO: Implement showing the items the farmer owns once the Farmer class is made
 
 public class GeneralStore {
+
 	private ArrayList<Item> fertilizer = new ArrayList<Item>();
 	private ArrayList<Item> compost = new ArrayList<Item>();
 	private ArrayList<Item> hoes = new ArrayList<Item>();
@@ -143,6 +144,36 @@ public class GeneralStore {
 //======================================== ITEM FUNCTIONALITY ========================================
 
 	/**
+	 * TODO  ---- tidy implementation
+	 * @param type
+	 * @return
+	 */
+	public Item getItem(int type) {
+		Item item = null;
+		switch (type) {
+		case 1:
+			item = fertilizer.get(0);
+			break;
+		case 2:
+			item = compost.get(0);
+			break;
+		case 3:
+			item = hoes.get(0);
+			break;
+		case 4:
+			item = steroids.get(0);
+			break;
+		case 5:
+			item = grain.get(0);
+			break;
+		case 6:
+			item = barns.get(0);
+			break;
+		}
+		return item;
+	}
+	
+	/**
 	 * Processes a list of items to assess whether the item is in stock and can be
 	 * sold.
 	 * 
@@ -167,30 +198,29 @@ public class GeneralStore {
 	 * @return The item that has been purchased. Returns a null object if the item
 	 *         is out of stock.
 	 */
-	public Item sellItem(String type) {
+	public Item sellItem(int type) {
 		Item item = null;
-		;
-		switch (type.toUpperCase()) {
-		case "FERTILIZER":
+		switch (type) {
+		case 1:
 			item = processItems(fertilizer);
 			break;
-		case "COMPOST":
+		case 2:
 			item = processItems(compost);
 			break;
-		case "HOE":
+		case 3:
 			item = processItems(hoes);
 			break;
-		case "STEROID":
+		case 4:
 			item = processItems(steroids);
 			break;
-		case "GRAIN":
+		case 5:
 			item = processItems(grain);
 			break;
-		case "BARN":
+		case 6:
 			item = processItems(barns);
 			break;
 		default:
-			System.out.println("Sorry, we do not sell the '" + type + "' item type.");
+			System.out.println("Sorry, we do not sell that item.");
 		}
 		return item;
 	}
@@ -199,54 +229,66 @@ public class GeneralStore {
 	 * Prints the number of each type of item available for purchase.
 	 */
 	public void printItemStock() {
-		System.out.println("Fertilizer: " + fertilizer.size());
-		System.out.println("Compost: " + compost.size());
-		System.out.println("Hoes: " + hoes.size());
-		System.out.println("Steriods: " + steroids.size());
-		System.out.println("Barns: " + barns.size());
-		System.out.println("Grain: " + grain.size());
+		System.out.println("We sell the following items. Please enter a number to find out more about an item.");
+		System.out.println("[1] - Fertilizer stock: " + fertilizer.size());
+		System.out.println("[2] - Compost stock: " + compost.size());
+		System.out.println("[3] - Hoes stock: " + hoes.size());
+		System.out.println("[4] - Steriods stock:" + steroids.size());
+		System.out.println("[5] - Barns stock:" + barns.size());
+		System.out.println("[6] - Grain stock:" + grain.size());
+		System.out.println("[7] - Return to main store");
 	}
 
 	/**
-	 * Prints the details of the items available for purchase.
+	 * Prints the details of a given item if it is in stock.
 	 * 
 	 * @param type Type of item.
+	 * @return True if the item is in stock
 	 */
-	public void printItemDetails(String type) {
+	public boolean processItemDetails(int type) {
+		boolean inStock = false;
 		String result = "Sorry, we do not have that item in stock.";
-		switch (type.toUpperCase()) {
-		case "FERTILIZER":
+		switch (type) {
+		case 1:
 			if (!fertilizer.isEmpty()) {
+				inStock = true;
 				result = fertilizer.get(0).toString();
 			}
 			break;
-		case "COMPOST":
+		case 2:
 			if (!compost.isEmpty()) {
+				inStock = true;
 				result = compost.get(0).toString();
 			}
 			break;
-		case "HOE":
+		case 3:
 			if (!hoes.isEmpty()) {
+				inStock = true;
 				result = hoes.get(0).toString();
 			}
 			break;
-		case "STEROID":
+		case 4:
 			if (!steroids.isEmpty()) {
+				inStock = true;
 				result = steroids.get(0).toString();
 			}
 			break;
-		case "BARN":
+		case 5:
 			if (!barns.isEmpty()) {
+				inStock = true;
 				result = barns.get(0).toString();
 			}
 			break;
-		case "GRAIN":
+		case 6:
 			if (!grain.isEmpty()) {
+				inStock = true;
 				result = grain.get(0).toString();
 			}
 			break;
 		}
+
 		System.out.println(result);
+		return inStock;
 	}
 
 //======================================== CROP FUNCTIONALITY ========================================

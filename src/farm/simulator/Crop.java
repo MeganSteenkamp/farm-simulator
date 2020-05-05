@@ -35,8 +35,11 @@ public abstract class Crop {
 		this.daysToGrow = daysToGrow;
 	}
 
-	// TODO: toString() method
 	
+	public String toString(int currentDay) {
+		return "Name: " + this.name + "\nDays growing: " + getTimeGrowing(currentDay) + " days(s)\nTime until harvest: " 
+				+ getTimeUntilHarvest(currentDay) + " days(s)";
+	}
 	
 	/**
 	 * Sets the name of a crop.
@@ -120,12 +123,12 @@ public abstract class Crop {
 	}
 
 	/**
-	 * Sets the duration of time (in days) for a crop to grow.
+	 * Adds to the days a crop will day to grow.
 	 *
-	 * @param daysToGrow for a crop.
+	 * @param addedDays Amount of days to increase growth by.
 	 */
-	public void setDaysToGrow(int daysToGrow) {
-		this.daysToGrow = daysToGrow;
+	public void addDaysToGrow(int addedDays) {
+		this.daysToGrow += addedDays;
 	}
 
 	/**
@@ -172,6 +175,4 @@ public abstract class Crop {
 	public int getTimeUntilHarvest(int currentDay) {
 		return (this.daysToGrow - getTimeGrowing(currentDay));
 	}
-
-	// TODO: scaleGrowthTime() method
 }

@@ -9,23 +9,40 @@ package farm.simulator;
 
 public abstract class Item {
 
-	private float price;
 	private String name;
+	private String description;
+	private float price;
 	private int cropGrowthFactor;
 	private int animalHealthFactor;
-	private String description;
 
 	/**
 	 * Class constructor for the Item class
 	 *
-	 * @param price              price of the item
 	 * @param name               name of the item
+	 * @param description        description of the item
+	 * @param price              price of the item
 	 * @param cropGrowthFactor   scaling factor for crop growth
 	 * @param animalHealthFactor scaling factor for animal health
-	 * @param description        description of the item
+	 * 
 	 */
+	public Item(String name, String description, float price, int cropGrowthFactor, int animalHealthFactor) {
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.cropGrowthFactor = cropGrowthFactor;
+		this.animalHealthFactor = animalHealthFactor;
+	}
 
-	// TODO: tostring() method
+	/**
+	 * String representation of an item.
+	 * 
+	 * @return String representation of item attributes.
+	 */
+	@Override
+	public String toString() {
+		return "Name: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price + "\nAdded crop growth: " 
+				+ this.cropGrowthFactor + " day(s)" + "\nAnimal health bonus: "+ this.animalHealthFactor + " point(s)";
+	}
 
 	/**
 	 * Sets the price of an item.

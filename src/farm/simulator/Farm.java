@@ -35,25 +35,28 @@ public abstract class Farm {
 		this.cropGrowthFactor = cropGrowthFactor;
 		this.animalHappinessFactor = animalHappinessFactor;
 	}
-	
+
 	/**
 	 * Sets the name of the farm.
+	 * 
 	 * @param name Name of farm.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * Sets the farmer of the farm.
+	 * 
 	 * @param farmer Farmer object representing the farm's farmer.
 	 */
 	public void setFarmer(Farmer farmer) {
 		this.farmer = farmer;
 	}
-	
+
 	/**
 	 * Returns the farmer of the farm.
+	 * 
 	 * @param farmer Farmer object associated with farm.
 	 */
 	public Farmer getFarmer() {
@@ -67,17 +70,22 @@ public abstract class Farm {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: $" + this.balance + "\nAvailable crop plots: "
-				+ this.numAvailableCrops;
+		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: $" + this.balance
+				+ "\nAvailable crop plots: " + this.numAvailableCrops;
 	}
-	
+
 	/**
-	 * Prints the status of the farm's crops and animals. This includes viewing a crop's time growing, the time left
-	 * until crop's harvest and an animal's happiness levels
+	 * Prints the status of the farm's crops and animals. This includes viewing a
+	 * crop's time growing, the time left until crop's harvest and an animal's
+	 * happiness levels
+	 * @param currentDay Current day number on farm
 	 */
-	public void printCropAndAnimalStatus() {
-		// TODO: Iterate over crops and animals and use their toString method.
-		System.out.println("Testing: printing crop and animal status");
+	public void printCropAndAnimalStatus(int currentDay) {
+		System.out.println("Number of crops: " + crops.size());
+		System.out.println("Number of animals: " + crops.size());
+		
+		printCrops(currentDay);
+		printAnimals();
 	}
 
 	/**
@@ -87,6 +95,29 @@ public abstract class Farm {
 	 */
 	public String getName() {
 		return this.name;
+	}
+	
+	/**
+	 * Returns the balance of a farm.
+	 * 
+	 * @return Name of the farm.
+	 */
+	public float getBalance() {
+		return this.balance;
+	}
+	
+	/**
+	 * Returns the balance of a farm.
+	 * 
+	 * @return Name of the farm.
+	 */
+	public void withdrawMoney(float amount) {
+		if (amount < getBalance()) {
+			this.balance -= amount;
+		} else {
+			System.out.println("Cannot afford");
+		}
+		// TODO: Should raise insufficient funds error
 	}
 
 	/**
@@ -108,22 +139,41 @@ public abstract class Farm {
 		this.crops.add(crop);
 	}
 
+	public void removeCrop(Crop crop) {
+		for (int i = 0; i < crops.size(); i++) {
+			if (crops.get(i) == crop) {
+				crops.remove(i);
+				break;
+			}
+		}
+	}
+
 	/**
 	 * Adds a new animal to the farm.
 	 * 
 	 * @param animal Animal to be added.
 	 */
 	public void addAnimal(Animal animal) {
-		animal.scaleHappiness(this.animalHappinessFactor);
+		animal.addToHappiness(this.animalHappinessFactor);
 		this.animals.add(animal);
 	}
-	
+
 	/**
 	 * Returns the farm's crops.
+	 * 
 	 * @return the farm's crops.
 	 */
 	public ArrayList<Crop> getCrops() {
 		return this.crops;
+	}
+
+	/**
+	 * Returns the farm's animals.
+	 * 
+	 * @return the farm's animals.
+	 */
+	public ArrayList<Animal> getAnimals() {
+		return this.animals;
 	}
 
 	/**
@@ -140,12 +190,13 @@ public abstract class Farm {
 
 	/**
 	 * Prints the details of the crops on the farm.
+	 * @param currentDay Current day number.
 	 */
-	public void printCrops() {
+	public void printCrops(int currentDay) {
 		System.out.println("Number of crops owned: " + this.crops.size());
 		System.out.println();
 		for (Crop c : crops) {
-			System.out.println(c.toString());
+			System.out.println(c.toString(currentDay));
 			System.out.println();
 		}
 	}

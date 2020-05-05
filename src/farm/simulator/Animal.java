@@ -107,11 +107,11 @@ public abstract class Animal {
 	 * Adds to the health of an animal by a given amount. If health reaches 0, the
 	 * animal dies.
 	 * 
-	 * @param scaleFactor the amount by which to change the animal's health.
+	 * @param bonus the amount by which to change the animal's health.
 	 * @return the animal's current health status.
 	 */
-	public int scaleHealth(int scaleFactor) {
-		this.health += scaleFactor;
+	public int addToHealth(int bonus) {
+		this.health += bonus;
 		if (this.health == 0) {
 			this.isAlive = false;
 		}
@@ -122,11 +122,11 @@ public abstract class Animal {
 	 * Adds to the happiness of an animal by a given amount. If happiness reaches 0,
 	 * the animal dies.
 	 * 
-	 * @param scaleFactor the amount by which to change the animal's happiness.
+	 * @param bonus the amount by which to change the animal's happiness.
 	 * @return the animal's current happiness status.
 	 */
-	public int scaleHappiness(int scaleFactor) {
-		this.happiness += scaleFactor;
+	public int addToHappiness(int bonus) {
+		this.happiness += bonus;
 		if (this.happiness == 0) {
 			this.isAlive = false;
 		}
