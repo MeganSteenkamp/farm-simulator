@@ -199,8 +199,4 @@ public class Farmer {
 		
 		return moneyEarned;
 	}
-
-	public void tendToCrops() {
-
-	}
 }
