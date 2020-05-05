@@ -87,7 +87,7 @@ public class GeneralStore {
 	 *         animal is out of stock.
 	 */
 	public Animal sellAnimal(String type) {
-		Animal animal = null; m
+		Animal animal = null;
 		switch (type.toUpperCase()) {
 		case "CHICKEN":
 			animal = processAnimals(chickens);

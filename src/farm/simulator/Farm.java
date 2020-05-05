@@ -51,6 +51,14 @@ public abstract class Farm {
 	public void setFarmer(Farmer farmer) {
 		this.farmer = farmer;
 	}
+	
+	/**
+	 * Returns the farmer of the farm.
+	 * @param farmer Farmer object associated with farm.
+	 */
+	public Farmer getFarmer() {
+		return this.farmer;
+	}
 
 	/**
 	 * String representation of a farm.
@@ -59,8 +67,17 @@ public abstract class Farm {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: " + this.balance + "\nAvailable crop plots: "
+		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: $" + this.balance + "\nAvailable crop plots: "
 				+ this.numAvailableCrops;
+	}
+	
+	/**
+	 * Prints the status of the farm's crops and animals. This includes viewing a crop's time growing, the time left
+	 * until crop's harvest and an animal's happiness levels
+	 */
+	public void printCropAndAnimalStatus() {
+		// TODO: Iterate over crops and animals and use their toString method.
+		System.out.println("Testing: printing crop and animal status");
 	}
 
 	/**
@@ -88,7 +105,6 @@ public abstract class Farm {
 	 * @param crop Crop to be added.
 	 */
 	public void addCrop(Crop crop) {
-		// TODO: Scale this
 		this.crops.add(crop);
 	}
 
@@ -100,6 +116,14 @@ public abstract class Farm {
 	public void addAnimal(Animal animal) {
 		animal.scaleHappiness(this.animalHappinessFactor);
 		this.animals.add(animal);
+	}
+	
+	/**
+	 * Returns the farm's crops.
+	 * @return the farm's crops.
+	 */
+	public ArrayList<Crop> getCrops() {
+		return this.crops;
 	}
 
 	/**
