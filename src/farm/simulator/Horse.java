@@ -7,11 +7,25 @@ package farm.simulator;
  * @author Lewis Marshall
  */
 public class Horse extends Animal {
+	private static float price = 100.00f;
+	private static String type = "Horse";
+	private static int happiness = 7;
+	private static int health = 7;
 
 	/**
 	 * Construct a horse.
 	 */
 	public Horse() {
-		super(100.0f, "Horse", 7, 7);
+		super(price, type, happiness, health);
+	}
+
+	/**
+	 * Prints a description of the animal.
+	 */
+	public static void printDescription() {
+		System.out.println("Type: " + type);
+		System.out.println("Price: $" + price);
+		System.out.println("Happiness: " + happiness);
+		System.out.println("Health: " + health);
 	}
 }

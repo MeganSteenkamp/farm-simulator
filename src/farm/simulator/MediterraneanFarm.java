@@ -23,7 +23,6 @@ public class MediterraneanFarm extends Farm {
 	 * Prints a description of the farm with a number for selection.
 	 */
 	public static void printDescription() {
-		System.out.println("[3]");
 		System.out.println("Type: " + type);
 		System.out.println("Starting balance: $" + balance);
 		System.out.println("Crop crowth delay: " + cropDelay + " day(s)");
