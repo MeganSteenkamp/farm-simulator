@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Steroid extends Item {
+	private static int id = 4;
 	private static String name = "Steroids";
 	private static String description = "Let's bulk - fork out a little for some extra plump farmlife.";
 	private static float price = 200.00f;
@@ -11,7 +12,7 @@ public class Steroid extends Item {
 	 * Instantiate a Barn.
 	 */
 	public Steroid() {
-		super(name, description, price, cropGrowthFactor, animalHealthFactor);
+		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);
 	}
 	
 	/**

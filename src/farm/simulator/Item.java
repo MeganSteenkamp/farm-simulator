@@ -8,7 +8,7 @@ package farm.simulator;
  */
 
 public abstract class Item {
-
+	private int id;
 	private String name;
 	private String description;
 	private float price;
@@ -18,6 +18,7 @@ public abstract class Item {
 	/**
 	 * Class constructor for the Item class
 	 *
+	 * @param id 				 identification number of item type
 	 * @param name               name of the item
 	 * @param description        description of the item
 	 * @param price              price of the item
@@ -25,7 +26,8 @@ public abstract class Item {
 	 * @param animalHealthFactor scaling factor for animal health
 	 * 
 	 */
-	public Item(String name, String description, float price, int cropGrowthFactor, int animalHealthFactor) {
+	public Item(int id, String name, String description, float price, int cropGrowthFactor, int animalHealthFactor) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -42,6 +44,14 @@ public abstract class Item {
 	public String toString() {
 		return "Name: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price + "\nAdded crop growth: " 
 				+ this.cropGrowthFactor + " day(s)" + "\nAnimal health bonus: "+ this.animalHealthFactor + " point(s)";
+	}
+	
+	/**
+	 * Returns the id of a given type of item.
+	 * @return Id of item type.
+	 */
+	public int getId() {
+		return this.id;
 	}
 
 	/**

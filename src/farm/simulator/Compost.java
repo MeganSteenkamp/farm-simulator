@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Compost extends Item {
+	private static int id = 2;
 	private static String name = "Compost";
 	private static String description = "Take one day off the growth of a type of crop.";
 	private static float price = 20.00f;
@@ -11,7 +12,7 @@ public class Compost extends Item {
 	 * Instantiate Compost.
 	 */
 	public Compost() {
-		super(name, description, price, cropGrowthFactor, animalHealthFactor);
+		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);
 	}
 	
 	/**

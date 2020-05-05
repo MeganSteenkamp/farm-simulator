@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Hoe extends Item {
+	private static int id = 3;
 	private static String name = "Hoe";
 	private static String description = "Dramatically decrease the growth on those slow crops.";
 	private static float price = 300.00f;
@@ -11,13 +12,14 @@ public class Hoe extends Item {
 	 * Instantiate a Hoe.
 	 */
 	public Hoe() {
-		super(name, description, price, cropGrowthFactor, animalHealthFactor);
+		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);
 	}
 	
 	/**
 	 * Prints a description of the crop without being instantiated.
 	 */
 	public static void printDescription() {
+		System.out.println("[" + id + "]");
 		System.out.println("Name: " + name);
 		System.out.println("Description: " + description);
 		System.out.println("Price: " + price);

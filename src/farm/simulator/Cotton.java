@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Cotton extends Crop {
+	private static int id = 3;
 	private static String name = "Cotton";
 	private static String description = "The harvested soft, fluffy fiber will make a moderate profit for a moderate growth time.";
 	private static float purchasePrice = 60.00f;
@@ -11,7 +12,7 @@ public class Cotton extends Crop {
 	 * Instantiate an Cotton Crop.
 	 */
 	public Cotton() {
-		super(name, description, purchasePrice, sellingPrice, daysToGrow);
+		super(id, name, description, purchasePrice, sellingPrice, daysToGrow);
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Fertilizer extends Item {
+	private static int id = 1;
 	private static String name = "Fertilizer";
 	private static String description = "Increase the crop fertility for a quick harvest.";
 	private static float price = 800.00f;
@@ -11,7 +12,7 @@ public class Fertilizer extends Item {
 	 * Instantiate Fertilizer.
 	 */
 	public Fertilizer() {
-		super(name, description, price, cropGrowthFactor, animalHealthFactor);
+		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);
 	}
 	
 	/**

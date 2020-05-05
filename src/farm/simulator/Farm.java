@@ -135,6 +135,7 @@ public abstract class Farm {
 		// Scale crop growth according to farm
 		crop.addDaysToGrow(cropGrowthFactor);
 		this.crops.add(crop);
+		this.numAvailableCrops -= 1;
 	}
 
 	/**

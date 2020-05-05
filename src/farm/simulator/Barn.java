@@ -1,6 +1,7 @@
 package farm.simulator;
 
 public class Barn extends Item {
+	private static int id = 6;
 	private static String name = "Barn";
 	private static String description = "This shelter is expensive but your animals will be very happy.";
 	private static float price = 400.00f;
@@ -11,7 +12,7 @@ public class Barn extends Item {
 	 * Instantiate a Barn.
 	 */
 	public Barn() {
-		super(name, description, price, cropGrowthFactor, animalHealthFactor);
+		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);
 	}
 	
 	/**

@@ -131,12 +131,12 @@ public class Farmer {
 				barn += 1;
 			}
 		}
-		System.out.println("Fertilizer stock: " + fertilizer);
-		System.out.println("Compost stock: " + compost);
-		System.out.println("Hoes stock: " + hoe);
-		System.out.println("Steriods stock:" + steroids);
-		System.out.println("Barns stock:" + barn);
-		System.out.println("Grain stock:" + grain);
+		System.out.println("Fertilizer: " + fertilizer);
+		System.out.println("Compost: " + compost);
+		System.out.println("Hoes: " + hoe);
+		System.out.println("Steriods:" + steroids);
+		System.out.println("Barns:" + barn);
+		System.out.println("Grain:" + grain);
 	}
 
 	/**

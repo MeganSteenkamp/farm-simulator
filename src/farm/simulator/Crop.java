@@ -8,7 +8,7 @@ package farm.simulator;
  */
 
 public abstract class Crop {
-
+	private int id;
 	private String name;
 	private String description;
 	private float purchasePrice;
@@ -19,6 +19,7 @@ public abstract class Crop {
 	/**
 	 * Class constructor for the Crop class
 	 *
+	 * @param id  			id associated with type of crop
 	 * @param name          name of the crop
 	 * @param description   description for the item
 	 * @param purchasePrice cost of crop to purchase
@@ -26,7 +27,8 @@ public abstract class Crop {
 	 * @param daysToGrow    amount of days a crop takes to fully grow
 	 * @param daysGrowing   the number of days the crop has been growing for
 	 */
-	public Crop(String name, String description, float purchasePrice, float sellingPrice, int daysToGrow) {
+	public Crop(int id, String name, String description, float purchasePrice, float sellingPrice, int daysToGrow) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.purchasePrice = purchasePrice;
@@ -35,9 +37,21 @@ public abstract class Crop {
 		this.daysGrowing = 0;
 	}
 
+	/**
+	 * Return string representation of a crop.
+	 */
+	@Override
 	public String toString() {
 		return "Name: " + this.name + "\nDays growing: " + getDaysGrowing() + " days(s)\nTime until harvest: "
 				+ getTimeUntilHarvest() + " days(s)";
+	}
+	
+	/**
+	 * Returns the id of a given type of crop.
+	 * @return Id of crop type.
+	 */
+	public int getId() {
+		return this.id;
 	}
 
 	/**
