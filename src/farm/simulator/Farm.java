@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public abstract class Farm {
 	private String name;
 	private String type;
-	// private Farmer farmer;
+	private Farmer farmer;
 	private float balance;
 	private int numAvailableCrops = 6;
 	private ArrayList<Crop> crops = new ArrayList<Crop>();
@@ -29,19 +29,33 @@ public abstract class Farm {
 	 * @param cropGrowthFactor      Scale factor to apply to growth time of crops.
 	 * @param animalHappinessFactor Scale factor to apply to happiness of animals.
 	 */
-	public Farm(String name, String type, float balance, int cropGrowthFactor, int animalHappinessFactor) {
-		// TODO: Pass farmer object into constructor
-		this.name = name;
+	public Farm(String type, float balance, int cropGrowthFactor, int animalHappinessFactor) {
 		this.type = type;
 		this.balance = balance;
 		this.cropGrowthFactor = cropGrowthFactor;
 		this.animalHappinessFactor = animalHappinessFactor;
 	}
+	
+	/**
+	 * Sets the name of the farm.
+	 * @param name Name of farm.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/**
+	 * Sets the farmer of the farm.
+	 * @param farmer Farmer object representing the farm's farmer.
+	 */
+	public void setFarmer(Farmer farmer) {
+		this.farmer = farmer;
+	}
 
 	/**
-	 * String representation of an animal.
+	 * String representation of a farm.
 	 * 
-	 * @return String representation of animal attributes.
+	 * @return String representation of farm attributes.
 	 */
 	@Override
 	public String toString() {
