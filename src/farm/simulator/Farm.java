@@ -77,14 +77,10 @@ public abstract class Farm {
 	/**
 	 * Prints the status of the farm's crops and animals. This includes viewing a
 	 * crop's time growing, the time left until crop's harvest and an animal's
-	 * happiness levels
-	 * @param currentDay Current day number on farm
+	 * happiness levels.
 	 */
-	public void printCropAndAnimalStatus(int currentDay) {
-		System.out.println("Number of crops: " + crops.size());
-		System.out.println("Number of animals: " + crops.size());
-		
-		printCrops(currentDay);
+	public void printCropAndAnimalStatus() {
+		printCrops();
 		printAnimals();
 	}
 
@@ -96,7 +92,7 @@ public abstract class Farm {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	/**
 	 * Returns the balance of a farm.
 	 * 
@@ -105,7 +101,7 @@ public abstract class Farm {
 	public float getBalance() {
 		return this.balance;
 	}
-	
+
 	/**
 	 * Returns the balance of a farm.
 	 * 
@@ -115,9 +111,9 @@ public abstract class Farm {
 		if (amount < getBalance()) {
 			this.balance -= amount;
 		} else {
+			// TODO: Should raise insufficient funds error
 			System.out.println("Cannot afford");
 		}
-		// TODO: Should raise insufficient funds error
 	}
 
 	/**
@@ -136,9 +132,16 @@ public abstract class Farm {
 	 * @param crop Crop to be added.
 	 */
 	public void addCrop(Crop crop) {
+		// Scale crop growth according to farm
+		crop.addDaysToGrow(cropGrowthFactor);
 		this.crops.add(crop);
 	}
 
+	/**
+	 * Removes a crop from the farm. Will be called if a crop is harvested.
+	 * 
+	 * @param crop Crop to be removed.
+	 */
 	public void removeCrop(Crop crop) {
 		for (int i = 0; i < crops.size(); i++) {
 			if (crops.get(i) == crop) {
@@ -154,7 +157,7 @@ public abstract class Farm {
 	 * @param animal Animal to be added.
 	 */
 	public void addAnimal(Animal animal) {
-		animal.addToHappiness(this.animalHappinessFactor);
+		animal.addToHappiness(animalHappinessFactor);
 		this.animals.add(animal);
 	}
 
@@ -190,13 +193,14 @@ public abstract class Farm {
 
 	/**
 	 * Prints the details of the crops on the farm.
+	 * 
 	 * @param currentDay Current day number.
 	 */
-	public void printCrops(int currentDay) {
+	public void printCrops() {
 		System.out.println("Number of crops owned: " + this.crops.size());
 		System.out.println();
 		for (Crop c : crops) {
-			System.out.println(c.toString(currentDay));
+			System.out.println(c.toString());
 			System.out.println();
 		}
 	}

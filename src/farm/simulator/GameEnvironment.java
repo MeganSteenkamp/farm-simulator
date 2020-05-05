@@ -318,8 +318,13 @@ public class GameEnvironment {
 		float dailyBonus = 0;
 		boolean isDayEnd = false;
 
+		// Update crop growth by 1 day
+		for (Crop c : this.farm.getCrops()) {
+			c.updateCropGrowth(1);
+		}
+		
 		// Harvest any ready crops and add money to farm's balance
-		float harvestBonus = farm.getFarmer().harvestCrops(dayNum);
+		float harvestBonus = farm.getFarmer().harvestCrops();
 		this.farm.addToBalance(harvestBonus);
 
 		// Show available actions
@@ -330,7 +335,7 @@ public class GameEnvironment {
 				int choice = getInputInt("your choice of activity");
 				switch (choice) {
 				case 1:
-					this.farm.printCropAndAnimalStatus(dayNum);
+					this.farm.printCropAndAnimalStatus();
 					isValid = true;
 					break;
 				case 2:

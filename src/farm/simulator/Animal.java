@@ -12,7 +12,6 @@ public abstract class Animal {
 	private String type;
 	private int happiness;
 	private int health;
-	private boolean isAlive = true;
 
 	/**
 	 * Class constructor for the Animal class
@@ -104,32 +103,20 @@ public abstract class Animal {
 	}
 
 	/**
-	 * Adds to the health of an animal by a given amount. If health reaches 0, the
-	 * animal dies.
+	 * Adds to the health of an animal by a given amount.
 	 * 
 	 * @param bonus the amount by which to change the animal's health.
-	 * @return the animal's current health status.
 	 */
-	public int addToHealth(int bonus) {
+	public void addToHealth(int bonus) {
 		this.health += bonus;
-		if (this.health == 0) {
-			this.isAlive = false;
-		}
-		return this.health;
 	}
 
 	/**
-	 * Adds to the happiness of an animal by a given amount. If happiness reaches 0,
-	 * the animal dies.
+	 * Adds to the happiness of an animal by a given amount.
 	 * 
 	 * @param bonus the amount by which to change the animal's happiness.
-	 * @return the animal's current happiness status.
 	 */
-	public int addToHappiness(int bonus) {
+	public void addToHappiness(int bonus) {
 		this.happiness += bonus;
-		if (this.happiness == 0) {
-			this.isAlive = false;
-		}
-		return this.happiness;
 	}
 }

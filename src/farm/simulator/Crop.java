@@ -14,8 +14,7 @@ public abstract class Crop {
 	private float purchasePrice;
 	private float sellingPrice;
 	private int daysToGrow;
-	// Game instance should set this
-	private int dayOfPurchase;
+	private int daysGrowing;
 
 	/**
 	 * Class constructor for the Crop class
@@ -25,7 +24,7 @@ public abstract class Crop {
 	 * @param purchasePrice cost of crop to purchase
 	 * @param sellingPrice  price received for the sale of crop
 	 * @param daysToGrow    amount of days a crop takes to fully grow
-	 * @param dayOfPurchase the day of crop purchase
+	 * @param daysGrowing   the number of days the crop has been growing for
 	 */
 	public Crop(String name, String description, float purchasePrice, float sellingPrice, int daysToGrow) {
 		this.name = name;
@@ -33,14 +32,14 @@ public abstract class Crop {
 		this.purchasePrice = purchasePrice;
 		this.sellingPrice = sellingPrice;
 		this.daysToGrow = daysToGrow;
+		this.daysGrowing = 0;
 	}
 
-	
-	public String toString(int currentDay) {
-		return "Name: " + this.name + "\nDays growing: " + getTimeGrowing(currentDay) + " days(s)\nTime until harvest: " 
-				+ getTimeUntilHarvest(currentDay) + " days(s)";
+	public String toString() {
+		return "Name: " + this.name + "\nDays growing: " + getDaysGrowing() + " days(s)\nTime until harvest: "
+				+ getTimeUntilHarvest() + " days(s)";
 	}
-	
+
 	/**
 	 * Sets the name of a crop.
 	 *
@@ -141,30 +140,12 @@ public abstract class Crop {
 	}
 
 	/**
-	 * Sets the day of purchase of a crop.
-	 *
-	 * @param dayOfPurchase of a crop.
-	 */
-	public void setDayOfPurchase(int dayOfPurchase) {
-		this.dayOfPurchase = dayOfPurchase;
-	}
-
-	/**
-	 * Returns the day of purchase of a crop.
-	 *
-	 * @return dayOfPurchase of a crop.
-	 */
-	public int getDayOfPurchase() {
-		return dayOfPurchase;
-	}
-
-	/**
 	 * Returns the amount of time a crop has been growing for.
 	 *
 	 * @return the number of days the crop has been growing
 	 */
-	public int getTimeGrowing(int currentDay) {
-		return currentDay - this.dayOfPurchase;
+	public int getDaysGrowing() {
+		return daysGrowing;
 	}
 
 	/**
@@ -172,7 +153,17 @@ public abstract class Crop {
 	 *
 	 * @return daysToGrow - number of days crop has been growing.
 	 */
-	public int getTimeUntilHarvest(int currentDay) {
-		return (this.daysToGrow - getTimeGrowing(currentDay));
+	public int getTimeUntilHarvest() {
+		return (this.daysToGrow - this.daysGrowing);
+	}
+
+	/**
+	 * Updates the growth of a crop by a given number of days.
+	 * 
+	 * @param days The days to be added to the number of days the crop has been
+	 *             growing for.
+	 */
+	public void updateCropGrowth(int days) {
+		this.daysGrowing += days;
 	}
 }

@@ -181,11 +181,11 @@ public class Farmer {
 		}
 	}
 
-	public float harvestCrops(int currentDay) {
+	public float harvestCrops() {
 		float moneyEarned = 0.0f;
 		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
 		for (Crop crop : this.farm.getCrops()) {
-			if (crop.getTimeUntilHarvest(currentDay) == 0) {
+			if (crop.getTimeUntilHarvest() == 0) {
 				System.out.println("Well done, your " + crop.getName() + " is ready for harvest");
 				System.out.println("It has sold for $" + crop.getSellingPrice());
 				moneyEarned += crop.getSellingPrice();
