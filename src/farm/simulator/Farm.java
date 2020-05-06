@@ -14,7 +14,7 @@ public abstract class Farm {
 	private String type;
 	private Farmer farmer;
 	private float balance;
-	private int numAvailableCrops = 6;
+	private int numAvailableCrops = 4;
 	private ArrayList<FarmItem> crops = new ArrayList<FarmItem>();
 	private ArrayList<FarmItem> animals = new ArrayList<FarmItem>();
 	private int cropGrowthFactor;
@@ -34,6 +34,17 @@ public abstract class Farm {
 		this.balance = balance;
 		this.cropGrowthFactor = cropGrowthFactor;
 		this.animalHappinessFactor = animalHappinessFactor;
+	}
+	
+	/**
+	 * String representation of a farm.
+	 * 
+	 * @return String representation of farm attributes.
+	 */
+	@Override
+	public String toString() {
+		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $" + this.balance + "\nCrop growth bonus: " + this.cropGrowthFactor +
+				" days(s)\nAnimal happiness bonus: " + this.balance + " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
 	}
 
 	/**
@@ -62,17 +73,15 @@ public abstract class Farm {
 	public Farmer getFarmer() {
 		return this.farmer;
 	}
-
+	
 	/**
-	 * String representation of a farm.
-	 * 
-	 * @return String representation of farm attributes.
+	 * Adds to the number of free crops available on the farm.
+	 * @param num The number of newly available crops.
 	 */
-	@Override
-	public String toString() {
-		return "Name: " + this.name + "\nType: " + this.type + "\nBalance: $" + this.balance
-				+ "\nAvailable crop plots: " + this.numAvailableCrops;
-	}
+	public void addToAvailableCrops(int num) {
+		this.numAvailableCrops += num;
+	} 
+
 
 	/**
 	 * Prints the status of the farm's crops and animals. This includes viewing a

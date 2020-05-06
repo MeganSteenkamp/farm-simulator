@@ -42,8 +42,14 @@ public abstract class Item implements FarmItem {
 	 */
 	@Override
 	public String toString() {
-		return "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price + "\nAdded crop growth: " 
-				+ this.cropGrowthFactor + " day(s)" + "\nAnimal health bonus: "+ this.animalHealthFactor + " point(s)";
+		String s = "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price;
+		if (this.cropGrowthFactor != 0) {
+			s += "\nAdded crop growth: " + this.cropGrowthFactor + " day(s)";
+		}
+		if (this.animalHealthFactor != 0) {
+			s += "\nAnimal health bonus: "+ this.animalHealthFactor + " point(s)";
+		}
+		return s;
 	}
 	
 	/**

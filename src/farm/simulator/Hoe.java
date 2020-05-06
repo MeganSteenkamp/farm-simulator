@@ -5,7 +5,7 @@ public class Hoe extends Item {
 	private static String name = "Hoe";
 	private static String description = "Dramatically decrease the growth on those slow crops.";
 	private static float price = 300.00f;
-	private static int cropGrowthFactor = 3;
+	private static int cropGrowthFactor = -3;
 	private static int animalHealthFactor = 0;
 	
 	/**

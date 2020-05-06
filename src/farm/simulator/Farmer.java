@@ -28,6 +28,16 @@ public class Farmer {
 		this.age = age;
 		this.items = new ArrayList<FarmItem>();
 	}
+	
+	/**
+	 * String representation of a farm.
+	 * 
+	 * @return String representation of farm attributes.
+	 */
+	@Override
+	public String toString() {
+		return "Farmer: " + this.name + " (" + this.age + ")";
+	}
 
 	/**
 	 * Set the farm that the farmer has.
@@ -100,7 +110,7 @@ public class Farmer {
 	public ArrayList<FarmItem> getItems() {
 		return items;
 	}
-	
+
 	/**
 	 * Prints the details of the items owned by the farmer.
 	 */
@@ -122,7 +132,7 @@ public class Farmer {
 		int hoe = 0;
 		int steroids = 0;
 		int grain = 0;
-		int barn = 0;
+		int silage = 0;
 
 		for (FarmItem item : items) {
 			if (Fertilizer.class.isInstance(item)) {
@@ -140,16 +150,16 @@ public class Farmer {
 			if (Grain.class.isInstance(item)) {
 				grain += 1;
 			}
-			if (Barn.class.isInstance(item)) {
-				barn += 1;
+			if (Silage.class.isInstance(item)) {
+				silage += 1;
 			}
 		}
 		System.out.println("Fertilizer: " + fertilizer);
 		System.out.println("Compost: " + compost);
 		System.out.println("Hoes: " + hoe);
 		System.out.println("Steriods:" + steroids);
-		System.out.println("Barns:" + barn);
 		System.out.println("Grain:" + grain);
+		System.out.println("Silage:" + silage);
 	}
 
 	/**
@@ -161,10 +171,9 @@ public class Farmer {
 		for (FarmItem crop : this.farm.getCrops()) {
 			if (crop.getId() == cropType) {
 				// Decrease the days to grow by one
-				((Crop)crop).addDaysToGrow(-1);
+				((Crop) crop).addDaysToGrow(-1);
 			}
 		}
-
 	}
 
 	/**
@@ -177,20 +186,20 @@ public class Farmer {
 		for (FarmItem crop : this.farm.getCrops()) {
 			if (crop.getId() == cropType) {
 				// Add to the growth based on the growth factor
-				((Crop)crop).addDaysToGrow(item.getCropGrowthFactor());
+				((Crop) crop).addDaysToGrow(item.getCropGrowthFactor());
 			}
 		}
 	}
 
 	public void feedAnimals(Item item) {
 		for (FarmItem animal : this.farm.getAnimals()) {
-			((Animal)animal).addToHealth(item.getAnimalHealthFactor());
+			((Animal) animal).addToHealth(item.getAnimalHealthFactor());
 		}
 	}
 
 	public void playWithAnimals() {
 		for (FarmItem animal : this.farm.getAnimals()) {
-			((Animal)animal).addToHappiness(1);
+			((Animal) animal).addToHappiness(1);
 		}
 	}
 
@@ -198,7 +207,7 @@ public class Farmer {
 		float moneyEarned = 0.0f;
 		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
 		for (FarmItem crop : this.farm.getCrops()) {
-			Crop c = (Crop)crop;
+			Crop c = (Crop) crop;
 			if (c.getTimeUntilHarvest() == 0) {
 				System.out.println("Well done, your " + c.getName() + " is ready for harvest");
 				System.out.println("It has sold for $" + c.getSellingPrice());
@@ -213,37 +222,51 @@ public class Farmer {
 
 		return moneyEarned;
 	}
-	
-	// TODO
-	public void tendToFarmland() {}
+
+	/**
+	 * Increase the number of crops available on the farm by 1 and increase the happiness of all animals by 1.
+	 */
+	public void tendToFarmland() {
+		this.farm.addToAvailableCrops(1);
+		for (FarmItem animal : this.farm.getAnimals()) {
+			((Animal) animal).addToHappiness(1);
+		}
+	}
 
 	/**
 	 * Prints a description of an action the farmer can perform and its benefits
 	 */
 	public void printDescription(int actionChoice) {
 		switch (actionChoice) {
-		case 1: 
-			System.out.println("Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.");
+		case 1:
+			System.out.println(
+					"Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.");
 			System.out.println("Only one type of crop can be harvested at a time.");
 			System.out.println("An item or water can be used to tend to the crops.");
+			System.out.println("Continue to pick your which crops to harvest.");
+			break;
+		case 2:
+			System.out.println("Feeding your animals will increase their health.");
+			System.out.println("A food item must be used to do this.");
+			System.out.println("Continue to view which items you could feed your animals with.");
 			break;
 		case 3:
-			System.out.println("Feeding your animals will increase their health.");
-			System.out.println("An item must be used to do this.");
+			System.out.println("Playing with animals makes their happiness increase.");
+			System.out.println("The happiness of all animals will increase by 1 point.");
+			System.out.println("Continue to view the current happiness of your animals and decide whether it's time to play.");
 			break;
 		case 4:
-			System.out.println("Playing with animals makes their happiness increase.");
+			System.out.println("Any crops that have fully grown can be harvested for a money bonus.");
+			System.out.println("Continue to view your crop status and decide if it is time to harvest.");
 			break;
 		case 5:
-			System.out.println("Any crops that have fully grown can be harvested for a money bonus");
-			break;
-		case 6:
 			System.out.println("Tending to the farm's land keeps the farm tidy and well maintained.");
 			System.out.println("This allows for more crops to be grown and keeps animals happier for longer.");
+			System.out.println("Continue to add 1 point to the happiness of all of your animals, and add 1 available crop plot.");
 			break;
 		}
 	}
-	
+
 	/**
 	 * Gets an item of a given type, specified by an integer.
 	 * 
@@ -260,7 +283,7 @@ public class Farmer {
 		}
 		return item;
 	}
-	
+
 	/**
 	 * Whether the farmer has a item of a given type.
 	 * 
@@ -274,7 +297,7 @@ public class Farmer {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Gets an item of a given type and removes it from the available items.
 	 * 

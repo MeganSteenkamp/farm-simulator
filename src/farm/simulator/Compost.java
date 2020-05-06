@@ -5,7 +5,7 @@ public class Compost extends Item {
 	private static String name = "Compost";
 	private static String description = "Take one day off the growth of a type of crop.";
 	private static float price = 20.00f;
-	private static int cropGrowthFactor = 1;
+	private static int cropGrowthFactor = -1;
 	private static int animalHealthFactor = 0;
 	
 	/**

@@ -127,14 +127,6 @@ public abstract class Crop implements FarmItem {
 		return sellingPrice;
 	}
 
-	/**
-	 * Scales the selling price of a crop by an external factor.
-	 *
-	 * @param scaleFactor of a crop determined by an external factor.
-	 */
-	public void scaleSellingPrice(float scaleFactor) {
-		this.sellingPrice *= scaleFactor;
-	}
 
 	/**
 	 * Adds to the days a crop will day to grow.
@@ -165,11 +157,15 @@ public abstract class Crop implements FarmItem {
 
 	/**
 	 * Returns the time remaining until the harvest of a crop.
-	 *
+	 * If the growth has exceeded the max growth it will remain at 0 days until harvest.
 	 * @return daysToGrow - number of days crop has been growing.
 	 */
 	public int getTimeUntilHarvest() {
-		return (this.daysToGrow - this.daysGrowing);
+		int time = this.daysToGrow - this.daysGrowing;
+		if (time < 0) {
+			time = 0;
+		}
+		return time;
 	}
 
 	/**

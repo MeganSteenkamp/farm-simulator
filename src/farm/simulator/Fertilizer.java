@@ -5,7 +5,7 @@ public class Fertilizer extends Item {
 	private static String name = "Fertilizer";
 	private static String description = "Increase the crop fertility for a quick harvest.";
 	private static float price = 800.00f;
-	private static int cropGrowthFactor = 2;
+	private static int cropGrowthFactor = -2;
 	private static int animalHealthFactor = 0;
 	
 	/**

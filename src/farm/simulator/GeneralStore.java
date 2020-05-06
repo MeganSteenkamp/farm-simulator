@@ -26,7 +26,7 @@ public class GeneralStore {
 			stock.add(new Compost());
 			stock.add(new Hoe());
 			stock.add(new Steroid());
-			stock.add(new Barn());
+			stock.add(new Silage());
 			stock.add(new Grain());
 
 			// Crops
@@ -132,7 +132,7 @@ public class GeneralStore {
 		int hoe = 0;
 		int steroids = 0;
 		int grain = 0;
-		int barn = 0;
+		int silage = 0;
 
 		for (FarmItem item : stock) {
 			if (Fertilizer.class.isInstance(item)) {
@@ -150,8 +150,8 @@ public class GeneralStore {
 			if (Grain.class.isInstance(item)) {
 				grain += 1;
 			}
-			if (Barn.class.isInstance(item)) {
-				barn += 1;
+			if (Silage.class.isInstance(item)) {
+				silage += 1;
 			}
 		}
 		System.out.println("We sell the following items. Please enter a number to find out more about an item.");
@@ -160,7 +160,7 @@ public class GeneralStore {
 		System.out.println("[3] - Hoe stock: " + hoe);
 		System.out.println("[4] - Steriod stock: " + steroids);
 		System.out.println("[5] - Grain stock: " + grain);
-		System.out.println("[6] - Barn stock: " + barn);
+		System.out.println("[6] - Silage stock: " + silage);
 	}
 	
 	/**
