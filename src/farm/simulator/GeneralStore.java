@@ -44,8 +44,6 @@ public class GeneralStore {
 		}
 	}
 
-//======================================== ITEM FUNCTIONALITY ========================================
-
 	/**
 	 * Gets an item of a given type, specified by an integer.
 	 * 
@@ -97,9 +95,9 @@ public class GeneralStore {
 	}
 
 	/**
-	 * Whether item is in stock.
+	 * Whether farm item is in stock.
 	 * 
-	 * @param type Identifier of item type.
+	 * @param type Type ID of farm item.
 	 * @return True if item is in stock. Else false.
 	 */
 	public boolean itemIsInStock(int type) {
@@ -108,6 +106,21 @@ public class GeneralStore {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Prints the details of a given farm item if it is in stock.
+	 * 
+	 * @param type Type ID of farm item.
+	 */
+	public void printItemDetails(int type) {
+		FarmItem item = getItem(type);
+		if (item == null) {
+			// TODO: Should throw error here.
+			System.out.println("Sorry, we do not have that item in stock.");
+		} else {
+			System.out.println(item.toString());
+		}
 	}
 
 	/**
@@ -213,20 +226,5 @@ public class GeneralStore {
 		System.out.println("[13] - Chicken stock: " + chicken);
 		System.out.println("[14] - Pig stock: " + pig);
 		System.out.println("[15] - Horse stock: " + horse);
-	}
-
-	/**
-	 * Prints the details of a given item if it is in stock.
-	 * 
-	 * @param type Type of item.
-	 */
-	public void printItemDetails(int type) {
-		FarmItem item = getItem(type);
-		if (item == null) {
-			// TODO: Should throw error here.
-			System.out.println("Sorry, we do not have that item in stock.");
-		} else {
-			System.out.println(item.toString());
-		}
 	}
 }

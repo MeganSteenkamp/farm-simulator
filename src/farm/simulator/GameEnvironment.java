@@ -24,6 +24,8 @@ public class GameEnvironment {
 	public GameEnvironment() {
 	}
 
+//===================================================== INPUT PARSING =====================================================
+
 	/**
 	 * Gets an input string to name a given item. Iterates until a valid string is
 	 * provided.
@@ -77,6 +79,8 @@ public class GameEnvironment {
 		}
 		return 0;
 	}
+
+//===================================================== GAME INITIALIZATION =====================================================
 
 	/**
 	 * Instantiates a new farmer once a valid name and age have been given
@@ -192,6 +196,8 @@ public class GameEnvironment {
 		System.out.println("===========================================================================");
 	}
 
+//===================================================== MAIN MENU =====================================================
+
 	/**
 	 * Prints the default options and associated numbers for actions players can do.
 	 */
@@ -203,6 +209,8 @@ public class GameEnvironment {
 		System.out.println("[4] - Perform an action on the farm");
 		System.out.println("[5] - Move on to the next day");
 	}
+
+//===================================================== GENERAL STORE =====================================================
 
 	public void printGeneralStoreOptions() {
 		System.out.println("Please enter the number corresponding to what you would like to do.");
@@ -378,6 +386,8 @@ public class GameEnvironment {
 		}
 	}
 
+//===================================================== FARMER ACTIONS =====================================================
+
 	public void printActionOptions() {
 		System.out.println("Please enter the number corresponding to the action you would like to learn more about.");
 		System.out.println("[1] - Tend to crops");
@@ -430,12 +440,13 @@ public class GameEnvironment {
 			System.out.println("The following items are available for use on the crop:");
 
 			for (FarmItem item : items) {
-				Item i = (Item)item;
+				Item i = (Item) item;
 				if (i.getCropGrowthFactor() != 0) {
 					System.out.println(item.toString());
 				}
 			}
-			System.out.println("Please enter the ID of the item you would like to use on the crop. Enter 0 if you would like to use water.");
+			System.out.println(
+					"Please enter the ID of the item you would like to use on the crop. Enter 0 if you would like to use water.");
 			boolean choosing = true;
 			while (choosing) {
 				int choice = getInputInt("the ID of the item you would like to use");
@@ -461,11 +472,11 @@ public class GameEnvironment {
 			System.out.println(
 					"You have no items available for use on the crop, so the crops will be tended to with water.");
 		}
-		
+
 		// Tend to crop
 		if (itemType != 0) {
 			FarmItem item = this.farm.getFarmer().removeItem(itemType);
-			this.farm.getFarmer().tendToCrop(cropType, (Item)item);
+			this.farm.getFarmer().tendToCrop(cropType, (Item) item);
 		} else {
 			this.farm.getFarmer().tendToCrop(cropType); // Use water
 		}
@@ -531,6 +542,8 @@ public class GameEnvironment {
 		}
 	}
 
+//===================================================== DAY IMPLEMENTATION =====================================================
+
 	/**
 	 * Runs the entirety of a day on the farm.
 	 * 
@@ -543,7 +556,7 @@ public class GameEnvironment {
 
 		// Update crop growth by 1 day
 		for (FarmItem c : this.farm.getCrops()) {
-			((Crop)c).updateCropGrowth(1);
+			((Crop) c).updateCropGrowth(1);
 		}
 
 		// Show available actions
@@ -582,6 +595,8 @@ public class GameEnvironment {
 
 		// TODO: Calculate and give daily bonus
 	}
+
+//===================================================== MAIN LOOP =====================================================
 
 	public void run() {
 		initializeGame();
