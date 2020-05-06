@@ -68,7 +68,7 @@ public abstract class Item implements FarmItem {
 	 *
 	 * @return price of an item.
 	 */
-	public float getPrice() {
+	public float getPurchasePrice() {
 		return price;
 	}
 

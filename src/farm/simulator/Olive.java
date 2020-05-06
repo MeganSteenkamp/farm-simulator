@@ -1,7 +1,7 @@
 package farm.simulator;
 
 public class Olive extends Crop {
-	private static int id = 5;
+	private static int id = 11;
 	private static String name = "Olive";
 	private static String description = "This small, wild tree could prove profitable if you're willing to wait.";
 	private static float purchasePrice = 160.00f;

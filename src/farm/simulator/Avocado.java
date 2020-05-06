@@ -7,7 +7,7 @@ package farm.simulator;
  * @author Megan Steenkamp
  */
 public class Avocado extends Crop {
-	private static int id = 6;
+	private static int id = 12;
 	private static String name = "Avocado";
 	private static String description = "The Avocado tree is a slow going tree that can make a real profit.";
 	private static float purchasePrice = 200.00f;

@@ -7,7 +7,7 @@ package farm.simulator;
  * @author Megan Steenkamp
  */
 
-public abstract class Crop {
+public abstract class Crop implements FarmItem {
 	private int id;
 	private String name;
 	private String description;
@@ -19,7 +19,7 @@ public abstract class Crop {
 	/**
 	 * Class constructor for the Crop class
 	 *
-	 * @param id  			id associated with type of crop
+	 * @param id            id associated with type of crop
 	 * @param name          name of the crop
 	 * @param description   description for the item
 	 * @param purchasePrice cost of crop to purchase
@@ -42,12 +42,13 @@ public abstract class Crop {
 	 */
 	@Override
 	public String toString() {
-		return "Type ID: " + this.id + "\nName: " + this.name + "\nDays growing: " + getDaysGrowing() + " days(s)\nTime until harvest: "
-				+ getTimeUntilHarvest() + " days(s)";
+		return "Type ID: " + this.id + "\nName: " + this.name + "\nDays growing: " + getDaysGrowing()
+				+ " days(s)\nTime until harvest: " + getTimeUntilHarvest() + " days(s)";
 	}
-	
+
 	/**
 	 * Returns the id of a given type of crop.
+	 * 
 	 * @return Id of crop type.
 	 */
 	public int getId() {

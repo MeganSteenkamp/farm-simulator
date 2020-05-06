@@ -6,10 +6,11 @@ package farm.simulator;
  * @author Megan Steenkamp
  * @author Lewis Marshall
  */
-public abstract class Animal {
+public abstract class Animal implements FarmItem {
 	private int id;
 	private float price;
 	private String type;
+	private String description;
 	private int happiness;
 	private int health;
 
@@ -22,12 +23,22 @@ public abstract class Animal {
 	 * @param happiness  the happiness status of the animal
 	 * @param health     the health status of the animal
 	 */
-	public Animal(int id, float price, String type, int happiness, int health) {
+	public Animal(int id, float price, String type, String description, int happiness, int health) {
 		this.id = id;
 		this.price = price;
 		this.type = type;
+		this.description = description;
 		this.happiness = happiness;
 		this.health = health;
+	}
+	
+	/**
+	 * Returns the description for an animal.
+	 *
+	 * @return description for an animal.
+	 */
+	public String getDescription() {
+		return description;
 	}
 	
 	/**
@@ -45,7 +56,7 @@ public abstract class Animal {
 	 */
 	@Override
 	public String toString() {
-		return "Type ID: " + this.id + "\nType: " + this.type + "\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: "
+		return "Type ID: " + this.id + "\nType: " + this.type + "\nDescription: " + this.description +"\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: "
 				+ this.health;
 	}
 
@@ -72,7 +83,7 @@ public abstract class Animal {
 	 * 
 	 * @return Price of the animal.
 	 */
-	public float getPrice() {
+	public float getPurchasePrice() {
 		return this.price;
 	}
 

@@ -1,7 +1,7 @@
 package farm.simulator;
 
 public class Coffee extends Crop {
-	private static int id = 4;
+	private static int id = 10;
 	private static String name = "Coffee";
 	private static String description = "This small evergreen plant will make a moderate profit for a moderate growth time.";
 	private static float purchasePrice = 80.00f;

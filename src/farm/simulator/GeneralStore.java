@@ -13,9 +13,7 @@ import java.util.ArrayList;
 
 public class GeneralStore {
 
-	private ArrayList<Item> items = new ArrayList<Item>();
-	private ArrayList<Crop> crops = new ArrayList<Crop>();
-	private ArrayList<Animal> animals = new ArrayList<Animal>();
+	private ArrayList<FarmItem> stock = new ArrayList<FarmItem>();
 
 	/**
 	 * Class constructor for the General Store class Begins with 2 of each Item,
@@ -24,25 +22,25 @@ public class GeneralStore {
 	public GeneralStore() {
 		for (int i = 0; i < 2; i++) {
 			// Items
-			items.add(new Fertilizer());
-			items.add(new Compost());
-			items.add(new Hoe());
-			items.add(new Steroid());
-			items.add(new Barn());
-			items.add(new Grain());
+			stock.add(new Fertilizer());
+			stock.add(new Compost());
+			stock.add(new Hoe());
+			stock.add(new Steroid());
+			stock.add(new Barn());
+			stock.add(new Grain());
 
 			// Crops
-			crops.add(new Rice());
-			crops.add(new Wheat());
-			crops.add(new Cotton());
-			crops.add(new Coffee());
-			crops.add(new Olive());
-			crops.add(new Avocado());
+			stock.add(new Rice());
+			stock.add(new Wheat());
+			stock.add(new Cotton());
+			stock.add(new Coffee());
+			stock.add(new Olive());
+			stock.add(new Avocado());
 
 			// Animals
-			animals.add(new Chicken());
-			animals.add(new Pig());
-			animals.add(new Horse());
+			stock.add(new Chicken());
+			stock.add(new Pig());
+			stock.add(new Horse());
 		}
 	}
 
@@ -54,11 +52,11 @@ public class GeneralStore {
 	 * @param type Type of item, identified with an integer.
 	 * @return Item if it is in the list of items. Otherwise will return null.
 	 */
-	public Item getItem(int type) {
-		Item item = null;
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getId() == type) {
-				item = items.get(i);
+	public FarmItem getItem(int type) {
+		FarmItem item = null;
+		for (int i = 0; i < stock.size(); i++) {
+			if (stock.get(i).getId() == type) {
+				item = stock.get(i);
 				break;
 			}
 		}
@@ -71,11 +69,11 @@ public class GeneralStore {
 	 * @param type Type of item, identified with an integer.
 	 * @return Item if it is in the list of items. Otherwise will return null.
 	 */
-	public Item removeItem(int type) {
-		Item item = null;
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getId() == type) {
-				item = items.remove(i);
+	public FarmItem removeItem(int type) {
+		FarmItem item = null;
+		for (int i = 0; i < stock.size(); i++) {
+			if (stock.get(i).getId() == type) {
+				item = stock.remove(i);
 				break;
 			}
 		}
@@ -89,8 +87,8 @@ public class GeneralStore {
 	 * @return The item that has been purchased. Returns a null object if the item
 	 *         is out of stock.
 	 */
-	public Item sellItem(int type) {
-		Item item = removeItem(type);
+	public FarmItem sellItem(int type) {
+		FarmItem item = removeItem(type);
 		if (item == null) {
 			// TODO: Should give an error here
 			System.out.println("Sorry, we do not sell that item.");
@@ -105,7 +103,7 @@ public class GeneralStore {
 	 * @return True if item is in stock. Else false.
 	 */
 	public boolean itemIsInStock(int type) {
-		Item item = getItem(type);
+		FarmItem item = getItem(type);
 		if (item == null) {
 			return false;
 		}
@@ -123,7 +121,7 @@ public class GeneralStore {
 		int grain = 0;
 		int barn = 0;
 
-		for (Item item : items) {
+		for (FarmItem item : stock) {
 			if (Fertilizer.class.isInstance(item)) {
 				fertilizer += 1;
 			}
@@ -151,88 +149,7 @@ public class GeneralStore {
 		System.out.println("[5] - Grain stock: " + grain);
 		System.out.println("[6] - Barn stock: " + barn);
 	}
-
-	/**
-	 * Prints the details of a given item if it is in stock.
-	 * 
-	 * @param type Type of item.
-	 */
-	public void printItemDetails(int type) {
-		Item item = getItem(type);
-		if (item == null) {
-			// TODO: Should throw error here.
-			System.out.println("Sorry, we do not have that item in stock.");
-		} else {
-			System.out.println(item.toString());
-		}
-	}
-
-// ======================================== CROP FUNCTIONALITY ========================================
-
-	/**
-	 * Gets an crop of a given type, specified by an integer.
-	 * 
-	 * @param type Type of crop, identified with an integer.
-	 * @return Crop if it is in the list of crops. Otherwise will return null.
-	 */
-	public Crop getCrop(int type) {
-		Crop crop = null;
-		for (int i = 0; i < crops.size(); i++) {
-			if (crops.get(i).getId() == type) {
-				crop = crops.get(i);
-				break;
-			}
-		}
-		return crop;
-	}
-
-	/**
-	 * Gets a crop of a given type and removes it from the available items.
-	 * 
-	 * @param type Type of crop, identified with an integer.
-	 * @return Crop if it is in the list of crops. Otherwise will return null.
-	 */
-	public Crop removeCrop(int type) {
-		Crop crop = null;
-		for (int i = 0; i < crops.size(); i++) {
-			if (crops.get(i).getId() == type) {
-				crop = crops.remove(i);
-				break;
-			}
-		}
-		return crop;
-	}
-
-	/**
-	 * Sells a crop and removes it from inventory.
-	 * 
-	 * @param type Type of crop to be purchased.
-	 * @return The crop that has been purchased. Returns a null object if the crop
-	 *         is out of stock.
-	 */
-	public Crop sellCrop(int type) {
-		Crop crop = removeCrop(type);
-		if (crop == null) {
-			// TODO: Should give an error here
-			System.out.println("Sorry, we do not sell that item.");
-		}
-		return crop;
-	}
-
-	/**
-	 * Whether a crop is in stock.
-	 * 
-	 * @param type Identifier of crop type.
-	 * @return True if crop is in stock. Else false.
-	 */
-	public boolean cropIsInStock(int type) {
-		Crop crop = getCrop(type);
-		if (crop == null) {
-			return false;
-		}
-		return true;
-	}
-
+	
 	/**
 	 * Prints a stock count of crop types for sale in the store.
 	 */
@@ -244,7 +161,7 @@ public class GeneralStore {
 		int olive = 0;
 		int avocado = 0;
 
-		for (Crop crop : crops) {
+		for (FarmItem crop : stock) {
 			if (Rice.class.isInstance(crop)) {
 				rice += 1;
 			}
@@ -265,95 +182,14 @@ public class GeneralStore {
 			}
 		}
 		System.out.println("We sell the following crops. Please enter a number to find out more about a crop.");
-		System.out.println("[1] - Rice stock: " + rice);
-		System.out.println("[2] - Wheat stock: " + wheat);
-		System.out.println("[3] - Cotton stock: " + cotton);
-		System.out.println("[4] - Coffee stock: " + coffee);
-		System.out.println("[5] - Olive stock: " + olive);
-		System.out.println("[6] - Avocado stock: " + avocado);
+		System.out.println("[7] - Rice stock: " + rice);
+		System.out.println("[8] - Wheat stock: " + wheat);
+		System.out.println("[9] - Cotton stock: " + cotton);
+		System.out.println("[10] - Coffee stock: " + coffee);
+		System.out.println("[11] - Olive stock: " + olive);
+		System.out.println("[12] - Avocado stock: " + avocado);
 	}
-
-	/**
-	 * Prints the details of a given crop if it is in stock.
-	 * 
-	 * @param type Type of crop.
-	 */
-	public void printCropDetails(int type) {
-		Crop crop = getCrop(type);
-		if (crop == null) {
-			// TODO: Should throw error here.
-			System.out.println("Sorry, we do not have that item in stock.");
-		} else {
-			System.out.println(crop.toString());
-		}
-	}
-
-// ======================================== ANIMAL FUNCTIONALITY ========================================
-
-	/**
-	 * Gets an animal of a given type, specified by an integer.
-	 * 
-	 * @param type Type of animal, identified with an integer.
-	 * @return Animal if it is in the list of animals. Otherwise will return null.
-	 */
-	public Animal getAnimal(int type) {
-		Animal animal = null;
-		for (int i = 0; i < animals.size(); i++) {
-			if (animals.get(i).getId() == type) {
-				animal = animals.get(i);
-				break;
-			}
-		}
-		return animal;
-	}
-
-	/**
-	 * Gets an animal of a given type and removes it from the available items.
-	 * 
-	 * @param type Type of animal, identified with an integer.
-	 * @return Animal if it is in the list of animals. Otherwise will return null.
-	 */
-	public Animal removeAnimal(int type) {
-		Animal animal = null;
-		for (int i = 0; i < animals.size(); i++) {
-			if (animals.get(i).getId() == type) {
-				animal = animals.remove(i);
-				break;
-			}
-		}
-		return animal;
-	}
-
-	/**
-	 * Sells an animal and removes it from inventory.
-	 * 
-	 * @param type Type of animal to be purchased.
-	 * @return The animal that has been purchased. Returns a null object if the
-	 *         animal is out of stock.
-	 */
-	public Animal sellAnimal(int type) {
-		Animal animal = removeAnimal(type);
-		if (animal == null) {
-			// TODO: Should give an error here
-			System.out.println("Sorry, we do not sell that item.");
-		}
-		return animal;
-	}
-
-	/**
-	 * Whether an animal is in stock.
-	 * 
-	 * @param type Identifier of animal type.
-	 * @return True if animal is in stock. Else false.
-	 */
-	public boolean animalIsInStock(int type) {
-		Animal animal = getAnimal(type);
-		if (animal == null) {
-			return false;
-		}
-		return true;
-	}
-
+	
 	/**
 	 * Prints a stock count of animal types for sale in the store.
 	 */
@@ -362,7 +198,7 @@ public class GeneralStore {
 		int pig = 0;
 		int horse = 0;
 
-		for (Animal animal : animals) {
+		for (FarmItem animal : stock) {
 			if (Chicken.class.isInstance(animal)) {
 				chicken += 1;
 			}
@@ -374,24 +210,23 @@ public class GeneralStore {
 			}
 		}
 		System.out.println("We sell the following animals. Please enter a number to find out more about an animal.");
-		System.out.println("[1] - Chicken stock: " + chicken);
-		System.out.println("[2] - Pig stock: " + pig);
-		System.out.println("[3] - Horse stock: " + horse);
+		System.out.println("[13] - Chicken stock: " + chicken);
+		System.out.println("[14] - Pig stock: " + pig);
+		System.out.println("[15] - Horse stock: " + horse);
 	}
 
 	/**
-	 * Prints the details of a given crop if it is in stock.
+	 * Prints the details of a given item if it is in stock.
 	 * 
-	 * @param type Type of crop.
+	 * @param type Type of item.
 	 */
-	public void printAnimalDetails(int type) {
-		Animal animal = getAnimal(type);
-		if (animal == null) {
+	public void printItemDetails(int type) {
+		FarmItem item = getItem(type);
+		if (item == null) {
 			// TODO: Should throw error here.
 			System.out.println("Sorry, we do not have that item in stock.");
 		} else {
-			System.out.println(animal.toString());
+			System.out.println(item.toString());
 		}
 	}
-
 }

@@ -15,8 +15,8 @@ public abstract class Farm {
 	private Farmer farmer;
 	private float balance;
 	private int numAvailableCrops = 6;
-	private ArrayList<Crop> crops = new ArrayList<Crop>();
-	private ArrayList<Animal> animals = new ArrayList<Animal>();
+	private ArrayList<FarmItem> crops = new ArrayList<FarmItem>();
+	private ArrayList<FarmItem> animals = new ArrayList<FarmItem>();
 	private int cropGrowthFactor;
 	private int animalHappinessFactor;
 
@@ -131,9 +131,9 @@ public abstract class Farm {
 	 * 
 	 * @param crop Crop to be added.
 	 */
-	public void addCrop(Crop crop) {
+	public void addCrop(FarmItem crop) {
 		// Scale crop growth according to farm
-		crop.addDaysToGrow(cropGrowthFactor);
+		((Crop)crop).addDaysToGrow(cropGrowthFactor);
 		this.crops.add(crop);
 		this.numAvailableCrops -= 1;
 	}
@@ -157,8 +157,8 @@ public abstract class Farm {
 	 * 
 	 * @param animal Animal to be added.
 	 */
-	public void addAnimal(Animal animal) {
-		animal.addToHappiness(animalHappinessFactor);
+	public void addAnimal(FarmItem animal) {
+		((Animal)animal).addToHappiness(animalHappinessFactor);
 		this.animals.add(animal);
 	}
 
@@ -167,7 +167,7 @@ public abstract class Farm {
 	 * 
 	 * @return the farm's crops.
 	 */
-	public ArrayList<Crop> getCrops() {
+	public ArrayList<FarmItem> getCrops() {
 		return this.crops;
 	}
 
@@ -176,7 +176,7 @@ public abstract class Farm {
 	 * 
 	 * @return the farm's animals.
 	 */
-	public ArrayList<Animal> getAnimals() {
+	public ArrayList<FarmItem> getAnimals() {
 		return this.animals;
 	}
 
@@ -186,7 +186,7 @@ public abstract class Farm {
 	public void printAnimals() {
 		System.out.println("Number of animals owned: " + this.animals.size());
 		System.out.println();
-		for (Animal a : animals) {
+		for (FarmItem a : animals) {
 			System.out.println(a.toString());
 			System.out.println();
 		}
@@ -200,7 +200,7 @@ public abstract class Farm {
 	public void printCrops() {
 		System.out.println("Number of crops owned: " + this.crops.size());
 		System.out.println();
-		for (Crop c : crops) {
+		for (FarmItem c : crops) {
 			System.out.println(c.toString());
 			System.out.println();
 		}
@@ -212,8 +212,8 @@ public abstract class Farm {
 	 * @param type Type of crop, identified with an integer.
 	 * @return Crop if it is in the list of crops. Otherwise will return null.
 	 */
-	public Crop getCrop(int type) {
-		Crop crop = null;
+	public FarmItem getCrop(int type) {
+		FarmItem crop = null;
 		for (int i = 0; i < crops.size(); i++) {
 			if (crops.get(i).getId() == type) {
 				crop = crops.get(i);
@@ -230,7 +230,7 @@ public abstract class Farm {
 	 * @return True if crop is in stock. Else false.
 	 */
 	public boolean ownsCrop(int type) {
-		Crop crop = getCrop(type);
+		FarmItem crop = getCrop(type);
 		if (crop == null) {
 			return false;
 		}

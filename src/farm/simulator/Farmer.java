@@ -14,7 +14,7 @@ public class Farmer {
 	private String name;
 	private int age;
 	private Farm farm;
-	private ArrayList<Item> items;
+	private ArrayList<FarmItem> items;
 
 	/**
 	 * Class constructor for the Farmer class
@@ -26,7 +26,7 @@ public class Farmer {
 	public Farmer(String name, int age) {
 		this.name = name;
 		this.age = age;
-		this.items = new ArrayList<Item>();
+		this.items = new ArrayList<FarmItem>();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class Farmer {
 	 * 
 	 * @param items
 	 */
-	public void setItems(ArrayList<Item> items) {
+	public void setItems(ArrayList<FarmItem> items) {
 		this.items = items;
 	}
 
@@ -88,7 +88,7 @@ public class Farmer {
 	 * 
 	 * @param item The item to be added.
 	 */
-	public void addItem(Item item) {
+	public void addItem(FarmItem item) {
 		this.items.add(item);
 	}
 
@@ -97,7 +97,7 @@ public class Farmer {
 	 *
 	 * @return the items the farmer owns.
 	 */
-	public ArrayList<Item> getItems() {
+	public ArrayList<FarmItem> getItems() {
 		return items;
 	}
 	
@@ -107,7 +107,7 @@ public class Farmer {
 	public void printItems() {
 		System.out.println("Number of items owned: " + this.items.size());
 		System.out.println();
-		for (Item i : items) {
+		for (FarmItem i : items) {
 			System.out.println(i.toString());
 			System.out.println();
 		}
@@ -124,7 +124,7 @@ public class Farmer {
 		int grain = 0;
 		int barn = 0;
 
-		for (Item item : items) {
+		for (FarmItem item : items) {
 			if (Fertilizer.class.isInstance(item)) {
 				fertilizer += 1;
 			}
@@ -158,10 +158,10 @@ public class Farmer {
 	 * @param variety Variety of crop to be tended to.
 	 */
 	public void tendToCrop(int cropType) {
-		for (Crop crop : this.farm.getCrops()) {
+		for (FarmItem crop : this.farm.getCrops()) {
 			if (crop.getId() == cropType) {
 				// Decrease the days to grow by one
-				crop.addDaysToGrow(-1);
+				((Crop)crop).addDaysToGrow(-1);
 			}
 		}
 
@@ -174,35 +174,36 @@ public class Farmer {
 	 * @param variety Variety of crop to be tended to.
 	 */
 	public void tendToCrop(int cropType, Item item) {
-		for (Crop crop : this.farm.getCrops()) {
+		for (FarmItem crop : this.farm.getCrops()) {
 			if (crop.getId() == cropType) {
 				// Add to the growth based on the growth factor
-				crop.addDaysToGrow(item.getCropGrowthFactor());
+				((Crop)crop).addDaysToGrow(item.getCropGrowthFactor());
 			}
 		}
 	}
 
 	public void feedAnimals(Item item) {
-		for (Animal animal : this.farm.getAnimals()) {
-			animal.addToHealth(item.getAnimalHealthFactor());
+		for (FarmItem animal : this.farm.getAnimals()) {
+			((Animal)animal).addToHealth(item.getAnimalHealthFactor());
 		}
 	}
 
 	public void playWithAnimals() {
-		for (Animal animal : this.farm.getAnimals()) {
-			animal.addToHappiness(1);
+		for (FarmItem animal : this.farm.getAnimals()) {
+			((Animal)animal).addToHappiness(1);
 		}
 	}
 
 	public float harvestCrops() {
 		float moneyEarned = 0.0f;
 		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
-		for (Crop crop : this.farm.getCrops()) {
-			if (crop.getTimeUntilHarvest() == 0) {
-				System.out.println("Well done, your " + crop.getName() + " is ready for harvest");
-				System.out.println("It has sold for $" + crop.getSellingPrice());
-				moneyEarned += crop.getSellingPrice();
-				cropsToHarvest.add(crop);
+		for (FarmItem crop : this.farm.getCrops()) {
+			Crop c = (Crop)crop;
+			if (c.getTimeUntilHarvest() == 0) {
+				System.out.println("Well done, your " + c.getName() + " is ready for harvest");
+				System.out.println("It has sold for $" + c.getSellingPrice());
+				moneyEarned += c.getSellingPrice();
+				cropsToHarvest.add(c);
 			}
 		}
 
@@ -249,8 +250,8 @@ public class Farmer {
 	 * @param type Type of item, identified with an integer.
 	 * @return Item if it is in the list of crops. Otherwise will return null.
 	 */
-	public Item getItem(int type) {
-		Item item = null;
+	public FarmItem getItem(int type) {
+		FarmItem item = null;
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getId() == type) {
 				item = items.get(i);
@@ -267,7 +268,7 @@ public class Farmer {
 	 * @return True if item is in stock. Else false.
 	 */
 	public boolean ownsItem(int type) {
-		Item item = getItem(type);
+		FarmItem item = getItem(type);
 		if (item == null) {
 			return false;
 		}
@@ -280,8 +281,8 @@ public class Farmer {
 	 * @param type Type of item, identified with an integer.
 	 * @return Item if it is in the list of items. Otherwise will return null.
 	 */
-	public Item removeItem(int type) {
-		Item item = null;
+	public FarmItem removeItem(int type) {
+		FarmItem item = null;
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getId() == type) {
 				item = items.remove(i);

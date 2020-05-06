@@ -222,8 +222,8 @@ public class GameEnvironment {
 		}
 	}
 
-	public Item processItemSale(int itemReference) {
-		Item item = null;
+	public FarmItem processSale(int itemReference) {
+		FarmItem item = null;
 		System.out.println("Would you like to buy this item?");
 		System.out.println("[1] - yes");
 		System.out.println("[2] - no");
@@ -233,7 +233,7 @@ public class GameEnvironment {
 			int choice = getInputInt("your choice of activity");
 			switch (choice) {
 			case 1:
-				this.farm.withdrawMoney(generalStore.getItem(itemReference).getPrice());
+				this.farm.withdrawMoney(generalStore.getItem(itemReference).getPurchasePrice());
 				item = generalStore.sellItem(itemReference);
 				transactionGoing = false;
 				break;
@@ -249,12 +249,12 @@ public class GameEnvironment {
 
 	}
 
-	public Item browseItems() {
-		Item item = null;
-		boolean browsingItems = true;
-		while (browsingItems) {
+	public FarmItem browseItems() {
+		FarmItem item = null;
+		boolean browsing = true;
+		while (browsing) {
+			System.out.println("[0] - Return to main store menu");
 			generalStore.printItemStock();
-			System.out.println("[7] - Return to main store menu");
 			int choice = getInputInt("your choice of activity");
 			switch (choice) {
 			case 1:
@@ -266,12 +266,12 @@ public class GameEnvironment {
 				generalStore.printItemDetails(choice);
 				boolean inStock = generalStore.itemIsInStock(choice);
 				if (inStock) {
-					item = processItemSale(choice);
-					browsingItems = false;
+					item = processSale(choice);
+					browsing = false;
 				}
 				break;
-			case 7:
-				browsingItems = false;
+			case 0:
+				browsing = false;
 				break;
 			default:
 				System.out.println("Please enter a valid choice.");
@@ -281,56 +281,29 @@ public class GameEnvironment {
 		return item;
 	}
 
-	public Crop processCropSale(int itemReference) {
-		Crop crop = null;
-		System.out.println("Would you like to buy this item?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean transactionGoing = true;
-		while (transactionGoing) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				this.farm.withdrawMoney(generalStore.getCrop(itemReference).getPurchasePrice());
-				crop = generalStore.sellCrop(itemReference);
-				transactionGoing = false;
-				break;
-			case 2:
-				transactionGoing = false;
-				break;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-
-		}
-		return crop;
-
-	}
-
-	public Crop browseCrops() {
-		Crop crop = null;
-		boolean browsingCrops = true;
-		while (browsingCrops) {
+	public FarmItem browseCrops() {
+		FarmItem crop = null;
+		boolean browsing = true;
+		while (browsing) {
+			System.out.println("[0] - Return to main store menu");
 			generalStore.printCropStock();
-			System.out.println("[7] - Return to main store menu");
 			int choice = getInputInt("your choice of activity");
 			switch (choice) {
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-				generalStore.printCropDetails(choice);
-				boolean inStock = generalStore.cropIsInStock(choice);
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+				generalStore.printItemDetails(choice);
+				boolean inStock = generalStore.itemIsInStock(choice);
 				if (inStock) {
-					crop = processCropSale(choice);
-					browsingCrops = false;
+					crop = processSale(choice);
+					browsing = false;
 				}
 				break;
-			case 7:
-				browsingCrops = false;
+			case 0:
+				browsing = false;
 				break;
 			default:
 				System.out.println("Please enter a valid choice.");
@@ -340,53 +313,26 @@ public class GameEnvironment {
 		return crop;
 	}
 
-	public Animal processAnimalSale(int itemReference) {
-		Animal animal = null;
-		System.out.println("Would you like to buy this item?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean transactionGoing = true;
-		while (transactionGoing) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				this.farm.withdrawMoney(generalStore.getAnimal(itemReference).getPrice());
-				animal = generalStore.sellAnimal(itemReference);
-				transactionGoing = false;
-				break;
-			case 2:
-				transactionGoing = false;
-				break;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-
-		}
-		return animal;
-
-	}
-
-	public Animal browseAnimals() {
-		Animal animal = null;
-		boolean browsingAnimals = true;
-		while (browsingAnimals) {
+	public FarmItem browseAnimals() {
+		FarmItem animal = null;
+		boolean browsing = true;
+		while (browsing) {
+			System.out.println("[0] - Return to main store menu");
 			generalStore.printAnimalStock();
-			System.out.println("[4] - Return to main store menu");
 			int choice = getInputInt("your choice of activity");
 			switch (choice) {
-			case 1:
-			case 2:
-			case 3:
-				generalStore.printAnimalDetails(choice);
-				boolean inStock = generalStore.animalIsInStock(choice);
+			case 13:
+			case 14:
+			case 15:
+				generalStore.printItemDetails(choice);
+				boolean inStock = generalStore.itemIsInStock(choice);
 				if (inStock) {
-					animal = processAnimalSale(choice);
-					browsingAnimals = false;
+					animal = processSale(choice);
+					browsing = false;
 				}
 				break;
-			case 4:
-				browsingAnimals = false;
+			case 0:
+				browsing = false;
 				break;
 			default:
 				System.out.println("Please enter a valid choice.");
@@ -403,19 +349,19 @@ public class GameEnvironment {
 			int choice = getInputInt("your choice of activity");
 			switch (choice) {
 			case 1:
-				Item item = browseItems();
+				FarmItem item = browseItems();
 				if (item != null) {
 					this.farm.getFarmer().addItem(item);
 				}
 				break;
 			case 2:
-				Crop crop = browseCrops();
+				FarmItem crop = browseCrops();
 				if (crop != null) {
 					this.farm.addCrop(crop);
 				}
 				break;
 			case 3:
-				Animal animal = browseAnimals();
+				FarmItem animal = browseAnimals();
 				if (animal != null) {
 					this.farm.addAnimal(animal);
 				}
@@ -479,12 +425,13 @@ public class GameEnvironment {
 
 	public void processTendingToCrop(int cropType) {
 		int itemType = 0;
-		ArrayList<Item> items = this.farm.getFarmer().getItems();
+		ArrayList<FarmItem> items = this.farm.getFarmer().getItems();
 		if (items.size() > 0) {
 			System.out.println("The following items are available for use on the crop:");
 
-			for (Item item : items) {
-				if (item.getCropGrowthFactor() != 0) {
+			for (FarmItem item : items) {
+				Item i = (Item)item;
+				if (i.getCropGrowthFactor() != 0) {
 					System.out.println(item.toString());
 				}
 			}
@@ -517,8 +464,8 @@ public class GameEnvironment {
 		
 		// Tend to crop
 		if (itemType != 0) {
-			Item item = this.farm.getFarmer().removeItem(itemType);
-			this.farm.getFarmer().tendToCrop(cropType, item);
+			FarmItem item = this.farm.getFarmer().removeItem(itemType);
+			this.farm.getFarmer().tendToCrop(cropType, (Item)item);
 		} else {
 			this.farm.getFarmer().tendToCrop(cropType); // Use water
 		}
@@ -595,8 +542,8 @@ public class GameEnvironment {
 		boolean isDayEnd = false;
 
 		// Update crop growth by 1 day
-		for (Crop c : this.farm.getCrops()) {
-			c.updateCropGrowth(1);
+		for (FarmItem c : this.farm.getCrops()) {
+			((Crop)c).updateCropGrowth(1);
 		}
 
 		// Show available actions

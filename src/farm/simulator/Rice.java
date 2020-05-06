@@ -1,7 +1,7 @@
 package farm.simulator;
 
 public class Rice extends Crop {
-	private static int id = 1;
+	private static int id = 7;
 	private static String name = "Rice";
 	private static String description = "This grain may make a small profit but it grows quickly.";
 	private static float purchasePrice = 20.00f;
