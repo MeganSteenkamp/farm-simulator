@@ -42,7 +42,7 @@ public abstract class Crop {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nDays growing: " + getDaysGrowing() + " days(s)\nTime until harvest: "
+		return "Type ID: " + this.id + "\nName: " + this.name + "\nDays growing: " + getDaysGrowing() + " days(s)\nTime until harvest: "
 				+ getTimeUntilHarvest() + " days(s)";
 	}
 	

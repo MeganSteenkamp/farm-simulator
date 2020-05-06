@@ -7,6 +7,7 @@ package farm.simulator;
  * @author Lewis Marshall
  */
 public class Horse extends Animal {
+	private static int id = 3;
 	private static float price = 100.00f;
 	private static String type = "Horse";
 	private static int happiness = 7;
@@ -16,7 +17,7 @@ public class Horse extends Animal {
 	 * Construct a horse.
 	 */
 	public Horse() {
-		super(price, type, happiness, health);
+		super(id, price, type, happiness, health);
 	}
 
 	/**

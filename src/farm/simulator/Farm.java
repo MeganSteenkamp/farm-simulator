@@ -205,4 +205,35 @@ public abstract class Farm {
 			System.out.println();
 		}
 	}
+	
+	/**
+	 * Gets an crop of a given type, specified by an integer.
+	 * 
+	 * @param type Type of crop, identified with an integer.
+	 * @return Crop if it is in the list of crops. Otherwise will return null.
+	 */
+	public Crop getCrop(int type) {
+		Crop crop = null;
+		for (int i = 0; i < crops.size(); i++) {
+			if (crops.get(i).getId() == type) {
+				crop = crops.get(i);
+				break;
+			}
+		}
+		return crop;
+	}
+	
+	/**
+	 * Whether the farm has a crop of a given type.
+	 * 
+	 * @param type Identifier of crop type.
+	 * @return True if crop is in stock. Else false.
+	 */
+	public boolean ownsCrop(int type) {
+		Crop crop = getCrop(type);
+		if (crop == null) {
+			return false;
+		}
+		return true;
+	}
 }

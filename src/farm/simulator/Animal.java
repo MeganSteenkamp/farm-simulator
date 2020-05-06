@@ -7,7 +7,7 @@ package farm.simulator;
  * @author Lewis Marshall
  */
 public abstract class Animal {
-
+	private int id;
 	private float price;
 	private String type;
 	private int happiness;
@@ -16,16 +16,26 @@ public abstract class Animal {
 	/**
 	 * Class constructor for the Animal class
 	 * 
+	 * @param id 		 the id of the animal type
 	 * @param price      the price of the animal
 	 * @param animalType the breed of the animal
 	 * @param happiness  the happiness status of the animal
 	 * @param health     the health status of the animal
 	 */
-	public Animal(float price, String type, int happiness, int health) {
+	public Animal(int id, float price, String type, int happiness, int health) {
+		this.id = id;
 		this.price = price;
 		this.type = type;
 		this.happiness = happiness;
 		this.health = health;
+	}
+	
+	/**
+	 * Returns the id of a given type of animal.
+	 * @return Id of animal type.
+	 */
+	public int getId() {
+		return this.id;
 	}
 
 	/**
@@ -35,7 +45,7 @@ public abstract class Animal {
 	 */
 	@Override
 	public String toString() {
-		return "Type: " + this.type + "\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: "
+		return "Type ID: " + this.id + "\nType: " + this.type + "\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: "
 				+ this.health;
 	}
 

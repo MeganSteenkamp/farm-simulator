@@ -288,4 +288,110 @@ public class GeneralStore {
 		}
 	}
 
+// ======================================== ANIMAL FUNCTIONALITY ========================================
+
+	/**
+	 * Gets an animal of a given type, specified by an integer.
+	 * 
+	 * @param type Type of animal, identified with an integer.
+	 * @return Animal if it is in the list of animals. Otherwise will return null.
+	 */
+	public Animal getAnimal(int type) {
+		Animal animal = null;
+		for (int i = 0; i < animals.size(); i++) {
+			if (animals.get(i).getId() == type) {
+				animal = animals.get(i);
+				break;
+			}
+		}
+		return animal;
+	}
+
+	/**
+	 * Gets an animal of a given type and removes it from the available items.
+	 * 
+	 * @param type Type of animal, identified with an integer.
+	 * @return Animal if it is in the list of animals. Otherwise will return null.
+	 */
+	public Animal removeAnimal(int type) {
+		Animal animal = null;
+		for (int i = 0; i < animals.size(); i++) {
+			if (animals.get(i).getId() == type) {
+				animal = animals.remove(i);
+				break;
+			}
+		}
+		return animal;
+	}
+
+	/**
+	 * Sells an animal and removes it from inventory.
+	 * 
+	 * @param type Type of animal to be purchased.
+	 * @return The animal that has been purchased. Returns a null object if the
+	 *         animal is out of stock.
+	 */
+	public Animal sellAnimal(int type) {
+		Animal animal = removeAnimal(type);
+		if (animal == null) {
+			// TODO: Should give an error here
+			System.out.println("Sorry, we do not sell that item.");
+		}
+		return animal;
+	}
+
+	/**
+	 * Whether an animal is in stock.
+	 * 
+	 * @param type Identifier of animal type.
+	 * @return True if animal is in stock. Else false.
+	 */
+	public boolean animalIsInStock(int type) {
+		Animal animal = getAnimal(type);
+		if (animal == null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Prints a stock count of animal types for sale in the store.
+	 */
+	public void printAnimalStock() {
+		int chicken = 0;
+		int pig = 0;
+		int horse = 0;
+
+		for (Animal animal : animals) {
+			if (Chicken.class.isInstance(animal)) {
+				chicken += 1;
+			}
+			if (Pig.class.isInstance(animal)) {
+				pig += 1;
+			}
+			if (Horse.class.isInstance(animal)) {
+				horse += 1;
+			}
+		}
+		System.out.println("We sell the following animals. Please enter a number to find out more about an animal.");
+		System.out.println("[1] - Chicken stock: " + chicken);
+		System.out.println("[2] - Pig stock: " + pig);
+		System.out.println("[3] - Horse stock: " + horse);
+	}
+
+	/**
+	 * Prints the details of a given crop if it is in stock.
+	 * 
+	 * @param type Type of crop.
+	 */
+	public void printAnimalDetails(int type) {
+		Animal animal = getAnimal(type);
+		if (animal == null) {
+			// TODO: Should throw error here.
+			System.out.println("Sorry, we do not have that item in stock.");
+		} else {
+			System.out.println(animal.toString());
+		}
+	}
+
 }

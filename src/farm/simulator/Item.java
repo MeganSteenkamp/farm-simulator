@@ -7,7 +7,7 @@ package farm.simulator;
  * @author Megan Steenkamp
  */
 
-public abstract class Item {
+public abstract class Item implements FarmItem {
 	private int id;
 	private String name;
 	private String description;
@@ -42,7 +42,7 @@ public abstract class Item {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price + "\nAdded crop growth: " 
+		return "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price + "\nAdded crop growth: " 
 				+ this.cropGrowthFactor + " day(s)" + "\nAnimal health bonus: "+ this.animalHealthFactor + " point(s)";
 	}
 	

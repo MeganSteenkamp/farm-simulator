@@ -82,9 +82,10 @@ public class Farmer {
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
-	
+
 	/**
 	 * Add an item to the items owned.
+	 * 
 	 * @param item The item to be added.
 	 */
 	public void addItem(Item item) {
@@ -101,6 +102,18 @@ public class Farmer {
 	}
 	
 	/**
+	 * Prints the details of the items owned by the farmer.
+	 */
+	public void printItems() {
+		System.out.println("Number of items owned: " + this.items.size());
+		System.out.println();
+		for (Item i : items) {
+			System.out.println(i.toString());
+			System.out.println();
+		}
+	}
+
+	/**
 	 * Prints a stock count of currently owned items
 	 */
 	public void printItemStock() {
@@ -110,7 +123,7 @@ public class Farmer {
 		int steroids = 0;
 		int grain = 0;
 		int barn = 0;
-		
+
 		for (Item item : items) {
 			if (Fertilizer.class.isInstance(item)) {
 				fertilizer += 1;
@@ -144,9 +157,9 @@ public class Farmer {
 	 * 
 	 * @param variety Variety of crop to be tended to.
 	 */
-	public void tendToCrop(Crop variety) {
+	public void tendToCrop(int cropType) {
 		for (Crop crop : this.farm.getCrops()) {
-			if (crop.getName().equals(variety.getName())) {
+			if (crop.getId() == cropType) {
 				// Decrease the days to grow by one
 				crop.addDaysToGrow(-1);
 			}
@@ -160,9 +173,9 @@ public class Farmer {
 	 * 
 	 * @param variety Variety of crop to be tended to.
 	 */
-	public void tendToCrop(Crop variety, Item item) {
+	public void tendToCrop(int cropType, Item item) {
 		for (Crop crop : this.farm.getCrops()) {
-			if (crop.getName().equals(variety.getName())) {
+			if (crop.getId() == cropType) {
 				// Add to the growth based on the growth factor
 				crop.addDaysToGrow(item.getCropGrowthFactor());
 			}
@@ -170,13 +183,13 @@ public class Farmer {
 	}
 
 	public void feedAnimals(Item item) {
-		for (Animal animal: this.farm.getAnimals()) {
+		for (Animal animal : this.farm.getAnimals()) {
 			animal.addToHealth(item.getAnimalHealthFactor());
 		}
 	}
 
 	public void playWithAnimals() {
-		for (Animal animal: this.farm.getAnimals()) {
+		for (Animal animal : this.farm.getAnimals()) {
 			animal.addToHappiness(1);
 		}
 	}
@@ -192,11 +205,89 @@ public class Farmer {
 				cropsToHarvest.add(crop);
 			}
 		}
-		
+
 		for (Crop crop : cropsToHarvest) {
 			this.farm.removeCrop(crop);
 		}
-		
+
 		return moneyEarned;
+	}
+	
+	// TODO
+	public void tendToFarmland() {}
+
+	/**
+	 * Prints a description of an action the farmer can perform and its benefits
+	 */
+	public void printDescription(int actionChoice) {
+		switch (actionChoice) {
+		case 1: 
+			System.out.println("Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.");
+			System.out.println("Only one type of crop can be harvested at a time.");
+			System.out.println("An item or water can be used to tend to the crops.");
+			break;
+		case 3:
+			System.out.println("Feeding your animals will increase their health.");
+			System.out.println("An item must be used to do this.");
+			break;
+		case 4:
+			System.out.println("Playing with animals makes their happiness increase.");
+			break;
+		case 5:
+			System.out.println("Any crops that have fully grown can be harvested for a money bonus");
+			break;
+		case 6:
+			System.out.println("Tending to the farm's land keeps the farm tidy and well maintained.");
+			System.out.println("This allows for more crops to be grown and keeps animals happier for longer.");
+			break;
+		}
+	}
+	
+	/**
+	 * Gets an item of a given type, specified by an integer.
+	 * 
+	 * @param type Type of item, identified with an integer.
+	 * @return Item if it is in the list of crops. Otherwise will return null.
+	 */
+	public Item getItem(int type) {
+		Item item = null;
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getId() == type) {
+				item = items.get(i);
+				break;
+			}
+		}
+		return item;
+	}
+	
+	/**
+	 * Whether the farmer has a item of a given type.
+	 * 
+	 * @param type Identifier of item type.
+	 * @return True if item is in stock. Else false.
+	 */
+	public boolean ownsItem(int type) {
+		Item item = getItem(type);
+		if (item == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Gets an item of a given type and removes it from the available items.
+	 * 
+	 * @param type Type of item, identified with an integer.
+	 * @return Item if it is in the list of items. Otherwise will return null.
+	 */
+	public Item removeItem(int type) {
+		Item item = null;
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getId() == type) {
+				item = items.remove(i);
+				break;
+			}
+		}
+		return item;
 	}
 }

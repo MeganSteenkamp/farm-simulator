@@ -1,5 +1,6 @@
 package farm.simulator;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -12,6 +13,7 @@ import java.util.regex.*;
 
 public class GameEnvironment {
 	Scanner in = new Scanner(System.in);
+	private int numDayActions;
 	private int numDays;
 	private Farm farm;
 	private GeneralStore generalStore = new GeneralStore();
@@ -268,7 +270,7 @@ public class GameEnvironment {
 					browsingItems = false;
 				}
 				break;
-			case 7: 
+			case 7:
 				browsingItems = false;
 				break;
 			default:
@@ -278,7 +280,7 @@ public class GameEnvironment {
 		}
 		return item;
 	}
-	
+
 	public Crop processCropSale(int itemReference) {
 		Crop crop = null;
 		System.out.println("Would you like to buy this item?");
@@ -305,7 +307,7 @@ public class GameEnvironment {
 		return crop;
 
 	}
-	
+
 	public Crop browseCrops() {
 		Crop crop = null;
 		boolean browsingCrops = true;
@@ -327,7 +329,7 @@ public class GameEnvironment {
 					browsingCrops = false;
 				}
 				break;
-			case 7: 
+			case 7:
 				browsingCrops = false;
 				break;
 			default:
@@ -336,6 +338,62 @@ public class GameEnvironment {
 
 		}
 		return crop;
+	}
+
+	public Animal processAnimalSale(int itemReference) {
+		Animal animal = null;
+		System.out.println("Would you like to buy this item?");
+		System.out.println("[1] - yes");
+		System.out.println("[2] - no");
+
+		boolean transactionGoing = true;
+		while (transactionGoing) {
+			int choice = getInputInt("your choice of activity");
+			switch (choice) {
+			case 1:
+				this.farm.withdrawMoney(generalStore.getAnimal(itemReference).getPrice());
+				animal = generalStore.sellAnimal(itemReference);
+				transactionGoing = false;
+				break;
+			case 2:
+				transactionGoing = false;
+				break;
+			default:
+				System.out.println("Please enter a valid choice.");
+			}
+
+		}
+		return animal;
+
+	}
+
+	public Animal browseAnimals() {
+		Animal animal = null;
+		boolean browsingAnimals = true;
+		while (browsingAnimals) {
+			generalStore.printAnimalStock();
+			System.out.println("[4] - Return to main store menu");
+			int choice = getInputInt("your choice of activity");
+			switch (choice) {
+			case 1:
+			case 2:
+			case 3:
+				generalStore.printAnimalDetails(choice);
+				boolean inStock = generalStore.animalIsInStock(choice);
+				if (inStock) {
+					animal = processAnimalSale(choice);
+					browsingAnimals = false;
+				}
+				break;
+			case 4:
+				browsingAnimals = false;
+				break;
+			default:
+				System.out.println("Please enter a valid choice.");
+			}
+
+		}
+		return animal;
 	}
 
 	public void visitGeneralStore() {
@@ -357,7 +415,10 @@ public class GameEnvironment {
 				}
 				break;
 			case 3:
-				//generalStore.printAnimalStock();
+				Animal animal = browseAnimals();
+				if (animal != null) {
+					this.farm.addAnimal(animal);
+				}
 				break;
 			case 4:
 				displayCurrentlyOwnedItems();
@@ -368,9 +429,159 @@ public class GameEnvironment {
 			default:
 				System.out.println("Please enter a valid choice.");
 			}
+		}
+	}
 
+	public void printActionOptions() {
+		System.out.println("Please enter the number corresponding to the action you would like to learn more about.");
+		System.out.println("[1] - Tend to crops");
+		System.out.println("[2] - Feed animals");
+		System.out.println("[3] - Play with animals");
+		System.out.println("[4] - Harvest crops");
+		System.out.println("[5] - Tend to the farm land");
+		System.out.println("[6] - Return to main screen");
+	}
+
+	public int selectCropVariety() {
+		int cropType = -1;
+
+		if (this.farm.getCrops().size() == 0) {
+			System.out.println("You do not own any crops");
+			return cropType;
 		}
 
+		System.out.println("You own the following crops:");
+		this.farm.printCrops();
+
+		boolean choosing = true;
+		while (choosing) {
+			int choice = getInputInt("the ID of the crop you would like to tend to");
+			switch (choice) {
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				if (this.farm.ownsCrop(choice)) {
+					cropType = choice;
+					choosing = false;
+					break;
+				} else {
+					System.out.println("You do not own a crop with this ID.");
+				}
+			default:
+				System.out.println("Please enter a valid choice.");
+			}
+		}
+		return cropType;
+	}
+
+	public void processTendingToCrop(int cropType) {
+		int itemType = 0;
+		ArrayList<Item> items = this.farm.getFarmer().getItems();
+		if (items.size() > 0) {
+			System.out.println("The following items are available for use on the crop:");
+
+			for (Item item : items) {
+				if (item.getCropGrowthFactor() != 0) {
+					System.out.println(item.toString());
+				}
+			}
+			System.out.println("Please enter the ID of the item you would like to use on the crop. Enter 0 if you would like to use water.");
+			boolean choosing = true;
+			while (choosing) {
+				int choice = getInputInt("the ID of the item you would like to use");
+				switch (choice) {
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+					if (this.farm.getFarmer().ownsItem(choice)) {
+						itemType = choice;
+						choosing = false;
+						break;
+					} else {
+						System.out.println("You do not own an item with this ID.");
+					}
+				default:
+					System.out.println("Please enter a valid choice.");
+				}
+			}
+		} else {
+			System.out.println(
+					"You have no items available for use on the crop, so the crops will be tended to with water.");
+		}
+		
+		// Tend to crop
+		if (itemType != 0) {
+			Item item = this.farm.getFarmer().removeItem(itemType);
+			this.farm.getFarmer().tendToCrop(cropType, item);
+		} else {
+			this.farm.getFarmer().tendToCrop(cropType); // Use water
+		}
+		// Action has been successfully completed so remove number of actions remaining
+		this.numDayActions -= 1;
+	}
+
+	public void performAction(int choice) {
+		switch (choice) {
+		case 1:
+			int cropType = selectCropVariety();
+			if (cropType == -1) {
+				System.out.println("You are unable to perform this activity.");
+				return;
+			}
+			processTendingToCrop(cropType);
+		}
+	}
+
+	public void processAction(int action) {
+		System.out.println("Would you like to perform this action?");
+		System.out.println("[1] - yes");
+		System.out.println("[2] - no");
+
+		boolean performingAction = true;
+		while (performingAction) {
+			int choice = getInputInt("your choice of activity");
+			switch (choice) {
+			case 1:
+				performAction(action);
+				System.out.println("Number of actions remaining for the day: " + this.numDayActions);
+				performingAction = false;
+				break;
+			case 2:
+				performingAction = false;
+				break;
+			default:
+				System.out.println("Please enter a valid choice.");
+			}
+		}
+	}
+
+	public void visitActionsMainScreen() {
+		boolean viewingActions = true;
+		while (viewingActions) {
+			printActionOptions();
+			int choice = getInputInt("your choice of action");
+			switch (choice) {
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				this.farm.getFarmer().printDescription(choice);
+				processAction(choice);
+				break;
+			case 6:
+				viewingActions = false;
+				break;
+			default:
+				System.out.println("Please enter a valid choice.");
+			}
+		}
 	}
 
 	/**
@@ -379,7 +590,7 @@ public class GameEnvironment {
 	 * @param dayNum The number of the day in the game.
 	 */
 	public void runDay(int dayNum) {
-		int numActions = 2;
+		this.numDayActions = 2;
 		float dailyBonus = 0;
 		boolean isDayEnd = false;
 
@@ -387,10 +598,6 @@ public class GameEnvironment {
 		for (Crop c : this.farm.getCrops()) {
 			c.updateCropGrowth(1);
 		}
-		
-		// Harvest any ready crops and add money to farm's balance
-		float harvestBonus = farm.getFarmer().harvestCrops();
-		this.farm.addToBalance(harvestBonus);
 
 		// Show available actions
 		while (!isDayEnd) {
@@ -412,8 +619,8 @@ public class GameEnvironment {
 					isValid = true;
 					break;
 				case 4:
-					System.out.println("Number of actions remaining for the day: " + numActions);
-					// TODO: Implement performing an action
+					System.out.println("Number of actions remaining for the day: " + this.numDayActions);
+					visitActionsMainScreen();
 					isValid = true;
 					break;
 				case 5:
@@ -426,7 +633,7 @@ public class GameEnvironment {
 			}
 		}
 
-		// TODO: Give daily bonus
+		// TODO: Calculate and give daily bonus
 	}
 
 	public void run() {
@@ -435,5 +642,9 @@ public class GameEnvironment {
 			System.out.println("Welcome to day " + i + " on the farm.");
 			runDay(i);
 		}
+
+		// TODO: Finish game, print final score
+
+		in.close();
 	}
 }
