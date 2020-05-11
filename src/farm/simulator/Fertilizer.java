@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements Fertilizer.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Fertilizer extends Item {
 	private static int id = 1;
 	private static String name = "Fertilizer";

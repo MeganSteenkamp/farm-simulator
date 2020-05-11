@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements a crop of type Grain.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Grain extends Item {
 	private static int id = 5;
 	private static String name = "Grain";

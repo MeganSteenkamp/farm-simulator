@@ -1,5 +1,12 @@
 package farm.simulator;
 
+/**
+ * Implements a crop of type Coffee.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
+
 public class Coffee extends Crop {
 	private static int id = 10;
 	private static String name = "Coffee";

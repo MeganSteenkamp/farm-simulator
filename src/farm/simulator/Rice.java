@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Instantiates a crop of type Rice.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Rice extends Crop {
 	private static int id = 7;
 	private static String name = "Rice";

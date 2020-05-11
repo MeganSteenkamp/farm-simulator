@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements Compost.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Compost extends Item {
 	private static int id = 2;
 	private static String name = "Compost";

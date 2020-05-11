@@ -191,18 +191,30 @@ public class Farmer {
 		}
 	}
 
+	/**
+	 * Feed all animals in the farm using an item, adding to the animal's health.
+	 * @param item Item used to feed the animal.
+	 */
 	public void feedAnimals(Item item) {
 		for (FarmItem animal : this.farm.getAnimals()) {
 			((Animal) animal).addToHealth(item.getAnimalHealthFactor());
 		}
 	}
 
+	/**
+	 * Adds one point to each animal's happiness as the farmer plays with the animals.
+	 */
 	public void playWithAnimals() {
 		for (FarmItem animal : this.farm.getAnimals()) {
 			((Animal) animal).addToHappiness(1);
 		}
 	}
 
+	/**
+	 * Harvests crops. Crops are sold for their selling price property.
+	 * Allows another crop to become available on the farm.
+	 * @return Money earned from harvesting crops.
+	 */
 	public float harvestCrops() {
 		float moneyEarned = 0.0f;
 		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
@@ -218,6 +230,8 @@ public class Farmer {
 
 		for (Crop crop : cropsToHarvest) {
 			this.farm.removeCrop(crop);
+			// Free the crop up for a new crop to be planted
+			this.farm.addToAvailableCrops(1);
 		}
 
 		return moneyEarned;

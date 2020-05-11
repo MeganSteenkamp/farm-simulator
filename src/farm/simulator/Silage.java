@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements a Silage item.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Silage extends Item {
 	private static int id = 6;
 	private static String name = "Silage";

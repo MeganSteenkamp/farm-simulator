@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements a crop of type Cotton.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Cotton extends Crop {
 	private static int id = 9;
 	private static String name = "Cotton";

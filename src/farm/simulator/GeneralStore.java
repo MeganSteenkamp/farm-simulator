@@ -9,8 +9,6 @@ import java.util.ArrayList;
  * @author Lewis Marshall
  */
 
-//TODO: Implement showing the items the farmer owns once the Farmer class is made
-
 public class GeneralStore {
 
 	private ArrayList<FarmItem> stock = new ArrayList<FarmItem>();

@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements Steroids.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Steroid extends Item {
 	private static int id = 4;
 	private static String name = "Steroids";

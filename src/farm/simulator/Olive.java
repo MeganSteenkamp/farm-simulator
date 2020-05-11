@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Instantiates a crop of type Olive.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Olive extends Crop {
 	private static int id = 11;
 	private static String name = "Olive";

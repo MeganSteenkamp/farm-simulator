@@ -44,7 +44,7 @@ public abstract class Farm {
 	@Override
 	public String toString() {
 		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $" + this.balance + "\nCrop growth bonus: " + this.cropGrowthFactor +
-				" days(s)\nAnimal happiness bonus: " + this.balance + " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
+				" days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor + " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
 	}
 
 	/**
@@ -112,16 +112,18 @@ public abstract class Farm {
 	}
 
 	/**
-	 * Returns the balance of a farm.
+	 * Withdraws money from the farm
 	 * 
 	 * @return Name of the farm.
 	 */
-	public void withdrawMoney(float amount) {
+	public float withdrawMoney(float amount) {
 		if (amount < getBalance()) {
 			this.balance -= amount;
+			return amount;
 		} else {
 			// TODO: Should raise insufficient funds error
-			System.out.println("Cannot afford");
+			System.out.println("You do not have enough money for this");
+			return 0;
 		}
 	}
 
@@ -185,7 +187,7 @@ public abstract class Farm {
 	 * 
 	 * @return the farm's animals.
 	 */
-	public static ArrayList<FarmItem> getAnimals() {
+	public ArrayList<FarmItem> getAnimals() {
 		return this.animals;
 	}
 

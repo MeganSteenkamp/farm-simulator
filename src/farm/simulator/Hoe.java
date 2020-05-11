@@ -1,5 +1,11 @@
 package farm.simulator;
 
+/**
+ * Implements a Hoe item.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
 public class Hoe extends Item {
 	private static int id = 3;
 	private static String name = "Hoe";
