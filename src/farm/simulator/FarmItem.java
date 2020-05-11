@@ -5,4 +5,5 @@ public interface FarmItem {
 	public int getId();
 	public float getPurchasePrice();
 	public String getDescription();
+	public float getHappiness();
 }

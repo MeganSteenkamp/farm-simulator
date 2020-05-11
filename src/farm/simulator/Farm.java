@@ -185,7 +185,7 @@ public abstract class Farm {
 	 * 
 	 * @return the farm's animals.
 	 */
-	public ArrayList<FarmItem> getAnimals() {
+	public static ArrayList<FarmItem> getAnimals() {
 		return this.animals;
 	}
 
