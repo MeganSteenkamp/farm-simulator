@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * Implements a crop of type Cotton.
  * 
@@ -24,11 +26,9 @@ public class Cotton extends Crop {
 	/**
 	 * Prints a description of the crop without being instantiated.
 	 */
-	public static void printDescription() {
-		System.out.println("Name: " + name);
-		System.out.println("Description: " + description);
-		System.out.println("Purchase price: " + purchasePrice);
-		System.out.println("Selling price: " + sellingPrice);
-		System.out.println("Growth: " + daysToGrow + " day(s)");
+	public static String getTypeDescription() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Name: " + name + "\nDescription: " + description + "\nPurchase price: $" + df.format(purchasePrice) +
+				"\nSelling price: $" + df.format(sellingPrice) + "\nGrowth time: " + daysToGrow + " day(s)";
 	}
 }

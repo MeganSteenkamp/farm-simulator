@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * This class instantiates a North Korean Farm.
  * @author Megan Steenkamp
@@ -20,10 +22,11 @@ public class NorthKoreanFarm extends Farm {
 	}
 
 	/**
-	 * Prints a description of the farm
+	 * Returns a default description of the farm type.
 	 */
-	public static String getDescription() {
-		return "Type: " + type + "\nStarting balance: $" + balance + "\nCrop crowth delay: " + cropDelay + 
+	public static String getTypeDescription() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Type: " + type + "\nStarting balance: $" + df.format(balance) + "\nCrop crowth delay: " + cropDelay + 
 				" day(s)\nAnimal happiness bonus: " + animalHappinessBonus + " points";
 	}
 }

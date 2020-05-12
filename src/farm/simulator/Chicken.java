@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * This class instantiates a Chicken.
  * 
@@ -15,20 +17,18 @@ public class Chicken extends Animal {
 	private static int health = 3;
 
 	/**
-	 * Construct a pig.
+	 * Construct a chicken.
 	 */
 	public Chicken() {
 		super(id, price, type, description, happiness, health);
 	}
-
+	
 	/**
-	 * Prints a description of the animal.
+	 * Returns a default description of the animal type.
 	 */
-	public static void printDescription() {
-		System.out.println("Type: " + type);
-		System.out.println("Price: $" + price);
-		System.out.println("Description: " + description);
-		System.out.println("Happiness: " + happiness);
-		System.out.println("Health: " + health);
+	public static String getTypeDescription() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Type: " + type + "\nPrice: $" + df.format(price) + "\nDescription: " + description + "\nHappiness: " + happiness +
+				"\nHealth: " + health;
 	}
 }

@@ -45,7 +45,7 @@ public class GameEnvironment {
 	
 	public String getWelcomeMessage() {	
 		return "Welcome to your new farm, " + this.farm.getFarmer().getName() +". It is a beautiful day to get to work on '" + this.farm.getName() + 
-				"'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals...";
+				"'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals";
 	}
 
 	/**

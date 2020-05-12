@@ -44,7 +44,6 @@ public class SetupScreen {
 	 * Create the application.
 	 */
 	public SetupScreen(ApplicationManager application, GameEnvironment g) {
-		System.out.println(g);
 		game = g;
 		manager = application;
 		initialize();
@@ -158,7 +157,7 @@ public class SetupScreen {
 		farmDescription.setBounds(391, 206, 285, 116);
 		window.getContentPane().add(farmDescription);
 		
-		JTextArea bonusesDescription = new JTextArea(game.getBonusesDescription());
+		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
 		bonusesDescription.setVisible(false);
 		bonusesDescription.setWrapStyleWord(true);
 		bonusesDescription.setFont(new Font("Dialog", Font.ITALIC, 9));
@@ -176,7 +175,6 @@ public class SetupScreen {
 					validateInput();
 					numDays = numDaysSlider.getValue();
 					
-					System.out.println(game);
 					// Set up farm
 					game.setUpGame(numDays, farmType, farmerName, age, farmName);
 					JOptionPane.showMessageDialog(window, game.getWelcomeMessage(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
@@ -185,7 +183,6 @@ public class SetupScreen {
 					finishedWindow();
 					closeWindow();
 				} catch (Exception exception) {
-					System.out.println(exception);
 					JOptionPane.showMessageDialog(window, exception.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -197,7 +194,7 @@ public class SetupScreen {
 		btnNorthKorea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bonusesDescription.setVisible(true);
-				farmDescription.setText(NorthKoreanFarm.getDescription());
+				farmDescription.setText(NorthKoreanFarm.getTypeDescription());
 				farmType = "North Korea";
 			}
 		});
@@ -208,7 +205,7 @@ public class SetupScreen {
 		btnAfrica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bonusesDescription.setVisible(true);
-				farmDescription.setText(AfricanFarm.getDescription());
+				farmDescription.setText(AfricanFarm.getTypeDescription());
 				farmType = "Africa";
 			}
 		});
@@ -219,7 +216,7 @@ public class SetupScreen {
 		btnMediterranean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bonusesDescription.setVisible(true);
-				farmDescription.setText(MediterraneanFarm.getDescription());
+				farmDescription.setText(MediterraneanFarm.getTypeDescription());
 				farmType = "Mediterranean";
 			}
 		});
@@ -230,7 +227,7 @@ public class SetupScreen {
 		btnNewZealand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bonusesDescription.setVisible(true);
-				farmDescription.setText(NewZealandFarm.getDescription());
+				farmDescription.setText(NewZealandFarm.getTypeDescription());
 				farmType = "New Zealand";
 			}
 		});

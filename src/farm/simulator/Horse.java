@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * This class implements a Horse.
  * 
@@ -22,13 +24,11 @@ public class Horse extends Animal {
 	}
 
 	/**
-	 * Prints a description of the animal.
+	 * Returns a default description of the animal type.
 	 */
-	public static void printDescription() {
-		System.out.println("Type: " + type);
-		System.out.println("Price: $" + price);
-		System.out.println("Description: " + description);
-		System.out.println("Happiness: " + happiness);
-		System.out.println("Health: " + health);
+	public static String getTypeDescription() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Type: " + type + "\nPrice: $" + df.format(price) + "\nDescription: " + description + "\nHappiness: " + happiness +
+				"\nHealth: " + health;
 	}
 }

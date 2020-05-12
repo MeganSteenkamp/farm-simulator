@@ -32,7 +32,6 @@ public class ApplicationManager {
 	public static void main(String[] args) {
 		ApplicationManager manager = new ApplicationManager();
 		GameEnvironment g = new GameEnvironment();
-		System.out.println(g);
 		manager.launchSetupScreen(g);
 		
 		//GameEnvironment g = new GameEnvironment();

@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * The abstract class implementing the base class for all items.
  *
@@ -42,7 +44,8 @@ public abstract class Item implements FarmItem {
 	 */
 	@Override
 	public String toString() {
-		String s = "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: " + this.price;
+		DecimalFormat df = new DecimalFormat("#.00");
+		String s = "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: $" + df.format(this.price);
 		if (this.cropGrowthFactor != 0) {
 			s += "\nAdded crop growth: " + this.cropGrowthFactor + " day(s)";
 		}

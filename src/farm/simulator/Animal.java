@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * This abstract class implements the base class for all animals.
  * 
@@ -56,8 +58,9 @@ public abstract class Animal implements FarmItem {
 	 */
 	@Override
 	public String toString() {
-		return "Type ID: " + this.id + "\nType: " + this.type + "\nDescription: " + this.description +"\nPrice: " + this.price + "\nHappiness: " + this.happiness + "\nHealth: "
-				+ this.health;
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Type ID: " + this.id + "\nType: " + this.type + "\nDescription: " + this.description +"\nPrice: $" + df.format(this.price)
+		+ "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
 	}
 
 	/**

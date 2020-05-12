@@ -1,5 +1,6 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +44,8 @@ public abstract class Farm {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $" + this.balance + "\nCrop growth bonus: " + this.cropGrowthFactor +
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $" + df.format(this.balance) + "\nCrop growth bonus: " + this.cropGrowthFactor +
 				" days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor + " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
 	}
 

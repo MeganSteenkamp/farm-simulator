@@ -1,5 +1,7 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
+
 /**
  * Implements Compost.
  * 
@@ -22,12 +24,11 @@ public class Compost extends Item {
 	}
 	
 	/**
-	 * Prints a description of the crop without being instantiated.
+	 * Returns a default description of the item type.
 	 */
-	public static void printDescription() {
-		System.out.println("Name: " + name);
-		System.out.println("Description: " + description);
-		System.out.println("Price: " + price);
-		System.out.println("Crop growth bonus: " + cropGrowthFactor);
+	public static String getTypeDescription() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Name: " + name + "\nPrice: $" + df.format(price) + "\nDescription: " + description + 
+				"\nCrop growth bonus: " + cropGrowthFactor + " day(s)";
 	}
 }
