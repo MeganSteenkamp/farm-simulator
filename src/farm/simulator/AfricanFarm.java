@@ -20,12 +20,10 @@ public class AfricanFarm extends Farm {
 	}
 	
 	/**
-	 * Prints a description of the farm with a number for selection.
+	 * Prints a description of the farm
 	 */
-	public static void printDescription() {
-		System.out.println("Type: " + type);
-		System.out.println("Starting balance: $" + balance);
-		System.out.println("Crop crowth delay: " + cropDelay + " day(s)");
-		System.out.println("Animal happiness bonus: " + animalHappinessBonus + " points");
+	public static String getDescription() {
+		return "Type: " + type + "\nStarting balance: $" + balance + "\nCrop crowth delay: " + cropDelay + 
+				" day(s)\nAnimal happiness bonus: " + animalHappinessBonus + " points";
 	}
 }

@@ -21,174 +21,56 @@ public class GameEnvironment {
 	/**
 	 * Initialize Game Environment
 	 */
-	public GameEnvironment() {
-	}
-
-//===================================================== INPUT PARSING =====================================================
-
-	/**
-	 * Gets an input string to name a given item. Iterates until a valid string is
-	 * provided.
-	 * 
-	 * @param item The string of the item the user is naming.
-	 * @return A valid string.
-	 */
-	private String getInputString(String item) {
-		String str = null;
-
-		// Regex to check for no numbers of special characters
-		String pattern = "^[a-zA-Z\\s]+$";
-		Pattern r = Pattern.compile(pattern);
-
-		// Get a name
-		boolean isValid = false;
-		System.out.println("Please give your " + item + " a name.");
-		while (!isValid && in.hasNext()) {
-			str = in.nextLine();
-			Matcher m = r.matcher(str);
-			if (m.matches()) {
-				if (str.length() >= 3 && str.length() <= 15) {
-					isValid = true;
-				} else {
-					System.out.println("Please keep the name between 3 and 15 letters inclusive.");
-					System.out.println("Please give your " + item + " a name.");
-				}
-			} else {
-				System.out.println("Numbers or special characters are not valid.");
-				System.out.println("Please give your " + item + " a name.");
-			}
-		}
-		return str;
-	}
-
-	/**
-	 * Gets an input integer to name a given item. Iterates until a valid string is
-	 * provided.
-	 * 
-	 * @param item The string of the item the user is naming.
-	 * @return The valid integer.
-	 */
-	private int getInputInt(String item) {
-		System.out.println("Please enter " + item + " as a whole number.");
-		while (in.hasNext()) {
-			try {
-				return Integer.valueOf(in.nextLine());
-			} catch (Exception e) {
-				System.out.println("Please enter a valid number.");
-			}
-		}
-		return 0;
-	}
+	public GameEnvironment() {}
+	
 
 //===================================================== GAME INITIALIZATION =====================================================
 
-	/**
-	 * Instantiates a new farmer once a valid name and age have been given
-	 * 
-	 * @return The farmer object.
-	 */
-	private Farmer createFarmer() {
-		Farmer farmer = null;
-
-		String name = getInputString("farmer");
-		int age = getInputInt("the farmer's age");
-
-		// Initialize Farmer
-		farmer = new Farmer(name, age);
+	public void setNumDays(int days) {
+		System.out.println("setting num days");
+		this.numDays = days;
+		System.out.println("set");
+	}
+	
+	public Farmer createFarmer(String name, int age) {
+		Farmer farmer = new Farmer(name, age);
 		return farmer;
 	}
-
-	/**
-	 * Prints the farm types and the numbers associated with picking them.
-	 */
-	private static void printFarmTypes() {
-		System.out.println("[1]");
-		NorthKoreanFarm.printDescription();
-		System.out.println();
-		System.out.println("[2]");
-		AfricanFarm.printDescription();
-		System.out.println();
-		System.out.println("[3]");
-		MediterraneanFarm.printDescription();
-		System.out.println();
-		System.out.println("[4]");
-		NewZealandFarm.printDescription();
+	
+	public static String getBonusesDescription() {
+		return "Crop growth delay will delay the base growth rate of a crop by a given number of days. A crop can only be harvested for money once"
+				+ " it is fully grown. If this delay is negative, it means your crops will grow faster. An animal happiness bonus adds the given number of points to the happiness of an animal, which"
+				+ " contributes to the amount of money earned at the end of a day.";
 	}
-
-	/**
-	 * Instantiates a new farm of the chosen type.
-	 */
-	private void setFarm() {
-		System.out.println("Please enter the number corresponding to your choice of farm.");
-		printFarmTypes();
-
-		boolean isValid = false;
-		while (!isValid) {
-			int farm = getInputInt("your choice of farm");
-			switch (farm) {
-			case 1:
-				this.farm = new NorthKoreanFarm();
-				isValid = true;
-				break;
-			case 2:
-				this.farm = new AfricanFarm();
-				isValid = true;
-				break;
-			case 3:
-				this.farm = new MediterraneanFarm();
-				isValid = true;
-				break;
-			case 4:
-				this.farm = new NewZealandFarm();
-				isValid = true;
-				break;
-			default:
-				System.out.println("Please enter a valid number between 1 and 4.");
-			}
-		}
-	}
-
-	/**
-	 * Sets the number of days for the game to last
-	 */
-	private void setNumDays() {
-		boolean isValid = false;
-		while (!isValid) {
-			int days = getInputInt("the number of days [5-10] you would like the game to continue");
-			switch (days) {
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-				this.numDays = days;
-				isValid = true;
-				break;
-			default:
-				System.out.println("Please enter a valid number between 5 and 10.");
-			}
-		}
+	
+	public String getWelcomeMessage() {	
+		return "Welcome to your new farm, " + this.farm.getFarmer().getName() +". It is a beautiful day to get to work on '" + this.farm.getName() + 
+				"'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals...";
 	}
 
 	/**
 	 * Initialize the game
 	 */
-	public void initializeGame() {
-		System.out.println("Welcome to 'Mowing before Hoeing'.");
-		System.out.println("In this game you will start a new life on your country farm.");
-		System.out.println();
+	public void setUpGame(int numDays, String farmType, String farmerName, int farmerAge, String farmName) {
+		setNumDays(numDays);
+		
+		switch (farmType) {
+		case "North Korea":
+			this.farm = new NorthKoreanFarm();
+			break;
+		case "Africa":
+			this.farm = new AfricanFarm();
+			break;
+		case "Mediterranean":
+			this.farm = new MediterraneanFarm();
+			break;
+		case "New Zealand":
+			this.farm = new NewZealandFarm();
+			break;
+		}
 
-		setNumDays();
-		Farmer farmer = createFarmer();
-		setFarm();
-		this.farm.setFarmer(farmer);
-		this.farm.getFarmer().setFarm(this.farm);
-		String farmName = getInputString("farm");
 		this.farm.setName(farmName);
-
-		System.out.println("Welcome to your new farm " + this.farm.getFarmer().getName() + ".");
-		System.out.println("It is a beautiful day on '" + this.farm.getName() + "'.");
+		this.farm.setFarmer(createFarmer(farmerName, farmerAge));
 	}
 
 //===================================================== MAIN MENU =====================================================
@@ -1021,7 +903,6 @@ public class GameEnvironment {
 	 * The main loop running the game environment.
 	 */
 	public void run() {
-		initializeGame();
 		for (int i = 1; i <= numDays; i++) {
 			System.out.println("===========================================================================");
 			System.out.println("Welcome to day " + i + " of " + numDays + " on " + this.farm.getName() + ".");
