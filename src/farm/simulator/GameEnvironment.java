@@ -79,6 +79,7 @@ public class GameEnvironment {
 
 		this.farm.setName(farmName);
 		this.farm.setFarmer(createFarmer(farmerName, farmerAge));
+		this.farm.getFarmer().setFarm(farm);
 
 		// TODO: Remove this code after testing
 		this.farm.addAnimal(new Chicken());
@@ -86,6 +87,10 @@ public class GameEnvironment {
 		this.farm.addCrop(new Cotton());
 		this.farm.addCrop(new Olive());
 		this.farm.addCrop(new Avocado());
+		this.farm.getFarmer().addItem(new Fertilizer());
+		this.farm.getFarmer().addItem(new Steroid());
+		this.farm.getFarmer().addItem(new Silage());
+		this.farm.getFarmer().addItem(new Hoe());
 	}
 
 //===================================================== DAY IMPLEMENTATION =====================================================	
@@ -164,45 +169,214 @@ public class GameEnvironment {
 		return "Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.\n"
 				+ "Only one type of crop can be harvested at a time.\n"
 				+ "An item or water can be used to tend to the crops.\n\n"
-				+ "Continue to pick your which crops to harvest.";
+				+ "Click yes to to pick which crop type and item.";
 	}
 
 	public String getFeedingAnimalsDescription() {
 		return "Feeding your animals will increase their health.\n" + "A food item must be used to do this.\n\n"
-				+ "Continue to view which items you could feed your animals with.";
+				+ "Click yes to pick the food to feed your animals with.";
 	}
 
 	public String getPlayWithAnimalsDescription() {
 		return "Playing with animals makes their happiness increase.\n"
 				+ "The happiness of all animals will increase by 1 point.\n\n"
-				+ "Continue to view the current happiness of your animals and decide whether it's time to play.";
+				+ "Here is the status of your current animals:\n" + this.farm.getAnimalStatus()
+				+ "\nClick yes to play with the animals.";
 	}
 
 	public String getHarvestCropsDescription() {
 		return "Any crops that have fully grown can be harvested for a money bonus.\n\n"
-				+ "Continue to view your crop status and decide if it is time to harvest.";
+				+ "Here are your current crops ready for harvest:\n" + this.farm.getCropStatus()
+				+ "\nClick yes to harvest these crops.";
 	}
 
 	public String getTendToFarmLandDescription() {
 		return "Tending to the farm's land keeps the farm tidy and well maintained.\n"
 				+ "This allows for more crops to be grown and keeps animals happier for longer.\n\n"
-				+ "Continue to add 1 point to the happiness of all of your animals, and add 1 available crop plot.";
+				+ "Here is the status of your current animals:\n" + this.farm.getAnimalStatus() + "\nYou have "
+				+ this.farm.getNumAvailableCrops() + "available crop plots.\n\n"
+				+ "Click yes to tend to the land, adding 1 point to the happiness of all of your animals, and adding 1 available crop plot.";
 	}
 
-// HERE BELOW IS COMMAND LINE IMPLEMENTATION (BROKEN)	
-//===================================================== MAIN MENU =====================================================
+	public boolean canTendToCrops() {
+		if (this.farm.getCrops().size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean canFeedAnimals() {
+		if (this.farm.getAnimals().size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean canPlayWithAnimals() {
+		if (this.farm.getAnimals().size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean canHarvestCrops() {
+		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
+		for (FarmItem crop : this.farm.getCrops()) {
+			Crop c = (Crop) crop;
+			if (c.getTimeUntilHarvest() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ArrayList<FarmItem> getFoodItems() {
+		ArrayList<FarmItem> food = new ArrayList<FarmItem>();
+		for (FarmItem i : this.farm.getFarmer().getItems()) {
+			if (((Item) i).getAnimalHealthFactor() != 0) {
+				food.add(i);
+			}
+		}
+		return food;
+	}
+
+	public ArrayList<FarmItem> getToolItems() {
+		ArrayList<FarmItem> tools = new ArrayList<FarmItem>();
+		for (FarmItem i : this.farm.getFarmer().getItems()) {
+			if (((Item) i).getCropGrowthFactor() != 0) {
+				tools.add(i);
+			}
+		}
+		return tools;
+	}
+
+	public ArrayList<FarmItem> getCrops() {
+		return this.farm.getCrops();
+	}
+
+	public String tendToCrops(int cropId, int itemId) {
+		String str = "";
+
+		// Remove item to use
+		Item item = (Item) this.farm.getFarmer().removeItem(itemId);
+		this.farm.getFarmer().feedAnimals(item);
+		
+		this.farm.getFarmer().tendToCrop(cropId, item);
+		str += "Good job on a hard day's work in the farm.\n"
+				+ "Here is the updated status of the crops:\n";
+		str += this.farm.getCropStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+	public String tendToCrops(int cropId) {
+		String str = "";
+		
+		this.farm.getFarmer().tendToCrop(cropId);
+		str += "Good job on a hard day's work in the farm.\n"
+				+ "Here is the updated status of the crops:\n";
+		str += this.farm.getCropStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+	public String feedAnimals(int itemId) {
+		String str = "";
+
+		// Remove item to use
+		Item item = (Item) this.farm.getFarmer().removeItem(itemId);
+		this.farm.getFarmer().feedAnimals(item);
+
+		// Return updated Animal details
+		str += "Your animals have been successfully fed. Here is their updated status:\n";
+		str += this.farm.getAnimalStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+	public String playWithAnimals() {
+		String str = "";
+		this.farm.getFarmer().playWithAnimals();
+		str += "Your animals love spending time with you! Here is their updated status:\n";
+		str += this.farm.getAnimalStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+	public String harvestCrops() {
+		String str = "";
+		float moneyEarned = this.farm.getFarmer().harvestCrops();
+		DecimalFormat df = new DecimalFormat("#.00");
+		str += "Score!! You have just added $" + df.format(moneyEarned) + " to the balance of the farm.\n"
+				+ "Here is the updated status of the crops:\n";
+		str += this.farm.getCropStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+	public String tendToFarmland() {
+		String str = "";
+		farm.getFarmer().tendToFarmland();
+
+		// Print updated farm and animals details
+		str += "That is one tidy farm! Here is your updated farm and animal status:\n\n";
+		str += this.farm.toString() + "\n\n";
+		str += this.farm.getAnimalStatus();
+
+		this.numDayActions -= 1;
+		return str;
+	}
+
+// ===================================================== FINAL SCORE IMPLEMENTATION =====================================================
 
 	/**
-	 * Prints the default options and associated numbers for actions players can do.
+	 * Calculate a final score based on game duration, number of crops and animals,
+	 * animal status and money earned
+	 * 
+	 * @return Final score.
 	 */
-	public void printDefaultOptions() {
-		System.out.println("Please enter the number corresponding to what you would like to do.");
-		System.out.println("[1] - View status of the farm's crops and animals");
-		System.out.println("[2] - View status of the farm");
-		System.out.println("[3] - Visit general store");
-		System.out.println("[4] - Perform an action on the farm");
-		System.out.println("[5] - Move on to the next day");
+	public int getFinalScore() {
+		int score = 0;
+
+		// =================== ASSESS MONEY ===================
+		// Sum up monetary value of assets (money, animals, crops)
+		float money = this.farm.getBalance();
+
+		ArrayList<FarmItem> animals = this.farm.getAnimals();
+		for (FarmItem a : animals) {
+			money += a.getPurchasePrice();
+		}
+
+		// Crops have not been harvested so calculate value through purchase price
+		ArrayList<FarmItem> crops = this.farm.getCrops();
+		for (FarmItem c : crops) {
+			money += c.getPurchasePrice();
+		}
+
+		// 1 points for every $10 earned
+		score += Math.floorDiv((int) money, 10);
+
+		// =================== ASSESS ANIMAL STATUS ===================
+
+		// 1 point for every happiness point on an animal, 1 point for health
+		for (FarmItem a : animals) {
+			score += ((Animal) a).getHealth();
+			score += ((Animal) a).getHappiness();
+		}
+
+		// Multiply by game duration
+		score *= this.daysTotal;
+		return score;
 	}
+
+//===== BELOW HERE BROKEN!!! ================================	
+
+// HERE BELOW IS COMMAND LINE IMPLEMENTATION (BROKEN)	
 
 //===================================================== GENERAL STORE =====================================================
 
@@ -417,499 +591,4 @@ public class GameEnvironment {
 			}
 		}
 	}
-
-//===================================================== FARMER ACTIONS =====================================================
-
-	/**
-	 * Prints the actions available for a user to make
-	 */
-	public void printActionOptions() {
-		System.out.println("Please enter the number corresponding to the action you would like to learn more about.");
-		System.out.println("[1] - Tend to crops");
-		System.out.println("[2] - Feed animals");
-		System.out.println("[3] - Play with animals");
-		System.out.println("[4] - Harvest crops");
-		System.out.println("[5] - Tend to the farm land");
-	}
-
-	/**
-	 * Returns the crop variety that will be tended to in this action
-	 * 
-	 * @return cropType that will be tended to
-	 */
-	public int selectCropVariety() {
-		int cropType = 0;
-		System.out.println("You own the following crops:");
-		this.farm.printCrops();
-
-		boolean choosing = true;
-		while (choosing) {
-			System.out.println("Enter [0] to return to the main menu.");
-			int choice = getInputInt("the ID of the crop you would like to tend to");
-			switch (choice) {
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-				if (this.farm.ownsCrop(choice)) {
-					cropType = choice;
-					choosing = false;
-					break;
-				} else {
-					System.out.println("You do not own a crop with this ID.");
-					break;
-				}
-			case 0:
-				choosing = false;
-				break;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-		return cropType;
-	}
-
-	/**
-	 * Prompts the user to select item to tend to crop with, confirms this action,
-	 * tends to crop and prints updated status of crop
-	 * 
-	 * @param cropType crop that will be tended to
-	 */
-	public void processTendingToCrop(int cropType) {
-		int itemType = 0;
-		ArrayList<FarmItem> items = this.farm.getFarmer().getItems();
-		if (items.size() > 0) {
-			System.out.println("The following items are available for use on the crop:");
-
-			for (FarmItem item : items) {
-				Item i = (Item) item;
-				if (i.getCropGrowthFactor() != 0) {
-					System.out.println(item.toString());
-				}
-			}
-			System.out.println("Please enter the ID of the item you would like to use on the crop.");
-			System.out.println("Enter [4] if you would like to use water.");
-			boolean choosing = true;
-			while (choosing) {
-				System.out.println("Enter [0] to return to the main actions menu.");
-				int choice = getInputInt("the ID of the item you would like to use");
-				switch (choice) {
-				case 1:
-				case 2:
-				case 3:
-					if (this.farm.getFarmer().ownsItem(choice)) {
-						itemType = choice;
-						choosing = false;
-						break;
-					} else {
-						System.out.println("You do not own an item with this ID.");
-						break;
-					}
-				case 4:
-					choosing = false;
-					break;
-				case 0:
-					return;
-				default:
-					System.out.println("Please enter a valid choice.");
-				}
-			}
-		} else {
-			System.out.println(
-					"You have no items available for use on the crop. Therefore, water will be used to tend to the crop.");
-		}
-
-		System.out.println("Are you sure you would like to perform this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				// Tend to crop
-				if (itemType != 0) {
-					Item item = (Item) this.farm.getFarmer().removeItem(itemType);
-					this.farm.getFarmer().tendToCrop(cropType, item);
-					// Action has been successfully completed so remove number of actions remaining
-				} else {
-					this.farm.getFarmer().tendToCrop(cropType); // Use water
-				}
-
-				// Print updated crop details
-				this.numDayActions -= 1;
-				System.out.println(
-						"Your selected crops have been successfully tended to. Here is the current status of your crops:");
-				this.farm.printCrops();
-				performingAction = false;
-				break;
-			case 2:
-				return;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Prompts the user to select item to feed animals with, feeds animal and prints
-	 * updated status of animal health
-	 * 
-	 */
-	public void processFeedingAnimals() {
-		int itemType = 0;
-
-		System.out.println("Here is the current status of your animals:");
-		this.farm.printAnimals();
-
-		ArrayList<FarmItem> items = this.farm.getFarmer().getItems();
-		if (items.size() > 0) {
-			System.out.println("The following items are available for use on the crop:");
-
-			for (FarmItem item : items) {
-				Item i = (Item) item;
-				if (i.getAnimalHealthFactor() != 0) {
-					System.out.println(item.toString());
-				}
-			}
-			System.out.println("Please enter the ID of the item you would like to use to feed the animals.");
-			boolean choosing = true;
-			while (choosing) {
-				System.out.println("Enter [0] to return to the main actions menu.");
-				int choice = getInputInt("the ID of the item you would like to use");
-				switch (choice) {
-				case 4:
-				case 5:
-				case 6:
-					if (this.farm.getFarmer().ownsItem(choice)) {
-						itemType = choice;
-						choosing = false;
-						break;
-					} else {
-						System.out.println("You do not own an item with this ID.");
-						break;
-					}
-				case 0:
-					return;
-				default:
-					System.out.println("Please enter a valid choice.");
-				}
-			}
-		} else {
-			// TODO: Should throw an error here
-			System.out.println(
-					"You have no items available to feed animals. Therefore, you are unable to perform this action.");
-			return;
-		}
-
-		System.out.println("Are you sure you would like to perform this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				// Feed the animals
-				Item item = (Item) this.farm.getFarmer().getItem(itemType);
-				this.farm.getFarmer().feedAnimals(item);
-
-				// Print updated crop details
-				this.numDayActions -= 1;
-				System.out.println("Your animals have been successfully fed. Here is their updated status:");
-				this.farm.printAnimals();
-				performingAction = false;
-				break;
-			case 2:
-				return;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Performs 'play with animals' actions and prints updated status of animal
-	 * happiness
-	 */
-	public void processPlayingWithAnimals() {
-		System.out.println("Here is the current status of your animals:");
-		this.farm.printAnimals();
-
-		System.out.println("Are you sure you would like to perform this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				// Play with animals
-				this.farm.getFarmer().playWithAnimals();
-
-				// Print updated animal details
-				this.numDayActions -= 1;
-				System.out.println("Your animals love spending time with you! Here is their updated status:");
-				this.farm.printAnimals();
-				performingAction = false;
-				break;
-			case 2:
-				return;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Confirms action. Harvests crops, adding gained funds to balance, removing
-	 * crop from field and printing updated list of crops.
-	 */
-	public void processHarvestingCrops() {
-		System.out.println("Here is the current status of your crops:");
-		this.farm.printCrops();
-		System.out.println("Remember that crops with 0 days of growth remaining can be harvested.");
-
-		System.out.println("Are you sure you would like to perform this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				// Harvest crops
-				float harvestBonus = farm.getFarmer().harvestCrops();
-				if (harvestBonus > 0) {
-					System.out.println("Good job! You have made $" + harvestBonus + " from harvesting your crop.");
-				} else {
-					System.out
-							.println("Oh no - perhaps it isn't a good decision to harvest crops that aren't ready...");
-				}
-				this.farm.addToBalance(harvestBonus);
-
-				// Print updated crop details
-				this.numDayActions -= 1;
-				System.out.println("Here is your updated crop status:");
-				this.farm.printCrops();
-				performingAction = false;
-				break;
-			case 2:
-				return;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Prints the status of the farm and animals. The player may then choose to
-	 * proceed tending to farm land.
-	 */
-	public void processTendingToFarmland() {
-		System.out.println("Here is the current status of your farm and animals:");
-		this.farm.toString();
-		this.farm.printAnimals();
-
-		System.out.println("Are you sure you would like to perform this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				// Tend to farmland
-				farm.getFarmer().tendToFarmland();
-
-				// Print updated farm and animals details
-				this.numDayActions -= 1;
-				System.out.println("That is one tidy farm! Here is your updated farm and animal status:");
-				this.farm.toString();
-				this.farm.printAnimals();
-				performingAction = false;
-				break;
-			case 2:
-				return;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Implements performing action when choice to perform action has been
-	 * confirmed.
-	 * 
-	 * @param choice Number associated with choice.
-	 */
-	public void performAction(int choice) {
-		switch (choice) {
-		case 1:
-			// Tending to crops
-			if (this.farm.getCrops().size() == 0) {
-				System.out.println("You do not own any crops. Therefore, you are unable to perform this activity.");
-				return;
-			}
-			int cropType = selectCropVariety();
-			processTendingToCrop(cropType);
-			break;
-		case 2:
-			// Feeding animals
-			if (this.farm.getAnimals().size() == 0) {
-				System.out.println("You do not own any animals. Therefore, you are unable to perform this activity.");
-				return;
-			}
-			processFeedingAnimals();
-			break;
-		case 3:
-			// Play with animals
-			if (this.farm.getAnimals().size() == 0) {
-				System.out.println("You do not own any animals. Therefore, you are unable to perform this activity.");
-				return;
-			}
-			processPlayingWithAnimals();
-			break;
-		case 4:
-			// Harvest crops
-			if (this.farm.getCrops().size() == 0) {
-				System.out.println("You do not own any crops. Therefore, you are unable to perform this activity.");
-				return;
-			}
-			processHarvestingCrops();
-			break;
-		case 5:
-			// Tend to farm land
-			if (this.farm.getAnimals().size() == 0) {
-				System.out.println(
-						"WARNING: You do not own any crops. Tending to farm land will only make an extra plot available");
-			}
-			processTendingToFarmland();
-			break;
-		}
-	}
-
-	/**
-	 * Gets player input to confirm whether the player would like to perform an
-	 * action.
-	 * 
-	 * @param action ID associated with action to be performed.
-	 */
-	public void confirmAction(int action) {
-		System.out.println("Would you would like continue with this action?");
-		System.out.println("[1] - yes");
-		System.out.println("[2] - no");
-
-		boolean performingAction = true;
-		while (performingAction) {
-			int choice = getInputInt("your choice of activity");
-			switch (choice) {
-			case 1:
-				performAction(action);
-				System.out.println("Number of actions remaining for the day: " + this.numDayActions);
-				performingAction = false;
-				break;
-			case 2:
-				performingAction = false;
-				break;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-	/**
-	 * Displays the list of actions that a farmer is able to perform.
-	 */
-	public void visitActionsMainScreen() {
-		boolean viewingActions = true;
-		while (viewingActions) {
-			printActionOptions();
-			System.out.println("Enter [0] to return to the main menu.");
-			int choice = getInputInt("your choice of action");
-			switch (choice) {
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-				this.farm.getFarmer().printDescription(choice);
-				confirmAction(choice);
-				viewingActions = false;
-				break;
-			case 0:
-				viewingActions = false;
-				break;
-			default:
-				System.out.println("Please enter a valid choice.");
-			}
-		}
-	}
-
-//===================================================== BONUS/ SCORE IMPLEMENTATION =====================================================
-
-	/**
-	 * Calculate a final score based on game duration, number of crops and animals,
-	 * animal status and money earned
-	 * 
-	 * @return Final score.
-	 */
-	public int getFinalScore() {
-		int score = 0;
-
-		// =================== ASSESS MONEY ===================
-		// Sum up monetary value of assets (money, animals, crops)
-		float money = this.farm.getBalance();
-
-		ArrayList<FarmItem> animals = this.farm.getAnimals();
-		for (FarmItem a : animals) {
-			money += a.getPurchasePrice();
-		}
-
-		// Crops have not been harvested so calculate value through purchase price
-		ArrayList<FarmItem> crops = this.farm.getCrops();
-		for (FarmItem c : crops) {
-			money += c.getPurchasePrice();
-		}
-
-		// 1 points for every $10 earned
-		score += Math.floorDiv((int) money, 10);
-
-		// =================== ASSESS ANIMAL STATUS ===================
-
-		// 1 point for every happiness point on an animal, 1 point for health
-		for (FarmItem a : animals) {
-			score += ((Animal) a).getHealth();
-			score += ((Animal) a).getHappiness();
-		}
-
-		// Multiply by game duration
-		score *= this.numDays;
-
-		return score;
-	}
-
-	/**
-	 * Display the farm's name, the game duration in days and the profit the farm
-	 * made in this time
-	 */
-	public void finishGame() {
-		System.out.println("===========================================================================");
-		System.out.println("Congratulations " + this.farm.getFarmer().getName() + "! You have finished the game.");
-		System.out.println("Here is a summary of your performance.");
-		System.out.println();
-		System.out.println("Farm name: " + this.farm.getName());
-		System.out.println("Number of days on farm: " + numDays);
-		System.out.println("Profit made: $" + this.farm.getBalance());
-		System.out.println("Final score: " + getFinalScore());
-		System.out.println("===========================================================================");
-	}
-
 }

@@ -77,6 +77,14 @@ public abstract class Farm {
 	}
 	
 	/**
+	 * Returns the number of available crop plots
+	 * @return Number of available crop plots
+	 */
+	public int getNumAvailableCrops() {
+		return this.numAvailableCrops;
+	}
+	
+	/**
 	 * Adds to the number of free crops available on the farm.
 	 * @param num The number of newly available crops.
 	 */

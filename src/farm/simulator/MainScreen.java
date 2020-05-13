@@ -35,7 +35,7 @@ public class MainScreen {
 	public void finishedWindow(String nextScreen) {
 		manager.closeMainScreen(this, nextScreen);
 	}
-	
+
 	private String getScreenTitle() {
 		return "Main Screen - Day " + game.getCurrentDay();
 	}
@@ -58,7 +58,7 @@ public class MainScreen {
 		});
 		btnGeneralStore.setBounds(364, 64, 303, 344);
 		window.getContentPane().add(btnGeneralStore);
-		
+
 		JButton btnViewCropAndAnimals = new JButton("View crop and animal status");
 		btnViewCropAndAnimals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,7 +68,7 @@ public class MainScreen {
 		});
 		btnViewCropAndAnimals.setBounds(35, 64, 291, 97);
 		window.getContentPane().add(btnViewCropAndAnimals);
-		
+
 		JButton btnViewFarmStatus = new JButton("View farm status");
 		btnViewFarmStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,13 +86,16 @@ public class MainScreen {
 					if (JOptionPane.showConfirmDialog(window,
 							"WARNING: You still have " + game.getNumActions() + " action(s) remaining today."
 									+ "\nAre you sure you want to continue?",
-							"Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+							"Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						game.moveToNextDay();
+						JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus",
+								JOptionPane.INFORMATION_MESSAGE);
+						window.setTitle(getScreenTitle());
+						JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
 						return;
 					}
-					game.moveToNextDay();
-					JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
-					window.setTitle(getScreenTitle());
-					JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -110,6 +113,9 @@ public class MainScreen {
 			}
 		});
 		btnPerformAnAction.setBounds(35, 311, 291, 97);
+		if (game.getNumActions() == 0) {
+			btnPerformAnAction.setEnabled(false);
+		}
 		window.getContentPane().add(btnPerformAnAction);
 
 		JLabel lblActionsWarning = new JLabel("*These actions count towards a daily action");

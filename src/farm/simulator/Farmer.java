@@ -197,6 +197,7 @@ public class Farmer {
 	 */
 	public void feedAnimals(Item item) {
 		for (FarmItem animal : this.farm.getAnimals()) {
+			System.out.println("in loop");
 			((Animal) animal).addToHealth(item.getAnimalHealthFactor());
 		}
 	}
@@ -268,7 +269,7 @@ public class Farmer {
 	 * Whether the farmer has a item of a given type.
 	 * 
 	 * @param type Identifier of item type.
-	 * @return True if item is in stock. Else false.
+	 * @return True if item is owned. Else false.
 	 */
 	public boolean ownsItem(int type) {
 		FarmItem item = getItem(type);
