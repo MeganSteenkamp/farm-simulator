@@ -72,7 +72,9 @@ public class SetupScreen {
 			}
 			throw new IllegalArgumentException("Please enter a " + fieldName + " that does not contain any special characters");
 		}
-		return inputString;
+		
+		// Capitalize string
+		return inputString.substring(0, 1).toUpperCase() + inputString.substring(1);
 	}
 
 	public int validateAge(String number) {
@@ -170,10 +172,10 @@ public class SetupScreen {
 					// Set up farm
 					game.setUpGame(numDays, farmType, farmerName, age, farmName);
 					JOptionPane.showMessageDialog(window, game.getWelcomeMessage(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
+					game.beginDay();
 					
 					// Move on to main window
 					finishedWindow();
-					closeWindow();
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(window, exception.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
 				}

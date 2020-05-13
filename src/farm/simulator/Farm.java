@@ -196,7 +196,7 @@ public abstract class Farm {
 	 * Prints the details of the animals on the farm.
 	 */
 	public String getAnimalStatus() {
-		String s = "Number of animals owned: " + this.animals.size() + "\n\n";
+		String s = "Number of animals owned: " + this.animals.size() + "\n";
 		for (FarmItem a : animals) {
 			s += a.toString() + "\n\n";
 		}
@@ -209,7 +209,7 @@ public abstract class Farm {
 	 * @param currentDay Current day number.
 	 */
 	public String getCropStatus() {
-		String s = "Number of crops owned: " + this.crops.size() + "\n\n";
+		String s = "Number of crops owned: " + this.crops.size() + "\n";
 		for (FarmItem c : crops) {
 			s += c.toString() + "\n\n";
 		}

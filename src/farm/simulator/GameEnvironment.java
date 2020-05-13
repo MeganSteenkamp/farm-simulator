@@ -23,7 +23,7 @@ public class GameEnvironment {
 	 * Initialize Game Environment
 	 */
 	public GameEnvironment() {
-		this.currentDay = 1;
+		this.currentDay = 0;
 	}
 
 // HERE BELOW IS CURRENT IMPLEMENTATION (GUI)
@@ -90,10 +90,11 @@ public class GameEnvironment {
 		this.farm.addCrop(new Avocado());
 	}
 
-//===================================================== MAIN MENU =====================================================	
-
+//===================================================== DAY INITIALIZATION =====================================================	
+	
 	public void beginDay() {
-
+		this.numDayActions = 2;
+		this.currentDay++;
 	}
 
 	public String getDayWelcomeMessage() {
@@ -101,10 +102,35 @@ public class GameEnvironment {
 				+ ".";
 	}
 
+//===================================================== MAIN MENU =====================================================	
+
 	public String getCropAndAnimalStatus() {
 		return this.farm.getCropAndAnimalStatus();
 	}
-
+	
+	public String getFarmStatus() {
+		return this.farm.toString();
+	}
+	
+	public int getNumActions() {
+		return this.numDayActions;
+	}
+	
+	public void moveToNextDay() {
+		beginDay();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 // HERE BELOW IS COMMAND LINE IMPLEMENTATION (BROKEN)	
 //===================================================== MAIN MENU =====================================================
 
