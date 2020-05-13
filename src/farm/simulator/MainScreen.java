@@ -90,6 +90,7 @@ public class MainScreen {
 						return;
 					}
 					game.moveToNextDay();
+					JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
 					window.setTitle(getScreenTitle());
 					JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
 				}

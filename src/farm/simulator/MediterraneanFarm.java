@@ -26,7 +26,7 @@ public class MediterraneanFarm extends Farm {
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Type: " + type + "\nStarting balance: $" + df.format(balance) + "\nCrop crowth delay: " + cropDelay + 
+		return "Starting balance: $" + df.format(balance) + "\nCrop growth delay: " + cropDelay + 
 				" day(s)\nAnimal happiness bonus: " + animalHappinessBonus + " points";
 	}
 }

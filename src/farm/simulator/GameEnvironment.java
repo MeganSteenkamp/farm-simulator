@@ -1,5 +1,6 @@
 package farm.simulator;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -29,18 +30,6 @@ public class GameEnvironment {
 // HERE BELOW IS CURRENT IMPLEMENTATION (GUI)
 //===================================================== GAME INITIALIZATION =====================================================
 
-	public void setNumDays(int days) {
-		this.daysTotal = days;
-	}
-
-	public int getDaysTotal() {
-		return this.daysTotal;
-	}
-
-	public int getCurrentDay() {
-		return this.currentDay;
-	}
-
 	public Farmer createFarmer(String name, int age) {
 		Farmer farmer = new Farmer(name, age);
 		return farmer;
@@ -55,7 +44,16 @@ public class GameEnvironment {
 	public String getWelcomeMessage() {
 		return "Welcome to your new farm, " + this.farm.getFarmer().getName()
 				+ ". It is a beautiful day to get to work on '" + this.farm.getName()
-				+ "'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals";
+				+ "'.\nWe suggest going to the General Store.\nA farm isn't much fun without crops or animals.";
+	}
+
+	public String getGameInstructions() {
+		return "Welcome to 'Mowing Before Hoeing'.\n\n"
+				+ "The goal of 'Mowing before Hoeing' is to earn as much money as possible \n"
+				+ "whilst keeping your animals happy and healthy.\n\n"
+				+ "Money can be earned from harvesting crops or owning items at the end of the game.\n"
+				+ "At the end of each day a bonus is given based on the health and happiness of animals.\n\n"
+				+ "Let's set up the farm before we get to work.";
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class GameEnvironment {
 		this.farm.setName(farmName);
 		this.farm.setFarmer(createFarmer(farmerName, farmerAge));
 
-		// TODO: Remove this code for testing
+		// TODO: Remove this code after testing
 		this.farm.addAnimal(new Chicken());
 		this.farm.addAnimal(new Horse());
 		this.farm.addCrop(new Cotton());
@@ -90,11 +88,16 @@ public class GameEnvironment {
 		this.farm.addCrop(new Avocado());
 	}
 
-//===================================================== DAY INITIALIZATION =====================================================	
-	
-	public void beginDay() {
-		this.numDayActions = 2;
+//===================================================== DAY IMPLEMENTATION =====================================================	
+
+	public void beginNewDay() {
 		this.currentDay++;
+		this.numDayActions = 2;
+
+		// Update crop growth by 1 day
+		for (FarmItem c : this.farm.getCrops()) {
+			((Crop) c).updateCropGrowth(1);
+		}
 	}
 
 	public String getDayWelcomeMessage() {
@@ -102,35 +105,90 @@ public class GameEnvironment {
 				+ ".";
 	}
 
+	/**
+	 * Returns a daily bonus for the farm depending on animal happiness and health.
+	 * 
+	 * @return Monetary bonus for the day.
+	 */
+	public String getDailyBonus() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		float bonus = 0;
+		String str = "Daily Bonuses for today:\n\n";
+
+		ArrayList<FarmItem> animals = this.farm.getAnimals();
+		for (FarmItem a : animals) {
+			float healthBonus = ((Animal) a).getHealth() * 5;
+			float happinessBonus = ((Animal) a).getHappiness() * 5;
+			str += "Bonus from " + ((Animal) a).getType() + ": $" + df.format(happinessBonus + healthBonus) + "\n";
+			bonus += (happinessBonus + healthBonus);
+		}
+		this.farm.addToBalance(bonus);
+		str += "\nTotal bonus money: $" + df.format(bonus);
+
+		return str;
+	}
+
+	public void setNumDays(int days) {
+		this.daysTotal = days;
+	}
+
+	public int getDaysTotal() {
+		return this.daysTotal;
+	}
+
+	public int getCurrentDay() {
+		return this.currentDay;
+	}
+
 //===================================================== MAIN MENU =====================================================	
 
 	public String getCropAndAnimalStatus() {
 		return this.farm.getCropAndAnimalStatus();
 	}
-	
+
 	public String getFarmStatus() {
 		return this.farm.toString();
 	}
-	
+
 	public int getNumActions() {
 		return this.numDayActions;
 	}
-	
+
 	public void moveToNextDay() {
-		beginDay();
+		beginNewDay();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+//===================================================== FARMER ACTIONS =====================================================	
+
+	public String getCropTendingDescription() {
+		return "Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.\n"
+				+ "Only one type of crop can be harvested at a time.\n"
+				+ "An item or water can be used to tend to the crops.\n\n"
+				+ "Continue to pick your which crops to harvest.";
+	}
+
+	public String getFeedingAnimalsDescription() {
+		return "Feeding your animals will increase their health.\n" + "A food item must be used to do this.\n\n"
+				+ "Continue to view which items you could feed your animals with.";
+	}
+
+	public String getPlayWithAnimalsDescription() {
+		return "Playing with animals makes their happiness increase.\n"
+				+ "The happiness of all animals will increase by 1 point.\n\n"
+				+ "Continue to view the current happiness of your animals and decide whether it's time to play.";
+	}
+
+	public String getHarvestCropsDescription() {
+		return "Any crops that have fully grown can be harvested for a money bonus.\n\n"
+				+ "Continue to view your crop status and decide if it is time to harvest.";
+	}
+
+	public String getTendToFarmLandDescription() {
+		return "Tending to the farm's land keeps the farm tidy and well maintained.\n"
+				+ "This allows for more crops to be grown and keeps animals happier for longer.\n\n"
+				+ "Continue to add 1 point to the happiness of all of your animals, and add 1 available crop plot.";
+	}
+
 // HERE BELOW IS COMMAND LINE IMPLEMENTATION (BROKEN)	
 //===================================================== MAIN MENU =====================================================
 
@@ -798,25 +856,6 @@ public class GameEnvironment {
 //===================================================== BONUS/ SCORE IMPLEMENTATION =====================================================
 
 	/**
-	 * Returns a daily bonus for the farm depending on animal happiness and health.
-	 * 
-	 * @return Monetary bonus for the day.
-	 */
-	public float getDailyBonus() {
-		float bonus = 0;
-
-		System.out.println("Daily Bonuses for today:");
-		ArrayList<FarmItem> animals = this.farm.getAnimals();
-		for (FarmItem a : animals) {
-			float healthBonus = ((Animal) a).getHealth() * 5;
-			float happinessBonus = ((Animal) a).getHappiness() * 5;
-			System.out.println("Bonus from animal: " + (happinessBonus + healthBonus));
-			bonus += (happinessBonus + healthBonus);
-		}
-		return bonus;
-	}
-
-	/**
 	 * Calculate a final score based on game duration, number of crops and animals,
 	 * animal status and money earned
 	 * 
@@ -873,106 +912,4 @@ public class GameEnvironment {
 		System.out.println("===========================================================================");
 	}
 
-//===================================================== DAY IMPLEMENTATION =====================================================
-
-	/**
-	 * Runs the entirety of a day on the farm.
-	 * 
-	 * @param dayNum The number of the day in the game.
-	 */
-	public void runDay(int dayNum) {
-		this.numDayActions = 2;
-		float dailyBonus = 0;
-		boolean isDayEnd = false;
-
-		// Update crop growth by 1 day
-		for (FarmItem c : this.farm.getCrops()) {
-			((Crop) c).updateCropGrowth(1);
-		}
-
-		// Show available actions
-		while (!isDayEnd) {
-			printDefaultOptions();
-			boolean isValid = false;
-			while (!isValid) {
-				int choice = getInputInt("your choice of activity");
-				switch (choice) {
-				case 1:
-					this.farm.printCropAndAnimalStatus();
-					isValid = true;
-					break;
-				case 2:
-					System.out.println(this.farm.toString());
-					isValid = true;
-					break;
-				case 3:
-					visitGeneralStore();
-					isValid = true;
-					break;
-				case 4:
-					System.out.println("Number of actions remaining for the day: " + this.numDayActions);
-					if (this.numDayActions > 0) {
-						visitActionsMainScreen();
-					} else {
-						System.out.println("Not allowed: You have no actions remaining for today.");
-					}
-					isValid = true;
-					break;
-				case 5:
-					if (this.numDayActions > 0) {
-						System.out.println(
-								"You still have " + this.numDayActions + " available actions you could perform today.");
-						System.out.println("Are you sure you would like to move to the next day?");
-						System.out.println("[1] - yes");
-						System.out.println("[2] - no");
-
-						boolean performingAction = true;
-						while (performingAction) {
-							int decision = getInputInt("your choice of activity");
-							switch (decision) {
-							case 1:
-								isValid = true;
-								performingAction = false;
-								// Give daily bonus
-								dailyBonus = getDailyBonus();
-								this.farm.addToBalance(dailyBonus);
-
-								isDayEnd = true;
-								break;
-							case 2:
-								isValid = true;
-								performingAction = false;
-								break;
-							default:
-								System.out.println("Please enter a valid choice.");
-							}
-						}
-					}
-					break;
-				default:
-					System.out.println("Please enter a valid choice.");
-				}
-			}
-		}
-	}
-
-//===================================================== MAIN LOOP =====================================================
-
-	/**
-	 * The main loop running the game environment.
-	 */
-	public void run() {
-		for (int i = 1; i <= numDays; i++) {
-			System.out.println("===========================================================================");
-			System.out.println("Welcome to day " + i + " of " + numDays + " on " + this.farm.getName() + ".");
-			System.out.println();
-			System.out.println("Here is your daily farm update:");
-			System.out.println(this.farm.toString());
-			System.out.println("===========================================================================");
-			runDay(i);
-		}
-		finishGame();
-
-		in.close();
-	}
 }

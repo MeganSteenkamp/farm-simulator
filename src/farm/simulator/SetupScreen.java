@@ -38,6 +38,7 @@ public class SetupScreen {
 		manager = application;
 		initialize();
 		window.setVisible(true);
+		JOptionPane.showMessageDialog(window, game.getGameInstructions(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public GameEnvironment closeWindow() {
@@ -105,7 +106,7 @@ public class SetupScreen {
 	 */
 	private void initialize() {
 		window = new JFrame();
-		window.setTitle("Farm Simulator Setup");
+		window.setTitle("Game Setup");
 		window.setBounds(100, 100, 700, 500);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
@@ -115,15 +116,15 @@ public class SetupScreen {
 		window.getContentPane().add(welcomeLabel);
 
 		JLabel ageLabel = new JLabel("Enter farmer's age:");
-		ageLabel.setBounds(12, 113, 339, 15);
+		ageLabel.setBounds(12, 123, 339, 15);
 		window.getContentPane().add(ageLabel);
 
 		JLabel nameLabel = new JLabel("Name your farmer:");
-		nameLabel.setBounds(12, 79, 339, 15);
+		nameLabel.setBounds(12, 89, 339, 15);
 		window.getContentPane().add(nameLabel);
 
 		JLabel numDaysLabel = new JLabel("How many days would you like the game to last?");
-		numDaysLabel.setBounds(12, 44, 403, 15);
+		numDaysLabel.setBounds(12, 55, 403, 15);
 		window.getContentPane().add(numDaysLabel);
 		
 		JSlider numDaysSlider = new JSlider();
@@ -132,11 +133,11 @@ public class SetupScreen {
 		numDaysSlider.setMinorTickSpacing(1);
 		numDaysSlider.setMaximum(10);
 		numDaysSlider.setMinimum(5);
-		numDaysSlider.setBounds(391, 39, 285, 31);
+		numDaysSlider.setBounds(391, 49, 285, 31);
 		window.getContentPane().add(numDaysSlider);
 
 		JLabel farmNameLabel = new JLabel("Give your farm a name:");
-		farmNameLabel.setBounds(12, 152, 339, 15);
+		farmNameLabel.setBounds(12, 162, 339, 15);
 		window.getContentPane().add(farmNameLabel);
 
 		JLabel farmSelectLabel = new JLabel("Select a farm type:");
@@ -144,10 +145,12 @@ public class SetupScreen {
 		window.getContentPane().add(farmSelectLabel);
 
 		JTextArea farmDescription = new JTextArea("");
+		farmDescription.setWrapStyleWord(true);
+		farmDescription.setLineWrap(true);
+		farmDescription.setEditable(false);
 		farmDescription.setVisible(false);
 		farmDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
-		farmDescription.setEditable(false);
-		farmDescription.setBounds(391, 206, 285, 116);
+		farmDescription.setBounds(391, 227, 285, 78);
 		window.getContentPane().add(farmDescription);
 		
 		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
@@ -172,7 +175,7 @@ public class SetupScreen {
 					// Set up farm
 					game.setUpGame(numDays, farmType, farmerName, age, farmName);
 					JOptionPane.showMessageDialog(window, game.getWelcomeMessage(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
-					game.beginDay();
+					game.beginNewDay();
 					
 					// Move on to main window
 					finishedWindow();
@@ -233,18 +236,18 @@ public class SetupScreen {
 		window.getContentPane().add(btnNewZealand);
 
 		nameInput = new JTextField();
-		nameInput.setBounds(391, 75, 285, 24);
+		nameInput.setBounds(391, 85, 285, 24);
 		window.getContentPane().add(nameInput);
 		nameInput.setColumns(10);
 
 		ageInput = new JTextField();
 		ageInput.setColumns(10);
-		ageInput.setBounds(391, 109, 285, 24);
+		ageInput.setBounds(391, 119, 285, 24);
 		window.getContentPane().add(ageInput);
 
 		farmNameInput = new JTextField();
 		farmNameInput.setColumns(10);
-		farmNameInput.setBounds(391, 148, 285, 24);
+		farmNameInput.setBounds(391, 158, 285, 24);
 		window.getContentPane().add(farmNameInput);
 	}
 }

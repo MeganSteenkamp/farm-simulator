@@ -248,40 +248,6 @@ public class Farmer {
 	}
 
 	/**
-	 * Prints a description of an action the farmer can perform and its benefits
-	 */
-	public void printDescription(int actionChoice) {
-		switch (actionChoice) {
-		case 1:
-			System.out.println(
-					"Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.");
-			System.out.println("Only one type of crop can be harvested at a time.");
-			System.out.println("An item or water can be used to tend to the crops.");
-			System.out.println("Continue to pick your which crops to harvest.");
-			break;
-		case 2:
-			System.out.println("Feeding your animals will increase their health.");
-			System.out.println("A food item must be used to do this.");
-			System.out.println("Continue to view which items you could feed your animals with.");
-			break;
-		case 3:
-			System.out.println("Playing with animals makes their happiness increase.");
-			System.out.println("The happiness of all animals will increase by 1 point.");
-			System.out.println("Continue to view the current happiness of your animals and decide whether it's time to play.");
-			break;
-		case 4:
-			System.out.println("Any crops that have fully grown can be harvested for a money bonus.");
-			System.out.println("Continue to view your crop status and decide if it is time to harvest.");
-			break;
-		case 5:
-			System.out.println("Tending to the farm's land keeps the farm tidy and well maintained.");
-			System.out.println("This allows for more crops to be grown and keeps animals happier for longer.");
-			System.out.println("Continue to add 1 point to the happiness of all of your animals, and add 1 available crop plot.");
-			break;
-		}
-	}
-
-	/**
 	 * Gets an item of a given type, specified by an integer.
 	 * 
 	 * @param type Type of item, identified with an integer.
