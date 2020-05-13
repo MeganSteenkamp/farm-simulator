@@ -45,7 +45,7 @@ public abstract class Item implements FarmItem {
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		String s = "Type ID: " + this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nPrice: $" + df.format(this.price);
+		String s = "Name: " + this.name + "\nDescription: " + this.description + "\nPrice: $" + df.format(this.price);
 		if (this.cropGrowthFactor != 0) {
 			s += "\nAdded crop growth: " + this.cropGrowthFactor + " day(s)";
 		}

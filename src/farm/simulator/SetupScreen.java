@@ -1,29 +1,19 @@
 package farm.simulator;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Font;
+import javax.swing.UIManager;
 
 public class SetupScreen {
 
@@ -152,6 +142,7 @@ public class SetupScreen {
 		window.getContentPane().add(farmSelectLabel);
 
 		JTextArea farmDescription = new JTextArea("");
+		farmDescription.setVisible(false);
 		farmDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
 		farmDescription.setEditable(false);
 		farmDescription.setBounds(391, 206, 285, 116);
@@ -168,6 +159,7 @@ public class SetupScreen {
 		window.getContentPane().add(bonusesDescription);
 
 		JButton btnBeginGame = new JButton("Begin game");
+		btnBeginGame.setBackground(UIManager.getColor("Button.background"));
 		btnBeginGame.setEnabled(true);
 		btnBeginGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,12 +179,13 @@ public class SetupScreen {
 				}
 			}
 		});
-		btnBeginGame.setBounds(559, 432, 117, 25);
+		btnBeginGame.setBounds(559, 433, 117, 25);
 		window.getContentPane().add(btnBeginGame);
 
 		JButton btnNorthKorea = new JButton("North Korea");
 		btnNorthKorea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				farmDescription.setVisible(true);
 				bonusesDescription.setVisible(true);
 				farmDescription.setText(NorthKoreanFarm.getTypeDescription());
 				farmType = "North Korea";
@@ -204,6 +197,7 @@ public class SetupScreen {
 		JButton btnAfrica = new JButton("Africa");
 		btnAfrica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				farmDescription.setVisible(true);
 				bonusesDescription.setVisible(true);
 				farmDescription.setText(AfricanFarm.getTypeDescription());
 				farmType = "Africa";
@@ -215,6 +209,7 @@ public class SetupScreen {
 		JButton btnMediterranean = new JButton("Mediterranean");
 		btnMediterranean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				farmDescription.setVisible(true);
 				bonusesDescription.setVisible(true);
 				farmDescription.setText(MediterraneanFarm.getTypeDescription());
 				farmType = "Mediterranean";
@@ -226,6 +221,7 @@ public class SetupScreen {
 		JButton btnNewZealand = new JButton("New Zealand");
 		btnNewZealand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				farmDescription.setVisible(true);
 				bonusesDescription.setVisible(true);
 				farmDescription.setText(NewZealandFarm.getTypeDescription());
 				farmType = "New Zealand";

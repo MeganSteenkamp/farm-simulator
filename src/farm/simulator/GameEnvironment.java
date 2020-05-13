@@ -14,38 +14,48 @@ import java.util.regex.*;
 public class GameEnvironment {
 	Scanner in = new Scanner(System.in);
 	private int numDayActions;
-	private int numDays;
+	private int daysTotal;
+	private int currentDay;
 	private Farm farm;
 	private GeneralStore generalStore = new GeneralStore();
 
 	/**
 	 * Initialize Game Environment
 	 */
-	public GameEnvironment() {}
-	
+	public GameEnvironment() {
+		this.currentDay = 1;
+	}
 
+// HERE BELOW IS CURRENT IMPLEMENTATION (GUI)
 //===================================================== GAME INITIALIZATION =====================================================
 
 	public void setNumDays(int days) {
-		System.out.println("setting num days");
-		this.numDays = days;
-		System.out.println("set");
+		this.daysTotal = days;
 	}
-	
+
+	public int getDaysTotal() {
+		return this.daysTotal;
+	}
+
+	public int getCurrentDay() {
+		return this.currentDay;
+	}
+
 	public Farmer createFarmer(String name, int age) {
 		Farmer farmer = new Farmer(name, age);
 		return farmer;
 	}
-	
+
 	public static String getBonusesDescription() {
 		return "Crop growth delay will delay the base growth rate of a crop by a given number of days. A crop can only be harvested for money once"
 				+ " it is fully grown. If this delay is negative, it means your crops will grow faster. An animal happiness bonus adds the given number of points to the happiness of an animal, which"
 				+ " contributes to the amount of money earned at the end of a day.";
 	}
-	
-	public String getWelcomeMessage() {	
-		return "Welcome to your new farm, " + this.farm.getFarmer().getName() +". It is a beautiful day to get to work on '" + this.farm.getName() + 
-				"'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals";
+
+	public String getWelcomeMessage() {
+		return "Welcome to your new farm, " + this.farm.getFarmer().getName()
+				+ ". It is a beautiful day to get to work on '" + this.farm.getName()
+				+ "'.\nWe suggest going to the General Store. A farm isn't much fun without crops or animals";
 	}
 
 	/**
@@ -53,7 +63,7 @@ public class GameEnvironment {
 	 */
 	public void setUpGame(int numDays, String farmType, String farmerName, int farmerAge, String farmName) {
 		setNumDays(numDays);
-		
+
 		switch (farmType) {
 		case "North Korea":
 			this.farm = new NorthKoreanFarm();
@@ -71,8 +81,31 @@ public class GameEnvironment {
 
 		this.farm.setName(farmName);
 		this.farm.setFarmer(createFarmer(farmerName, farmerAge));
+
+		// TODO: Remove this code for testing
+		this.farm.addAnimal(new Chicken());
+		this.farm.addAnimal(new Horse());
+		this.farm.addCrop(new Cotton());
+		this.farm.addCrop(new Olive());
+		this.farm.addCrop(new Avocado());
 	}
 
+//===================================================== MAIN MENU =====================================================	
+
+	public void beginDay() {
+
+	}
+
+	public String getDayWelcomeMessage() {
+		return "Welcome to day " + currentDay + " on '" + this.farm.getName() + "', " + this.farm.getFarmer().getName()
+				+ ".";
+	}
+
+	public String getCropAndAnimalStatus() {
+		return this.farm.getCropAndAnimalStatus();
+	}
+
+// HERE BELOW IS COMMAND LINE IMPLEMENTATION (BROKEN)	
 //===================================================== MAIN MENU =====================================================
 
 	/**

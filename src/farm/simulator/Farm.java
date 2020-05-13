@@ -86,13 +86,12 @@ public abstract class Farm {
 
 
 	/**
-	 * Prints the status of the farm's crops and animals. This includes viewing a
+	 * Returns the status of the farm's crops and animals. This includes viewing a
 	 * crop's time growing, the time left until crop's harvest and an animal's
 	 * happiness levels.
 	 */
-	public void printCropAndAnimalStatus() {
-		printCrops();
-		printAnimals();
+	public String getCropAndAnimalStatus() {
+		return getCropStatus() + "\n" + getAnimalStatus();
 	}
 
 	/**
@@ -196,13 +195,12 @@ public abstract class Farm {
 	/**
 	 * Prints the details of the animals on the farm.
 	 */
-	public void printAnimals() {
-		System.out.println("Number of animals owned: " + this.animals.size());
-		System.out.println();
+	public String getAnimalStatus() {
+		String s = "Number of animals owned: " + this.animals.size() + "\n\n";
 		for (FarmItem a : animals) {
-			System.out.println(a.toString());
-			System.out.println();
+			s += a.toString() + "\n\n";
 		}
+		return s;
 	}
 
 	/**
@@ -210,13 +208,12 @@ public abstract class Farm {
 	 * 
 	 * @param currentDay Current day number.
 	 */
-	public void printCrops() {
-		System.out.println("Number of crops owned: " + this.crops.size());
-		System.out.println();
+	public String getCropStatus() {
+		String s = "Number of crops owned: " + this.crops.size() + "\n\n";
 		for (FarmItem c : crops) {
-			System.out.println(c.toString());
-			System.out.println();
+			s += c.toString() + "\n\n";
 		}
+		return s;
 	}
 	
 	/**

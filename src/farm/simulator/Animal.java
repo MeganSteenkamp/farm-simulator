@@ -59,7 +59,7 @@ public abstract class Animal implements FarmItem {
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Type ID: " + this.id + "\nType: " + this.type + "\nDescription: " + this.description +"\nPrice: $" + df.format(this.price)
+		return "Type: " + this.type + "\nDescription: " + this.description +"\nPrice: $" + df.format(this.price)
 		+ "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
 	}
 
