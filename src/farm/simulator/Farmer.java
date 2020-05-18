@@ -28,7 +28,7 @@ public class Farmer {
 		this.age = age;
 		this.items = new ArrayList<FarmItem>();
 	}
-	
+
 	/**
 	 * String representation of a farm.
 	 * 
@@ -112,21 +112,10 @@ public class Farmer {
 	}
 
 	/**
-	 * Prints the details of the items owned by the farmer.
+	 * Returns a stock count of currently owned items
 	 */
-	public void printItems() {
-		System.out.println("Number of items owned: " + this.items.size());
-		System.out.println();
-		for (FarmItem i : items) {
-			System.out.println(i.toString());
-			System.out.println();
-		}
-	}
-
-	/**
-	 * Prints a stock count of currently owned items
-	 */
-	public void printItemStock() {
+	public String getItemStock() {
+		String str = "";
 		int fertilizer = 0;
 		int compost = 0;
 		int hoe = 0;
@@ -154,12 +143,25 @@ public class Farmer {
 				silage += 1;
 			}
 		}
-		System.out.println("Fertilizer: " + fertilizer);
-		System.out.println("Compost: " + compost);
-		System.out.println("Hoes: " + hoe);
-		System.out.println("Steriods:" + steroids);
-		System.out.println("Grain:" + grain);
-		System.out.println("Silage:" + silage);
+		if (fertilizer > 0) {
+			str += "Fertilizer: " + fertilizer + "\n";
+		}
+		if (compost > 0) {
+			str += "Compost: " + compost + "\n";
+		}
+		if (hoe > 0) {
+			str += "Hoes: " + hoe + "\n";
+		}
+		if (steroids > 0) {
+			str += "Steriods:" + steroids + "\n";
+		}
+		if (grain > 0) {
+			str += "Grain:" + grain + "\n";
+		}
+		if (silage > 0) {
+			str += "Silage:" + silage + "\n";
+		}
+		return str;
 	}
 
 	/**
@@ -193,17 +195,18 @@ public class Farmer {
 
 	/**
 	 * Feed all animals in the farm using an item, adding to the animal's health.
+	 * 
 	 * @param item Item used to feed the animal.
 	 */
 	public void feedAnimals(Item item) {
 		for (FarmItem animal : this.farm.getAnimals()) {
-			System.out.println("in loop");
 			((Animal) animal).addToHealth(item.getAnimalHealthFactor());
 		}
 	}
 
 	/**
-	 * Adds one point to each animal's happiness as the farmer plays with the animals.
+	 * Adds one point to each animal's happiness as the farmer plays with the
+	 * animals.
 	 */
 	public void playWithAnimals() {
 		for (FarmItem animal : this.farm.getAnimals()) {
@@ -212,8 +215,9 @@ public class Farmer {
 	}
 
 	/**
-	 * Harvests crops. Crops are sold for their selling price property.
-	 * Allows another crop to become available on the farm.
+	 * Harvests crops. Crops are sold for their selling price property. Allows
+	 * another crop to become available on the farm.
+	 * 
 	 * @return Money earned from harvesting crops.
 	 */
 	public float harvestCrops() {
@@ -222,24 +226,21 @@ public class Farmer {
 		for (FarmItem crop : this.farm.getCrops()) {
 			Crop c = (Crop) crop;
 			if (c.getTimeUntilHarvest() == 0) {
-				System.out.println("Well done, your " + c.getName() + " is ready for harvest");
-				System.out.println("It has sold for $" + c.getSellingPrice());
 				moneyEarned += c.getSellingPrice();
 				cropsToHarvest.add(c);
 			}
 		}
-
 		for (Crop crop : cropsToHarvest) {
 			this.farm.removeCrop(crop);
-			// Free the crop up for a new crop to be planted
+			// Free a plot up for a new crop to be planted
 			this.farm.addToAvailableCrops(1);
 		}
-
 		return moneyEarned;
 	}
 
 	/**
-	 * Increase the number of crops available on the farm by 1 and increase the happiness of all animals by 1.
+	 * Increase the number of crops available on the farm by 1 and increase the
+	 * happiness of all animals by 1.
 	 */
 	public void tendToFarmland() {
 		this.farm.addToAvailableCrops(1);

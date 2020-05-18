@@ -82,7 +82,7 @@ public abstract class Animal implements FarmItem {
 	}
 
 	/**
-	 * Returns the price of an animal.
+	 * Returns the purchase price of an animal.
 	 * 
 	 * @return Price of the animal.
 	 */

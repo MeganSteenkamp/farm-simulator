@@ -36,7 +36,7 @@ public abstract class Farm {
 		this.cropGrowthFactor = cropGrowthFactor;
 		this.animalHappinessFactor = animalHappinessFactor;
 	}
-	
+
 	/**
 	 * String representation of a farm.
 	 * 
@@ -45,8 +45,10 @@ public abstract class Farm {
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $" + df.format(this.balance) + "\nCrop growth bonus: " + this.cropGrowthFactor +
-				" days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor + " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
+		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $"
+				+ df.format(this.balance) + "\nCrop growth bonus: " + this.cropGrowthFactor
+				+ " days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor
+				+ " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
 	}
 
 	/**
@@ -75,23 +77,24 @@ public abstract class Farm {
 	public Farmer getFarmer() {
 		return this.farmer;
 	}
-	
+
 	/**
 	 * Returns the number of available crop plots
+	 * 
 	 * @return Number of available crop plots
 	 */
 	public int getNumAvailableCrops() {
 		return this.numAvailableCrops;
 	}
-	
+
 	/**
 	 * Adds to the number of free crops available on the farm.
+	 * 
 	 * @param num The number of newly available crops.
 	 */
 	public void addToAvailableCrops(int num) {
 		this.numAvailableCrops += num;
-	} 
-
+	}
 
 	/**
 	 * Returns the status of the farm's crops and animals. This includes viewing a
@@ -131,7 +134,6 @@ public abstract class Farm {
 			return amount;
 		} else {
 			// TODO: Should raise insufficient funds error
-			System.out.println("You do not have enough money for this");
 			return 0;
 		}
 	}
@@ -153,7 +155,7 @@ public abstract class Farm {
 	 */
 	public void addCrop(FarmItem crop) {
 		// Scale crop growth according to farm
-		((Crop)crop).addDaysToGrow(cropGrowthFactor);
+		((Crop) crop).addDaysToGrow(cropGrowthFactor);
 		this.crops.add(crop);
 		this.numAvailableCrops -= 1;
 	}
@@ -178,7 +180,7 @@ public abstract class Farm {
 	 * @param animal Animal to be added.
 	 */
 	public void addAnimal(FarmItem animal) {
-		((Animal)animal).addToHappiness(animalHappinessFactor);
+		((Animal) animal).addToHappiness(animalHappinessFactor);
 		this.animals.add(animal);
 	}
 
@@ -223,7 +225,22 @@ public abstract class Farm {
 		}
 		return s;
 	}
-	
+
+	/**
+	 * Prints the details of the crops on the farm.
+	 * 
+	 * @param currentDay Current day number.
+	 */
+	public String getCropsReadyForHarvest() {
+		String s = "";
+		for (FarmItem c : crops) {
+			if (((Crop) c).getTimeUntilHarvest() == 0) {
+				s += c.toString() + "\n\n";
+			}
+		}
+		return s;
+	}
+
 	/**
 	 * Gets an crop of a given type, specified by an integer.
 	 * 
@@ -240,7 +257,7 @@ public abstract class Farm {
 		}
 		return crop;
 	}
-	
+
 	/**
 	 * Whether the farm has a crop of a given type.
 	 * 

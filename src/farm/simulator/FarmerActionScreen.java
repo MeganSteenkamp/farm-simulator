@@ -224,7 +224,6 @@ public class FarmerActionScreen {
 		window.getContentPane().add(btnTendToFarmland);
 
 		// Initialize and hide lists that might be needed to pick items
-
 		// Food list for feeding animals
 		DefaultListModel<String> listModelFood = new DefaultListModel();
 		food = game.getFoodItems();

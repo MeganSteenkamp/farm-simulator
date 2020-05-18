@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class MainScreen {
 
@@ -36,8 +37,40 @@ public class MainScreen {
 		manager.closeMainScreen(this, nextScreen);
 	}
 
+	public void refreshWindow() {
+		window.dispose();
+		initialize();
+		window.setVisible(true);
+	}
+
 	private String getScreenTitle() {
 		return "Main Screen - Day " + game.getCurrentDay();
+	}
+
+	private String getRemainingActions() {
+		return "Number of actions remaining: " + game.getNumActions();
+	}
+
+	private void moveToNextDay() {
+		game.moveToNextDay();
+		JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
+		refreshWindow();
+		JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private void processNextDay() {
+		if (game.getNumActions() > 0) {
+			if (JOptionPane.showConfirmDialog(window,
+					"WARNING: You still have " + game.getNumActions() + " action(s) remaining today."
+							+ "\nAre you sure you want to continue?",
+					"Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				moveToNextDay();
+			} else {
+				return;
+			}
+		} else {
+			moveToNextDay();
+		}
 	}
 
 	/**
@@ -82,21 +115,7 @@ public class MainScreen {
 		JButton btnNextDay = new JButton("Move to next day");
 		btnNextDay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (game.getNumActions() > 0) {
-					if (JOptionPane.showConfirmDialog(window,
-							"WARNING: You still have " + game.getNumActions() + " action(s) remaining today."
-									+ "\nAre you sure you want to continue?",
-							"Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						game.moveToNextDay();
-						JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus",
-								JOptionPane.INFORMATION_MESSAGE);
-						window.setTitle(getScreenTitle());
-						JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day",
-								JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						return;
-					}
-				}
+				processNextDay();
 			}
 		});
 		btnNextDay.setBounds(483, 428, 184, 25);
@@ -123,7 +142,7 @@ public class MainScreen {
 		lblActionsWarning.setBounds(35, 420, 291, 15);
 		window.getContentPane().add(lblActionsWarning);
 
-		JLabel lblNumActions = new JLabel("Number of actions remaining: " + game.getNumActions());
+		JLabel lblNumActions = new JLabel(getRemainingActions());
 		lblNumActions.setFont(new Font("Dialog", Font.ITALIC, 9));
 		lblNumActions.setBounds(35, 435, 291, 15);
 		window.getContentPane().add(lblNumActions);

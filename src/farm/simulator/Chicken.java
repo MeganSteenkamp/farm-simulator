@@ -24,7 +24,7 @@ public class Chicken extends Animal {
 	}
 	
 	/**
-	 * Returns a default description of the animal type.
+	 * Returns a default description of a Chicken.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");
