@@ -3,19 +3,23 @@ package farm.simulator;
 import java.text.DecimalFormat;
 
 /**
- * This class instantiates a North Korean Farm.
+ * This class represents a type of farm in North Korea. There is a low cash
+ * bonus to start with. However, the crop growth will be hurried and the 
+ * animals are very happy which will lead to higher revenue growth.
+ * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
+ * @since 2020-04-25
  */
 public class NorthKoreanFarm extends Farm {
 	private static String type = "North Korean Farm";
-	private static float balance = 2000.00f;
-	private static int cropDelay = -2;
-	private static int animalHappinessBonus = 2;
+	private static float balance = 300.00f;
+	private static int cropDelay = -1;
+	private static int animalHappinessBonus = 5;
 
 	/**
 	 * Constructs a North Korean Farm.
-	 * @param name Name of farm.
 	 */
 	public NorthKoreanFarm() {
 		super(type, balance, cropDelay, animalHappinessBonus);

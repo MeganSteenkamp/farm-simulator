@@ -3,19 +3,23 @@ package farm.simulator;
 import java.text.DecimalFormat;
 
 /**
- * This class instantiates a Mediterranean Farm.
+ * This class represents a type of Farm in the Mediterranean.
+ * This farm has a generous starting bonus but the Mediterranean Farm
+ * does not improve crop growth. 
+ * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
+ * @since 2020-04-25
  */
 public class MediterraneanFarm extends Farm {
 	private static String type = "Mediterranean Farm";
-	private static float balance = 8000.00f;
+	private static float balance = 1600.00f;
 	private static int cropDelay = 0;
 	private static int animalHappinessBonus = 2;
 
 	/**
 	 * Constructs a Mediterranean Farm.
-	 * @param name Name of farm.
 	 */
 	public MediterraneanFarm() {
 		super(type, balance, cropDelay, animalHappinessBonus);

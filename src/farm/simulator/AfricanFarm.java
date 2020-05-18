@@ -3,13 +3,18 @@ package farm.simulator;
 import java.text.DecimalFormat;
 
 /**
- * This class instantiates an African Farm.
+ * This class represents a type of Farm in Africa.
+ * This farm has quick crop growth with an average cash bonus
+ * and animal happiness.
+ * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
+ * @since 2020-04-25
  */
 public class AfricanFarm extends Farm {
 	private static String type = "African Farm";
-	private static float balance = 4000.00f;
+	private static float balance = 800.00f;
 	private static int cropDelay = -1;
 	private static int animalHappinessBonus = 3;
 
@@ -22,7 +27,7 @@ public class AfricanFarm extends Farm {
 	}
 	
 	/**
-	 * Returns a default description of the farm type.
+	 * Returns a default description of an African farm.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");
