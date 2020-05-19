@@ -166,6 +166,7 @@ public class GameEnvironment {
 		return "Tending to the crops speeds up their growing process by a small amount, decreasing the amount of time until they can be harvested.\n"
 				+ "Only one type of crop can be harvested at a time.\n"
 				+ "An item or water can be used to tend to the crops.\n\n"
+				+ "You current own the following crops:\n" + this.farm.getCropStatus() +"\n"
 				+ "Click yes to to pick which crop type and item.";
 	}
 

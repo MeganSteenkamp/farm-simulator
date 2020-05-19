@@ -17,7 +17,6 @@ public class ApplicationManager {
 	}
 
 	public void launchGeneralStoreScreen(GameEnvironment g) {
-		System.out.println("launching gen store");
 		GeneralStoreScreen generalStoreWindow = new GeneralStoreScreen(this, g);
 	}
 
@@ -43,9 +42,7 @@ public class ApplicationManager {
 
 	public void closeMainScreen(MainScreen mainWindow, String nextScreen) {
 		GameEnvironment g = mainWindow.closeWindow();
-		System.out.println(nextScreen);
 		if (nextScreen.equals("General Store")) {
-			System.out.println("launching gen");
 			launchGeneralStoreScreen(g);
 		}
 		else if (nextScreen.equals("Final")) {

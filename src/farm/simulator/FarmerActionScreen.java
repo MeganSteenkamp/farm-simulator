@@ -6,10 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import java.awt.Font;
@@ -257,7 +259,9 @@ public class FarmerActionScreen {
 		window.getContentPane().add(lblSelectCrop);
 
 		DefaultListModel<String> listModelCrop = new DefaultListModel();
-		crops = game.getCrops();
+		// Change to hash set and back to array to get unique crop types
+		HashSet uniqueCrops = new HashSet<FarmItem>(game.getCrops());
+		crops = new ArrayList<FarmItem>(uniqueCrops);
 		for (FarmItem c : crops) {
 			listModelCrop.addElement(
 					((Crop) c).getName() + ", Time until harvest: " + ((Crop) c).getTimeUntilHarvest() + " day(s)");
