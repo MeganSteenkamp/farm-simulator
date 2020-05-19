@@ -390,8 +390,12 @@ public class GameEnvironment {
 		}
 		return str;
 	}
+	
+	public int getNumAvailableCrops() {
+		return this.farm.getNumAvailableCrops();
+	}
 
-	public FarmItem processAnimalOrCropSale(int itemId) {
+	public FarmItem processAnimalSale(int itemId) {
 		FarmItem animal = null;
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
 		// Check withdrawal was successful
@@ -400,6 +404,17 @@ public class GameEnvironment {
 			this.farm.addAnimal(animal);
 		}
 		return animal;
+	}
+	
+	public FarmItem processCropSale(int itemId) {
+		FarmItem crop = null;
+		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
+		// Check withdrawal was successful
+		if (payment != 0) {
+			crop = generalStore.getItem(itemId);
+			this.farm.addCrop(crop);
+		}
+		return crop;
 	}
 
 	public FarmItem processItemSale(int itemId) {

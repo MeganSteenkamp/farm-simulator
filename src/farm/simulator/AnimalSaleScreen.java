@@ -65,9 +65,9 @@ public class AnimalSaleScreen {
 		btnReturnToGeneralStore.setBounds(24, 288, 240, 25);
 		window.getContentPane().add(btnReturnToGeneralStore);
 		
-		JLabel lblClickOnAn = new JLabel("Click on an animal to learn more about it:");
-		lblClickOnAn.setBounds(25, 12, 314, 15);
-		window.getContentPane().add(lblClickOnAn);
+		JLabel lblInfo = new JLabel("Click on an animal to learn more about it:");
+		lblInfo.setBounds(25, 12, 314, 15);
+		window.getContentPane().add(lblInfo);
 		
 		animalDescription = new JTextArea();
 		animalDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
@@ -82,9 +82,9 @@ public class AnimalSaleScreen {
 		btnBuyAnimal = new JButton("Buy animal");
 		btnBuyAnimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FarmItem animal = game.processAnimalOrCropSale(selectedAnimalId);
+				FarmItem animal = game.processAnimalSale(selectedAnimalId);
 				if (animal == null) {
-					JOptionPane.showMessageDialog(window, game.getErrorMessage(), "Success", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(window, game.getErrorMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(window, game.getSuccessMessage(animal), "Success", JOptionPane.INFORMATION_MESSAGE);
 				}

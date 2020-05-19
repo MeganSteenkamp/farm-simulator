@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextArea;
 
 public class GeneralStoreScreen {
 
@@ -44,6 +47,19 @@ public class GeneralStoreScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
+		JLabel lblInfo = new JLabel("Select an action:");
+		lblInfo.setBounds(31, 21, 314, 15);
+		window.getContentPane().add(lblInfo);
+		
+		JTextArea txtCropWarning = new JTextArea();
+		txtCropWarning.setEditable(false);
+		txtCropWarning.setWrapStyleWord(true);
+		txtCropWarning.setLineWrap(true);
+		txtCropWarning.setVisible(false);
+		txtCropWarning.setText("*You are unable to purchase crops at this time as your plots are full");
+		txtCropWarning.setBounds(381, 400, 307, 34);
+		window.getContentPane().add(txtCropWarning);
+		
 		JButton btnReturnToMain = new JButton("Return to main screen");
 		btnReturnToMain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -60,7 +76,7 @@ public class GeneralStoreScreen {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnViewMyItems.setBounds(31, 48, 304, 159);
+		btnViewMyItems.setBounds(24, 48, 304, 159);
 		window.getContentPane().add(btnViewMyItems);
 		
 		JButton btnBuyAnimals = new JButton("Buy animals");
@@ -69,7 +85,7 @@ public class GeneralStoreScreen {
 				finishedWindow("Animals");
 			}
 		});
-		btnBuyAnimals.setBounds(360, 48, 304, 159);
+		btnBuyAnimals.setBounds(371, 48, 304, 159);
 		window.getContentPane().add(btnBuyAnimals);
 		
 		JButton btnBuyCrops = new JButton("Buy crops");
@@ -78,7 +94,11 @@ public class GeneralStoreScreen {
 				finishedWindow("Crops");
 			}
 		});
-		btnBuyCrops.setBounds(31, 247, 304, 159);
+		if (game.getNumAvailableCrops() == 0) {
+			btnBuyCrops.setEnabled(false);
+			txtCropWarning.setVisible(true);
+		}
+		btnBuyCrops.setBounds(371, 238, 304, 159);
 		window.getContentPane().add(btnBuyCrops);
 		
 		JButton btnBuyItems = new JButton("Buy farming items");
@@ -87,7 +107,7 @@ public class GeneralStoreScreen {
 				finishedWindow("Items");
 			}
 		});
-		btnBuyItems.setBounds(360, 247, 311, 159);
+		btnBuyItems.setBounds(24, 238, 311, 159);
 		window.getContentPane().add(btnBuyItems);
 	}
 }
