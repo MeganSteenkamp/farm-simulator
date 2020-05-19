@@ -10,6 +10,13 @@ import farm.simulator.Chicken;
 import farm.simulator.Horse;
 import farm.simulator.Pig;
 
+/**
+ * This class performs unit tests on the Animal class. It also checks the
+ * initialization of the Chicken, Pig and Horse subclasses work as intended.
+ * 
+ * @author Megan Steenkamp
+ *
+ */
 class AnimalTest {
 
 	private Animal testAnimal;
@@ -52,18 +59,17 @@ class AnimalTest {
 	void testGetType() {
 		assertEquals(tType, testAnimal.getType());
 	}
-	
+
 	/**
-	 * Test getting animal name.
-	 * This function is expected to return the type of the animal.
-	 * It was implemented so Animal could implement the FarmItem interface and meet
-	 * assignment spec requirements.
+	 * Test getting animal name. This function is expected to return the type of the
+	 * animal. It was implemented so Animal could implement the FarmItem interface
+	 * and meet assignment spec requirements.
 	 */
 	@Test
 	void testGetName() {
 		assertEquals(tType, testAnimal.getName());
 	}
-	
+
 	/**
 	 * Test getting animal description.
 	 */
