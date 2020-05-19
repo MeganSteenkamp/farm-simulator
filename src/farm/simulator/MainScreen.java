@@ -44,7 +44,7 @@ public class MainScreen {
 	}
 
 	private String getScreenTitle() {
-		return "Main Screen - Day " + game.getCurrentDay();
+		return "Main Screen - Day " + game.getCurrentDay() + "/" + game.getDaysTotal();
 	}
 
 	private String getRemainingActions() {
@@ -52,10 +52,14 @@ public class MainScreen {
 	}
 
 	private void moveToNextDay() {
-		game.moveToNextDay();
-		JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
-		refreshWindow();
-		JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
+		boolean gameOngoing = game.moveToNextDay();
+		if (!gameOngoing) {
+			finishedWindow("Final");
+		} else {
+			JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
+			refreshWindow(); //Updates labels without observers
+			JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	private void processNextDay() {
@@ -138,12 +142,12 @@ public class MainScreen {
 		window.getContentPane().add(btnPerformAnAction);
 
 		JLabel lblActionsWarning = new JLabel("*These actions count towards a daily action");
-		lblActionsWarning.setFont(new Font("Dialog", Font.ITALIC, 9));
+		lblActionsWarning.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblActionsWarning.setBounds(35, 420, 291, 15);
 		window.getContentPane().add(lblActionsWarning);
 
 		JLabel lblNumActions = new JLabel(getRemainingActions());
-		lblNumActions.setFont(new Font("Dialog", Font.ITALIC, 9));
+		lblNumActions.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNumActions.setBounds(35, 435, 291, 15);
 		window.getContentPane().add(lblNumActions);
 	}

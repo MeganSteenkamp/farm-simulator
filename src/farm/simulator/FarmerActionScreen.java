@@ -247,7 +247,7 @@ public class FarmerActionScreen {
 
 		lblSelectFood = new JLabel("Select a food item to use:");
 		lblSelectFood.setBounds(320, 71, 240, 15);
-		foodList.setVisible(false);
+		lblSelectFood.setVisible(false);
 		window.getContentPane().add(lblSelectFood);
 
 		// List of crops that can be tended to

@@ -156,11 +156,11 @@ public class SetupScreen {
 		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
 		bonusesDescription.setVisible(false);
 		bonusesDescription.setWrapStyleWord(true);
-		bonusesDescription.setFont(new Font("Dialog", Font.ITALIC, 9));
+		bonusesDescription.setFont(new Font("Dialog", Font.PLAIN, 10));
 		bonusesDescription.setLineWrap(true);
 		bonusesDescription.setEnabled(true);
 		bonusesDescription.setEditable(false);
-		bonusesDescription.setBounds(391, 325, 285, 95);
+		bonusesDescription.setBounds(391, 317, 285, 104);
 		window.getContentPane().add(bonusesDescription);
 
 		JButton btnBeginGame = new JButton("Begin game");

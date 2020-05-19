@@ -14,6 +14,7 @@ import java.util.regex.*;
 
 public class GameEnvironment {
 	Scanner in = new Scanner(System.in);
+	public float initialBalance;
 	private int numDayActions;
 	private int daysTotal;
 	private int currentDay;
@@ -43,7 +44,7 @@ public class GameEnvironment {
 	public String getWelcomeMessage() {
 		return "Welcome to your new farm, " + this.farm.getFarmer().getName()
 				+ ". It is a beautiful day to get to work on '" + this.farm.getName()
-				+ "'.\nWe suggest going to the General Store.\nA farm isn't much fun without crops or animals.";
+				+ "'.\nWe suggest visiting the General Store.\nA farm isn't much fun without crops or animals.";
 	}
 
 	public String getGameInstructions() {
@@ -75,21 +76,10 @@ public class GameEnvironment {
 			this.farm = new NewZealandFarm();
 			break;
 		}
-
+		this.initialBalance = this.farm.getBalance();
 		this.farm.setName(farmName);
 		this.farm.setFarmer(createFarmer(farmerName, farmerAge));
 		this.farm.getFarmer().setFarm(farm);
-
-		// TODO: Remove this code after testing
-		this.farm.addAnimal(new Chicken());
-		this.farm.addAnimal(new Horse());
-		this.farm.addCrop(new Cotton());
-		this.farm.addCrop(new Olive());
-		this.farm.addCrop(new Avocado());
-		this.farm.getFarmer().addItem(new Fertilizer());
-		this.farm.getFarmer().addItem(new Steroid());
-		this.farm.getFarmer().addItem(new Silage());
-		this.farm.getFarmer().addItem(new Hoe());
 	}
 
 //===================================================== DAY IMPLEMENTATION =====================================================	
@@ -97,7 +87,6 @@ public class GameEnvironment {
 	public void beginNewDay() {
 		this.currentDay++;
 		this.numDayActions = 2;
-		System.out.println(this.numDayActions);
 
 		// Update crop growth by 1 day
 		for (FarmItem c : this.farm.getCrops()) {
@@ -127,9 +116,12 @@ public class GameEnvironment {
 			str += "Bonus from " + ((Animal) a).getName() + ": $" + df.format(happinessBonus + healthBonus) + "\n";
 			bonus += (happinessBonus + healthBonus);
 		}
-		this.farm.addToBalance(bonus);
-		str += "\nTotal bonus money: $" + df.format(bonus);
-
+		if (bonus == 0) {
+			str += "\nTotal bonus money: $0.00";
+		} else {
+			this.farm.addToBalance(bonus);
+			str += "\nTotal bonus money: $" + df.format(bonus);
+		}
 		return str;
 	}
 
@@ -159,8 +151,13 @@ public class GameEnvironment {
 		return this.numDayActions;
 	}
 
-	public void moveToNextDay() {
-		beginNewDay();
+	public boolean moveToNextDay() {
+		if (this.currentDay < this.daysTotal) {
+			beginNewDay();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 //===================================================== FARMER ACTIONS =====================================================	
@@ -194,7 +191,7 @@ public class GameEnvironment {
 		return "Tending to the farm's land keeps the farm tidy and well maintained.\n"
 				+ "This allows for more crops to be grown and keeps animals happier for longer.\n\n"
 				+ "Here is the status of your current animals:\n" + this.farm.getAnimalStatus() + "\nYou have "
-				+ this.farm.getNumAvailableCrops() + "available crop plots.\n\n"
+				+ this.farm.getNumAvailableCrops() + " available crop plots.\n\n"
 				+ "Click yes to tend to the land, adding 1 point to the happiness of all of your animals, and adding 1 available crop plot.";
 	}
 
@@ -331,48 +328,6 @@ public class GameEnvironment {
 		return str;
 	}
 
-// ===================================================== FINAL SCORE IMPLEMENTATION =====================================================
-
-	/**
-	 * Calculate a final score based on game duration, number of crops and animals,
-	 * animal status and money earned
-	 * 
-	 * @return Final score.
-	 */
-	public int getFinalScore() {
-		int score = 0;
-
-		// =================== ASSESS MONEY ===================
-		// Sum up monetary value of assets (money, animals, crops)
-		float money = this.farm.getBalance();
-
-		ArrayList<FarmItem> animals = this.farm.getAnimals();
-		for (FarmItem a : animals) {
-			money += a.getPurchasePrice();
-		}
-
-		// Crops have not been harvested so calculate value through purchase price
-		ArrayList<FarmItem> crops = this.farm.getCrops();
-		for (FarmItem c : crops) {
-			money += c.getPurchasePrice();
-		}
-
-		// 1 points for every $10 earned
-		score += Math.floorDiv((int) money, 10);
-
-		// =================== ASSESS ANIMAL STATUS ===================
-
-		// 1 point for every happiness point on an animal, 1 point for health
-		for (FarmItem a : animals) {
-			score += ((Animal) a).getHealth();
-			score += ((Animal) a).getHappiness();
-		}
-
-		// Multiply by game duration
-		score *= this.daysTotal;
-		return score;
-	}
-
 //===================================================== GENERAL STORE =====================================================
 
 	/**
@@ -390,7 +345,7 @@ public class GameEnvironment {
 		}
 		return str;
 	}
-	
+
 	public int getNumAvailableCrops() {
 		return this.farm.getNumAvailableCrops();
 	}
@@ -405,7 +360,7 @@ public class GameEnvironment {
 		}
 		return animal;
 	}
-	
+
 	public FarmItem processCropSale(int itemId) {
 		FarmItem crop = null;
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
@@ -482,14 +437,71 @@ public class GameEnvironment {
 
 	public String getSuccessMessage(FarmItem item) {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Congratulations, " + this.farm.getFarmer().getName() +"!\n\n" +
-				"You are now the new owner of:\n"
+		return "Congratulations, " + this.farm.getFarmer().getName() + "!\n" + "Your purchase is completed"
+				+ "and your new item has been modified according to your farm type.\n\n"
+				+ "You are now the new owner of:\n"
 				+ item.toString() + "\n\nYour remaining balance is $" + df.format(this.farm.getBalance());
 	}
 
 	public String getErrorMessage() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Oh no, it appears you cannot afford this right now.\n"
-				+ "Your current balance is $" + df.format(this.farm.getBalance());
+		return "Oh no, it appears you cannot afford this right now.\n" + "Your current balance is $"
+				+ df.format(this.farm.getBalance());
 	}
+
+// ===================================================== FINAL SCORE IMPLEMENTATION =====================================================
+
+	public float getTotalProfit() {
+		return this.farm.getBalance() - this.initialBalance;
+	}
+
+	/**
+	 * Calculate a final score based on game duration, number of crops and animals,
+	 * animal status and money earned
+	 * 
+	 * @return Final score.
+	 */
+	public int calculateFinalScore() {
+		int score = 0;
+
+		// =================== ASSESS MONEY ===================
+		// Sum up monetary value of assets (money, animals, crops)
+		float money = this.farm.getBalance();
+
+		ArrayList<FarmItem> animals = this.farm.getAnimals();
+		for (FarmItem a : animals) {
+			money += a.getPurchasePrice();
+		}
+
+		// Crops have not been harvested so calculate value through purchase price
+		ArrayList<FarmItem> crops = this.farm.getCrops();
+		for (FarmItem c : crops) {
+			money += c.getPurchasePrice();
+		}
+
+		// 1 points for every $10 earned
+		score += Math.floorDiv((int) money, 10);
+
+		// =================== ASSESS ANIMAL STATUS ===================
+
+		// 1 point for every happiness point on an animal, 1 point for health
+		for (FarmItem a : animals) {
+			score += ((Animal) a).getHealth();
+			score += ((Animal) a).getHappiness();
+		}
+
+		// Multiply by game duration
+		score *= this.daysTotal;
+		return score;
+	}
+
+	public String getFinalResults() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Well done, " + this.farm.getFarmer().getName() + ", you have made it through life as a farmer!"
+				+ "\nFarm name: " + this.farm.getName() + "\nGame duration: " + this.getDaysTotal() + " days"
+				+ "\nProfit made: $" + df.format(getTotalProfit())
+				+ "\n\nYour final score is calculated based on game duration, "
+				+ "crops and animals owned, animal status and money earned";
+	}
+
 }

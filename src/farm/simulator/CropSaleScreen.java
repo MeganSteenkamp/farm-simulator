@@ -82,11 +82,11 @@ public class CropSaleScreen {
 		btnBuyCrop = new JButton("Buy crop");
 		btnBuyCrop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FarmItem animal = game.processCropSale(selectedCropId);
-				if (animal == null) {
+				FarmItem crop = game.processCropSale(selectedCropId);
+				if (crop == null) {
 					JOptionPane.showMessageDialog(window, game.getErrorMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(window, game.getSuccessMessage(animal), "Success", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(window, game.getSuccessMessage(crop), "Success", JOptionPane.INFORMATION_MESSAGE);
 				}
 				finishedWindow();
 			}

@@ -17,6 +17,7 @@ public class ApplicationManager {
 	}
 
 	public void launchGeneralStoreScreen(GameEnvironment g) {
+		System.out.println("launching gen store");
 		GeneralStoreScreen generalStoreWindow = new GeneralStoreScreen(this, g);
 	}
 
@@ -36,10 +37,19 @@ public class ApplicationManager {
 		ItemSaleScreen itemSaleWindow = new ItemSaleScreen(this, g);
 	}
 
+	public void launchFinalScreen(GameEnvironment g) {
+		FinalScreen finalWindow = new FinalScreen(this, g);
+	}
+
 	public void closeMainScreen(MainScreen mainWindow, String nextScreen) {
 		GameEnvironment g = mainWindow.closeWindow();
+		System.out.println(nextScreen);
 		if (nextScreen.equals("General Store")) {
+			System.out.println("launching gen");
 			launchGeneralStoreScreen(g);
+		}
+		else if (nextScreen.equals("Final")) {
+			launchFinalScreen(g);
 		} else {
 			launchFarmerActionScreen(g);
 		}
@@ -60,11 +70,9 @@ public class ApplicationManager {
 		GameEnvironment g = generalStoreWindow.closeWindow();
 		if (nextScreen.equals("Animals")) {
 			launchAnimalSaleScreen(g);
-		}
-		else if (nextScreen.equals("Crops")) {
+		} else if (nextScreen.equals("Crops")) {
 			launchCropSaleScreen(g);
-		}
-		else if (nextScreen.equals("Items")) {
+		} else if (nextScreen.equals("Items")) {
 			launchItemSaleScreen(g);
 		} else {
 			launchMainScreen(g);
@@ -84,6 +92,10 @@ public class ApplicationManager {
 	public void closeCropSaleScreen(CropSaleScreen cropSaleWindow) {
 		GameEnvironment g = cropSaleWindow.closeWindow();
 		launchGeneralStoreScreen(g);
+	}
+
+	public void closeFinalScreen(FinalScreen finalWindow) {
+		finalWindow.closeWindow();
 	}
 
 	/**
