@@ -284,7 +284,7 @@ public class FarmerActionScreen {
 		
 		DefaultListModel<String> listModelTools = new DefaultListModel();
 		tools = game.getToolItems();
-		listModelTools.addElement("Water, Added crop growth: 1 day(s)");
+		listModelTools.addElement("Water, Added crop growth: -1 day(s)");
 		for (FarmItem i : tools) {
 			listModelTools.addElement(
 					((Item) i).getName() + ", Added crop growth: " + ((Item) i).getCropGrowthFactor() + " day(s)");

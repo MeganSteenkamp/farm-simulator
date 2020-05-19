@@ -57,10 +57,8 @@ public class ApplicationManager {
 	}
 
 	public void closeGeneralStoreScreen(GeneralStoreScreen generalStoreWindow, String nextScreen) {
-		System.out.println(nextScreen);
 		GameEnvironment g = generalStoreWindow.closeWindow();
 		if (nextScreen.equals("Animals")) {
-			System.out.println("In animals");
 			launchAnimalSaleScreen(g);
 		}
 		else if (nextScreen.equals("Crops")) {

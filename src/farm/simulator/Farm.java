@@ -129,11 +129,10 @@ public abstract class Farm {
 	 * @return Name of the farm.
 	 */
 	public float withdrawMoney(float amount) {
-		if (amount < getBalance()) {
+		if (amount <= getBalance()) {
 			this.balance -= amount;
 			return amount;
 		} else {
-			// TODO: Should raise insufficient funds error
 			return 0;
 		}
 	}

@@ -124,7 +124,7 @@ public class GameEnvironment {
 		for (FarmItem a : animals) {
 			float healthBonus = ((Animal) a).getHealth() * 5;
 			float happinessBonus = ((Animal) a).getHappiness() * 5;
-			str += "Bonus from " + ((Animal) a).getType() + ": $" + df.format(happinessBonus + healthBonus) + "\n";
+			str += "Bonus from " + ((Animal) a).getName() + ": $" + df.format(happinessBonus + healthBonus) + "\n";
 			bonus += (happinessBonus + healthBonus);
 		}
 		this.farm.addToBalance(bonus);
@@ -310,7 +310,7 @@ public class GameEnvironment {
 		float moneyEarned = this.farm.getFarmer().harvestCrops();
 		DecimalFormat df = new DecimalFormat("#.00");
 		str += "Score!! You have just added $" + df.format(moneyEarned) + " to the balance of the farm.\n"
-				+ "You now have " + this.farm.getNumAvailableCrops() + " available crop plots.\n\n" 
+				+ "You now have " + this.farm.getNumAvailableCrops() + " available crop plots.\n\n"
 				+ "Here is the updated status of your crops:\n";
 		str += this.farm.getCropStatus();
 
@@ -391,13 +391,90 @@ public class GameEnvironment {
 		return str;
 	}
 
-	public FarmItem processSale(int itemId) {
+	public FarmItem processAnimalOrCropSale(int itemId) {
+		FarmItem animal = null;
+		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
+		// Check withdrawal was successful
+		if (payment != 0) {
+			animal = generalStore.getItem(itemId);
+			this.farm.addAnimal(animal);
+		}
+		return animal;
+	}
+
+	public FarmItem processItemSale(int itemId) {
 		FarmItem item = null;
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
-		// Check withdrawl was successful
+		// Check withdrawal was successful
 		if (payment != 0) {
 			item = generalStore.getItem(itemId);
+			this.farm.getFarmer().addItem(item);
 		}
 		return item;
+	}
+
+	public String getFarmItemDescription(int itemId) {
+		String str = "";
+		switch (itemId) {
+		case 1:
+			str += Fertilizer.getTypeDescription();
+			break;
+		case 2:
+			str += Compost.getTypeDescription();
+			break;
+		case 3:
+			str += Hoe.getTypeDescription();
+			break;
+		case 4:
+			str += Steroid.getTypeDescription();
+			break;
+		case 5:
+			str += Grain.getTypeDescription();
+			break;
+		case 6:
+			str += Silage.getTypeDescription();
+			break;
+		case 7:
+			str += Rice.getTypeDescription();
+			break;
+		case 8:
+			str += Wheat.getTypeDescription();
+			break;
+		case 9:
+			str += Cotton.getTypeDescription();
+			break;
+		case 10:
+			str += Coffee.getTypeDescription();
+			break;
+		case 11:
+			str += Olive.getTypeDescription();
+			break;
+		case 12:
+			str += Avocado.getTypeDescription();
+			break;
+		case 13:
+			str += Chicken.getTypeDescription();
+			break;
+		case 14:
+			str += Pig.getTypeDescription();
+			break;
+		case 15:
+			str += Horse.getTypeDescription();
+			break;
+		}
+		return str;
+	}
+
+	public String getSuccessMessage(FarmItem item) {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Congratulations, " + this.farm.getFarmer().getName() +"!\n\n" +
+				"You are now the new owner of:\n"
+				+ item.toString() + "\n\nYour remaining balance is $" + df.format(this.farm.getBalance());
+	}
+
+	public String getErrorMessage() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Oh no, it appears you cannot afford this right now.\n"
+				+ "Your current balance is $" + df.format(this.farm.getBalance());
 	}
 }

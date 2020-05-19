@@ -53,14 +53,14 @@ public class GeneralStoreScreen {
 		btnReturnToMain.setBounds(12, 438, 240, 25);
 		window.getContentPane().add(btnReturnToMain);
 		
-		JButton btnViewMyItems = new JButton("View my items");
+		JButton btnViewMyItems = new JButton("View my farming items");
 		btnViewMyItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(window, game.displayCurrentlyOwnedItems(), "Currently owned items",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnViewMyItems.setBounds(31, 32, 202, 25);
+		btnViewMyItems.setBounds(31, 48, 304, 159);
 		window.getContentPane().add(btnViewMyItems);
 		
 		JButton btnBuyAnimals = new JButton("Buy animals");
@@ -69,7 +69,7 @@ public class GeneralStoreScreen {
 				finishedWindow("Animals");
 			}
 		});
-		btnBuyAnimals.setBounds(64, 94, 188, 25);
+		btnBuyAnimals.setBounds(360, 48, 304, 159);
 		window.getContentPane().add(btnBuyAnimals);
 		
 		JButton btnBuyCrops = new JButton("Buy crops");
@@ -78,7 +78,7 @@ public class GeneralStoreScreen {
 				finishedWindow("Crops");
 			}
 		});
-		btnBuyCrops.setBounds(100, 152, 117, 25);
+		btnBuyCrops.setBounds(31, 247, 304, 159);
 		window.getContentPane().add(btnBuyCrops);
 		
 		JButton btnBuyItems = new JButton("Buy farming items");
@@ -87,7 +87,7 @@ public class GeneralStoreScreen {
 				finishedWindow("Items");
 			}
 		});
-		btnBuyItems.setBounds(100, 255, 207, 25);
+		btnBuyItems.setBounds(360, 247, 311, 159);
 		window.getContentPane().add(btnBuyItems);
 	}
 }

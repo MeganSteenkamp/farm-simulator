@@ -77,7 +77,7 @@ public abstract class Animal implements FarmItem {
 	 * 
 	 * @return Type of the animal.
 	 */
-	public String getType() {
+	public String getName() {
 		return this.type;
 	}
 
