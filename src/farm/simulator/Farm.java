@@ -102,7 +102,7 @@ public abstract class Farm {
 	 * happiness levels.
 	 */
 	public String getCropAndAnimalStatus() {
-		return getCropStatus() + "\n" + getAnimalStatus();
+		return getCropStatus() + getAnimalStatus();
 	}
 
 	/**

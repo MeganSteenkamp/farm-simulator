@@ -3,7 +3,6 @@ package farm.simulator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.*;
 
 /**
  * This abstract class implements the game environment.
@@ -218,7 +217,6 @@ public class GameEnvironment {
 	}
 
 	public boolean canHarvestCrops() {
-		ArrayList<Crop> cropsToHarvest = new ArrayList<Crop>();
 		for (FarmItem crop : this.farm.getCrops()) {
 			Crop c = (Crop) crop;
 			if (c.getTimeUntilHarvest() == 0) {

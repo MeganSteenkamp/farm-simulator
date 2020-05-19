@@ -227,13 +227,13 @@ public class FarmerActionScreen {
 
 		// Initialize and hide lists that might be needed to pick items
 		// Food list for feeding animals
-		DefaultListModel<String> listModelFood = new DefaultListModel();
+		DefaultListModel<String> listModelFood = new DefaultListModel<String>();
 		food = game.getFoodItems();
 		for (FarmItem f : food) {
 			listModelFood.addElement(
 					((Item) f).getName() + ", Bonus health: " + ((Item) f).getAnimalHealthFactor() + " point(s)");
 		}
-		foodList = new JList(listModelFood);
+		foodList = new JList<String>(listModelFood);
 		foodList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (foodList.getValueIsAdjusting()) {
@@ -258,15 +258,15 @@ public class FarmerActionScreen {
 		lblSelectCrop.setVisible(false);
 		window.getContentPane().add(lblSelectCrop);
 
-		DefaultListModel<String> listModelCrop = new DefaultListModel();
+		DefaultListModel<String> listModelCrop = new DefaultListModel<String>();
 		// Change to hash set and back to array to get unique crop types
-		HashSet uniqueCrops = new HashSet<FarmItem>(game.getCrops());
+		HashSet<FarmItem> uniqueCrops = new HashSet<FarmItem>(game.getCrops());
 		crops = new ArrayList<FarmItem>(uniqueCrops);
 		for (FarmItem c : crops) {
 			listModelCrop.addElement(
 					((Crop) c).getName() + ", Time until harvest: " + ((Crop) c).getTimeUntilHarvest() + " day(s)");
 		}
-		cropList = new JList(listModelCrop);
+		cropList = new JList<String>(listModelCrop);
 		cropList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (cropList.getValueIsAdjusting()) {
@@ -286,14 +286,14 @@ public class FarmerActionScreen {
 		lblSelectAnItem.setVisible(false);
 		window.getContentPane().add(lblSelectAnItem);
 		
-		DefaultListModel<String> listModelTools = new DefaultListModel();
+		DefaultListModel<String> listModelTools = new DefaultListModel<String>();
 		tools = game.getToolItems();
 		listModelTools.addElement("Water, Added crop growth: -1 day(s)");
 		for (FarmItem i : tools) {
 			listModelTools.addElement(
 					((Item) i).getName() + ", Added crop growth: " + ((Item) i).getCropGrowthFactor() + " day(s)");
 		}
-		itemList = new JList(listModelTools);
+		itemList = new JList<String>(listModelTools);
 		itemList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (itemList.getValueIsAdjusting()) {
@@ -328,7 +328,6 @@ public class FarmerActionScreen {
 			public void actionPerformed(ActionEvent e) {
 				Crop crop = (Crop) crops.get(cropList.getSelectedIndex());
 				if (itemList.getSelectedIndex() == 0) {
-					String item = "Water";
 					if (JOptionPane.showConfirmDialog(
 							window, "Please confirm your action:\nCrop to tend to: " + crop.getName()
 									+ "\nItem used: Water" + "\n\n",
