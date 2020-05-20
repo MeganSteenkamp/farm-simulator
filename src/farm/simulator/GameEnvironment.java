@@ -35,9 +35,9 @@ public class GameEnvironment {
 	}
 
 	public static String getBonusesDescription() {
-		return "Crop growth delay will delay the growth time of a crop by a given number of days. A crop can only be harvested for money once"
+		return "Crop growth delay will delay the growth of all crops by a given number of days. A crop can only be harvested for money once"
 				+ " it is fully grown. If this delay is negative, it means your crops will grow faster.\n\nAn animal happiness bonus adds to the happiness all animals, which"
-				+ " contributes to the amount of money earned at the end of a day.";
+				+ " contributes to the amount of money earned at the end of a day.\n\nThese bonuses are applied on purchase of the crop or animal.";
 	}
 
 	public String getWelcomeMessage() {

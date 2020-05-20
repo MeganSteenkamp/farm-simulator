@@ -4,13 +4,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * This abstract class implements the base class for all farms.
+ * This class implements the base class for all farms.
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
  */
 
-public abstract class Farm {
+public class Farm {
 	private String name;
 	private String type;
 	private Farmer farmer;
@@ -88,12 +88,18 @@ public abstract class Farm {
 	}
 
 	/**
-	 * Adds to the number of free crops available on the farm.
+	 * Adds to the number of free crops available on the farm. Only accepts positive
+	 * parameters.
 	 * 
 	 * @param num The number of newly available crops.
 	 */
 	public void addToAvailableCrops(int num) {
-		this.numAvailableCrops += num;
+		if (num > 0) {
+			this.numAvailableCrops += num;
+		} else {
+			throw new IllegalArgumentException("Available crops cannot be deducted from.");
+		}
+
 	}
 
 	/**
@@ -124,12 +130,13 @@ public abstract class Farm {
 	}
 
 	/**
-	 * Withdraws money from the farm
+	 * Withdraws money from the farm. Returns no money for payment if the withdrawal
+	 * is invalid.
 	 * 
 	 * @return Name of the farm.
 	 */
 	public float withdrawMoney(float amount) {
-		if (amount <= getBalance()) {
+		if (amount <= getBalance() && amount >= 0) {
 			this.balance -= amount;
 			return amount;
 		} else {
@@ -139,12 +146,18 @@ public abstract class Farm {
 
 	/**
 	 * Adds to monetary balance of the farm.
+	 * Throws an exception is money is attempted to be deducted.
 	 * 
 	 * @param amount Amount of money to add.
 	 */
 	public float addToBalance(float amount) {
-		this.balance += amount;
-		return this.balance;
+		if (amount >= 0) {
+			this.balance += amount;
+			return this.balance;
+		} else {
+			throw new IllegalArgumentException(
+					"Cannot add a negative amount to balance. Use withdrawMoney() function.");
+		}
 	}
 
 	/**
@@ -153,10 +166,14 @@ public abstract class Farm {
 	 * @param crop Crop to be added.
 	 */
 	public void addCrop(FarmItem crop) {
-		// Scale crop growth according to farm
-		((Crop) crop).addDaysToGrow(cropGrowthFactor);
-		this.crops.add(crop);
-		this.numAvailableCrops -= 1;
+		if (this.numAvailableCrops > 0) {
+			// Scale crop growth according to farm
+			((Crop) crop).addDaysToGrow(cropGrowthFactor);
+			this.crops.add(crop);
+			this.numAvailableCrops -= 1;
+		} else {
+			throw new IllegalArgumentException("Crops cannot be added to a farm with no available plots.");
+		}
 	}
 
 	/**
@@ -165,11 +182,16 @@ public abstract class Farm {
 	 * @param crop Crop to be removed.
 	 */
 	public void removeCrop(Crop crop) {
+		boolean removedCrop = false;
 		for (int i = 0; i < crops.size(); i++) {
 			if (crops.get(i) == crop) {
+				removedCrop = true;
 				crops.remove(i);
 				break;
 			}
+		}
+		if (removedCrop == false) {
+			throw new RuntimeException("Given crop does not exist in the farm");
 		}
 	}
 
@@ -233,7 +255,8 @@ public abstract class Farm {
 	public String getCropsReadyForHarvest() {
 		String s = "";
 		for (FarmItem c : crops) {
-			if (((Crop) c).getTimeUntilHarvest() == 0) {
+			int time = ((Crop) c).getTimeUntilHarvest();
+			if (time == 0) {
 				s += c.toString() + "\n\n";
 			}
 		}

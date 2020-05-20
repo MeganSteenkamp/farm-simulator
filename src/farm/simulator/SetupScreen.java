@@ -150,7 +150,7 @@ public class SetupScreen {
 		farmDescription.setEditable(false);
 		farmDescription.setVisible(false);
 		farmDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
-		farmDescription.setBounds(391, 227, 285, 78);
+		farmDescription.setBounds(391, 223, 285, 66);
 		window.getContentPane().add(farmDescription);
 		
 		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
@@ -160,7 +160,7 @@ public class SetupScreen {
 		bonusesDescription.setLineWrap(true);
 		bonusesDescription.setEnabled(true);
 		bonusesDescription.setEditable(false);
-		bonusesDescription.setBounds(391, 317, 285, 104);
+		bonusesDescription.setBounds(391, 289, 285, 143);
 		window.getContentPane().add(bonusesDescription);
 
 		JButton btnBeginGame = new JButton("Begin game");
@@ -184,7 +184,7 @@ public class SetupScreen {
 				}
 			}
 		});
-		btnBeginGame.setBounds(559, 433, 117, 25);
+		btnBeginGame.setBounds(559, 438, 117, 25);
 		window.getContentPane().add(btnBeginGame);
 
 		JButton btnNorthKorea = new JButton("North Korea");

@@ -1,13 +1,13 @@
 package farm.simulator;
 
 /**
- * The abstract class implementing the base class for all crops.
+ * The class implementing the base class for all crops.
  *
  * @author Lewis Marshall
  * @author Megan Steenkamp
  */
 
-public abstract class Crop implements FarmItem {
+public class Crop implements FarmItem {
 	private int id;
 	private String name;
 	private String description;
