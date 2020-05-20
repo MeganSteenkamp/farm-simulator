@@ -9,6 +9,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * This application window displays the crops for sale in the general store.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
 public class CropSaleScreen {
 
 	private ApplicationManager manager;
@@ -21,6 +27,9 @@ public class CropSaleScreen {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
 	 */
 	public CropSaleScreen(ApplicationManager application, GameEnvironment g) {
 		game = g;
@@ -29,15 +38,27 @@ public class CropSaleScreen {
 		window.setVisible(true);
 	}
 
+	/**
+	 * Close the Crop sale screen, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
 	public GameEnvironment closeWindow() {
 		window.dispose();
 		return game;
 	}
 
+	/**
+	 * Notify the window manager that the use of this window is finished.
+	 */
 	public void finishedWindow() {
 		manager.closeCropSaleScreen(this);
 	}
 
+	/**
+	 * Set the crop description to be visible and display the description of the
+	 * selected crop.
+	 */
 	public void displayDescription() {
 		cropDescription.setVisible(true);
 		cropDescription.setText(game.getFarmItemDescription(selectedCropId));

@@ -6,6 +6,7 @@ package farm.simulator;
  * the state of the game between windows.
  * 
  * @author Megan Steenkamp
+ * @version 1.0
  */
 public class ApplicationManager {
 
@@ -183,9 +184,8 @@ public class ApplicationManager {
 	}
 
 	/**
-	 * Main function to access the farm simulator game.
-	 * This instantiates the game and controls the GUI windows 
-	 * displayed to a user.
+	 * Main function to access the farm simulator game. This instantiates the game
+	 * and controls the GUI windows displayed to a user.
 	 * 
 	 * @param args Command line arguments.
 	 */

@@ -3,10 +3,11 @@ package farm.simulator;
 import java.text.DecimalFormat;
 
 /**
- * This abstract class implements the base class for all animals.
+ * This class implements the base class for all animals.
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
  */
 public class Animal implements FarmItem {
 	private int id;
@@ -19,11 +20,12 @@ public class Animal implements FarmItem {
 	/**
 	 * Class constructor for the Animal class
 	 * 
-	 * @param id 		 the id of the animal type
-	 * @param price      the price of the animal
-	 * @param animalType the breed of the animal
-	 * @param happiness  the happiness status of the animal
-	 * @param health     the health status of the animal
+	 * @param id          the id of the animal type
+	 * @param price       the price of the animal
+	 * @param type        the breed of the animal
+	 * @param description a general description of the breed of animal
+	 * @param happiness   the happiness status of the animal
+	 * @param health      the health status of the animal
 	 */
 	public Animal(int id, float price, String type, String description, int happiness, int health) {
 		this.id = id;
@@ -33,7 +35,7 @@ public class Animal implements FarmItem {
 		this.happiness = happiness;
 		this.health = health;
 	}
-	
+
 	/**
 	 * Returns the description for an animal.
 	 *
@@ -42,9 +44,10 @@ public class Animal implements FarmItem {
 	public String getDescription() {
 		return this.description;
 	}
-	
+
 	/**
-	 * Returns the id of a given type of animal.
+	 * Returns the ID of a given type of animal.
+	 * 
 	 * @return Id of animal type.
 	 */
 	public int getId() {
@@ -59,12 +62,13 @@ public class Animal implements FarmItem {
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Type: " + this.type + "\nDescription: " + this.description +"\nPrice: $" + df.format(this.price)
-		+ "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
+		return "Type: " + this.type + "\nDescription: " + this.description + "\nPrice: $" + df.format(this.price)
+				+ "\nHappiness: " + this.happiness + "\nHealth: " + this.health;
 	}
 
 	/**
-	 * Sets the price of an animal.
+	 * Sets the price of an animal. Throws an exception if the given price is
+	 * negative.
 	 * 
 	 * @param Price of the animal.
 	 */
@@ -75,9 +79,9 @@ public class Animal implements FarmItem {
 			throw new IllegalArgumentException("A price cannot be negative");
 		}
 	}
-	
+
 	/**
-	 * Returns the type of an animal.
+	 * Returns the type (breed) of an animal.
 	 * 
 	 * @return Type of the animal.
 	 */
@@ -86,8 +90,8 @@ public class Animal implements FarmItem {
 	}
 
 	/**
-	 * A duplicate of returning the type of animal to be able to
-	 * implement the FarmItem() interface.
+	 * Returns the breed of animal. A duplicate of getType() to implement the
+	 * FarmItem() interface.
 	 * 
 	 * @return Type of the animal.
 	 */
@@ -105,7 +109,7 @@ public class Animal implements FarmItem {
 	}
 
 	/**
-	 * Sets the happiness of an animal.
+	 * Sets the happiness of an animal, which must be positive.
 	 * 
 	 * @param Happiness of the animal.
 	 */
@@ -127,7 +131,7 @@ public class Animal implements FarmItem {
 	}
 
 	/**
-	 * Sets the health of an animal.
+	 * Sets the health of an animal, which must be positive.
 	 * 
 	 * @param Health of the animal.
 	 */
@@ -149,10 +153,10 @@ public class Animal implements FarmItem {
 	}
 
 	/**
-	 * Adds to the health of an animal by a given amount.
-	 * Health can be deducted but cannot fall below zero.
+	 * Adds to the health of an animal by a given amount. Health can be deducted but
+	 * cannot fall below zero.
 	 * 
-	 * @param bonus the amount by which to change the animal's health.
+	 * @param bonus the amount of points to add to the animal's health.
 	 */
 	public void addToHealth(int bonus) {
 		if ((this.health + bonus) < 0) {
@@ -163,16 +167,16 @@ public class Animal implements FarmItem {
 	}
 
 	/**
-	 * Adds to the happiness of an animal by a given amount.
-	 * Happiness can be deducted but cannot fall below zero.
+	 * Adds to the happiness of an animal by a given amount. Happiness can be
+	 * deducted but cannot fall below zero.
 	 * 
-	 * @param bonus the amount by which to change the animal's happiness.
+	 * @param bonus the amount of points to add to the animal's happiness.
 	 */
 	public void addToHappiness(int bonus) {
 		if ((this.happiness + bonus) < 0) {
 			this.happiness = 0;
 		} else {
 			this.happiness += bonus;
-		};
+		}
 	}
 }

@@ -19,7 +19,6 @@ public class AfricanFarm extends Farm {
 
 	/**
 	 * Constructs an African Farm.
-	 * @param name Name of farm.
 	 */
 	public AfricanFarm() {
 		super(type, balance, cropDelay, animalHappinessBonus);

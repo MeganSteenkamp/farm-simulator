@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
  */
 public class Chicken extends Animal {
 	private static int id = 13;
@@ -17,7 +18,7 @@ public class Chicken extends Animal {
 	private static int health = 3;
 
 	/**
-	 * Construct a chicken.
+	 * Construct a chicken with predefined attributes.
 	 */
 	public Chicken() {
 		super(id, price, type, description, happiness, health);

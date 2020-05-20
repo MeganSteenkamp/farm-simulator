@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 
+/**
+ * This application window displays the animals for sale in the general store.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
 public class AnimalSaleScreen {
 
 	private ApplicationManager manager;
@@ -21,6 +27,9 @@ public class AnimalSaleScreen {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
 	 */
 	public AnimalSaleScreen(ApplicationManager application, GameEnvironment g) {
 		game = g;
@@ -29,15 +38,27 @@ public class AnimalSaleScreen {
 		window.setVisible(true);
 	}
 
+	/**
+	 * Close the Animal sale screen, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
 	public GameEnvironment closeWindow() {
 		window.dispose();
 		return game;
 	}
 
+	/**
+	 * Notify the window manager that the use of this window is finished.
+	 */
 	public void finishedWindow() {
 		manager.closeAnimalSaleScreen(this);
 	}
-	
+
+	/**
+	 * Set the animal description to be visible and display the description of the
+	 * selected animal.
+	 */
 	public void displayDescription() {
 		animalDescription.setVisible(true);
 		animalDescription.setText(game.getFarmItemDescription(selectedAnimalId));
@@ -53,7 +74,7 @@ public class AnimalSaleScreen {
 		window.setBounds(100, 100, 700, 350);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
-		
+
 		JButton btnReturnToGeneralStore = new JButton("Return to General Store");
 		btnReturnToGeneralStore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -62,11 +83,11 @@ public class AnimalSaleScreen {
 		});
 		btnReturnToGeneralStore.setBounds(24, 288, 240, 25);
 		window.getContentPane().add(btnReturnToGeneralStore);
-		
+
 		JLabel lblInfo = new JLabel("Click on an animal to learn more about it:");
 		lblInfo.setBounds(25, 12, 314, 15);
 		window.getContentPane().add(lblInfo);
-		
+
 		animalDescription = new JTextArea();
 		animalDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
 		animalDescription.setVisible(false);
@@ -76,7 +97,7 @@ public class AnimalSaleScreen {
 		animalDescription.setEditable(false);
 		animalDescription.setBounds(383, 53, 267, 208);
 		window.getContentPane().add(animalDescription);
-		
+
 		btnBuyAnimal = new JButton("Buy animal");
 		btnBuyAnimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -84,7 +105,8 @@ public class AnimalSaleScreen {
 				if (animal == null) {
 					JOptionPane.showMessageDialog(window, game.getErrorMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(window, game.getSuccessMessage(animal), "Success", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(window, game.getSuccessMessage(animal), "Success",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 				finishedWindow();
 			}
@@ -92,7 +114,7 @@ public class AnimalSaleScreen {
 		btnBuyAnimal.setEnabled(false);
 		btnBuyAnimal.setBounds(556, 288, 117, 25);
 		window.getContentPane().add(btnBuyAnimal);
-		
+
 		JButton btnChicken = new JButton("Chicken");
 		btnChicken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,7 +124,7 @@ public class AnimalSaleScreen {
 		});
 		btnChicken.setBounds(25, 53, 280, 57);
 		window.getContentPane().add(btnChicken);
-		
+
 		JButton btnPig = new JButton("Pig");
 		btnPig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -112,7 +134,7 @@ public class AnimalSaleScreen {
 		});
 		btnPig.setBounds(25, 134, 280, 57);
 		window.getContentPane().add(btnPig);
-		
+
 		JButton btnHorse = new JButton("Horse");
 		btnHorse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
