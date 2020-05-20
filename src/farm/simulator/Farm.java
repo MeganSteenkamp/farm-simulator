@@ -4,12 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * This class implements the base class for all farms.
+ * This class implements the base class for all farms. A farm has a name, a type
+ * and farmer and contains a list of crops, a lost of animals, and the amount of
+ * money the farm currently has. The subclass of Farm instantiated will
+ * determine the crop growing speed and the animal bonuses.
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
  */
-
 public class Farm {
 	private String name;
 	private String type;
@@ -24,11 +27,12 @@ public class Farm {
 	/**
 	 * Class constructor for the Farm class
 	 * 
-	 * @param name                  Name of farm.
-	 * @param type                  Type of farm selected.
+	 * @param type                  Type of farm, based on geographical location.
 	 * @param balance               Starting monetary balance for farm.
-	 * @param cropGrowthFactor      Scale factor to apply to growth time of crops.
-	 * @param animalHappinessFactor Scale factor to apply to happiness of animals.
+	 * @param cropGrowthFactor      Scale factor to add to the growth time of crops
+	 *                              on purchase.
+	 * @param animalHappinessFactor Scale factor to add to the happiness of animals
+	 *                              on purchase.
 	 */
 	public Farm(String type, float balance, int cropGrowthFactor, int animalHappinessFactor) {
 		this.type = type;
@@ -70,7 +74,7 @@ public class Farm {
 	/**
 	 * Sets the farmer of the farm.
 	 * 
-	 * @param farmer Farmer object representing the farm's farmer.
+	 * @param farmer Farmer object representing the farmer.
 	 */
 	public void setFarmer(Farmer farmer) {
 		this.farmer = farmer;
@@ -79,7 +83,7 @@ public class Farm {
 	/**
 	 * Returns the farmer of the farm.
 	 * 
-	 * @param farmer Farmer object associated with farm.
+	 * @return farmer Farmer object associated with farm.
 	 */
 	public Farmer getFarmer() {
 		return this.farmer;
@@ -112,7 +116,9 @@ public class Farm {
 	/**
 	 * Returns the status of the farm's crops and animals. This includes viewing a
 	 * crop's time growing, the time left until crop's harvest and an animal's
-	 * happiness levels.
+	 * happiness and health levels.
+	 * 
+	 * @return The status of all crops and animals.
 	 */
 	public String getCropAndAnimalStatus() {
 		return getCropStatus() + getAnimalStatus();
@@ -130,17 +136,18 @@ public class Farm {
 	/**
 	 * Returns the balance of a farm.
 	 * 
-	 * @return Name of the farm.
+	 * @return Monetary balance of the farm.
 	 */
 	public float getBalance() {
 		return this.balance;
 	}
 
 	/**
-	 * Withdraws money from the farm. Returns no money for payment if the withdrawal
-	 * is invalid.
+	 * Withdraws money from the farm's balance and returns it. If the amount to be
+	 * withdrawn exceeds that of the balance, no money will be returned.
 	 * 
-	 * @return Name of the farm.
+	 * @param amount Amount of money to be withdrawn.
+	 * @return Money withdrawn.
 	 */
 	public float withdrawMoney(float amount) {
 		if (amount <= getBalance() && amount >= 0) {
@@ -156,6 +163,7 @@ public class Farm {
 	 * attempted to be deducted.
 	 * 
 	 * @param amount Amount of money to add.
+	 * @return The current balance of the farm.
 	 */
 	public float addToBalance(float amount) {
 		if (amount >= 0) {
@@ -168,7 +176,8 @@ public class Farm {
 	}
 
 	/**
-	 * Adds a new crop to the farm.
+	 * Adds a new crop to the farm if there is a plot available. Throws an exception
+	 * if there are no available crop plots left.
 	 * 
 	 * @param crop Crop to be added.
 	 */
@@ -184,7 +193,8 @@ public class Farm {
 	}
 
 	/**
-	 * Removes a crop from the farm. Will be called if a crop is harvested.
+	 * Removes a crop from the farm. This function is used if a crop is harvested.
+	 * If the crop given does not exist on the farm an exception will be thrown.
 	 * 
 	 * @param crop Crop to be removed.
 	 */
@@ -213,7 +223,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns the farm's crops.
+	 * Returns a list of the farm's crops.
 	 * 
 	 * @return the farm's crops.
 	 */
@@ -222,7 +232,7 @@ public class Farm {
 	}
 
 	/**
-	 * Returns the farm's animals.
+	 * Returns a list of the farm's animals.
 	 * 
 	 * @return the farm's animals.
 	 */
@@ -231,7 +241,9 @@ public class Farm {
 	}
 
 	/**
-	 * Prints the details of the animals on the farm.
+	 * Returns the details of all animals on the farm.
+	 * 
+	 * @return The animals the farm owns.
 	 */
 	public String getAnimalStatus() {
 		String s = "Number of animals owned: " + this.animals.size() + "\n";
@@ -242,9 +254,9 @@ public class Farm {
 	}
 
 	/**
-	 * Prints the details of the crops on the farm.
+	 * Returns the details of all crops on the farm.
 	 * 
-	 * @param currentDay Current day number.
+	 * @return The crops the farm owns.
 	 */
 	public String getCropStatus() {
 		String s = "Number of crops owned: " + this.crops.size() + "\n";
@@ -255,9 +267,10 @@ public class Farm {
 	}
 
 	/**
-	 * Prints the details of the crops on the farm.
+	 * Returns the details of all crops ready for harvest. If no crops are ready to
+	 * be harvested, an empty string will be returned.
 	 * 
-	 * @param currentDay Current day number.
+	 * @return The crops that are ready for harvest.
 	 */
 	public String getCropsReadyForHarvest() {
 		String s = "";
@@ -271,9 +284,9 @@ public class Farm {
 	}
 
 	/**
-	 * Gets an crop of a given type, specified by an integer.
+	 * Gets an crop of a given type, specified the type ID.
 	 * 
-	 * @param type Type of crop, identified with an integer.
+	 * @param type Type of crop, identified by an ID number.
 	 * @return Crop if it is in the list of crops. Otherwise will return null.
 	 */
 	public FarmItem getCrop(int type) {
@@ -290,7 +303,7 @@ public class Farm {
 	/**
 	 * Whether the farm has a crop of a given type.
 	 * 
-	 * @param type Identifier of crop type.
+	 * @param type ID number of the crop type.
 	 * @return True if crop is in stock. Else false.
 	 */
 	public boolean ownsCrop(int type) {
