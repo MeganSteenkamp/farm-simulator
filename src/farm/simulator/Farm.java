@@ -184,7 +184,7 @@ public class Farm {
 	public void addCrop(FarmItem crop) {
 		if (this.numAvailableCrops > 0) {
 			// Scale crop growth according to farm
-			((Crop) crop).addDaysToGrow(cropGrowthFactor);
+			((Crop) crop).addDaysToGrow(this.cropGrowthFactor);
 			this.crops.add(crop);
 			this.numAvailableCrops -= 1;
 		} else {

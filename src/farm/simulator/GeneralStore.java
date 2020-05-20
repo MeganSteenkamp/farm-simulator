@@ -60,15 +60,61 @@ public class GeneralStore {
 	}
 
 	/**
-	 * Sells an item. As the concept of unlimited stock is used, this item is not
-	 * removed from the class.
+	 * Sells an item. It returns a new item as there is no concept of stock.
 	 * 
 	 * @param type Type ID of item to be purchased.
 	 * @return The item that has been purchased. Returns a null object if the item
 	 *         type does not exist in the store.
 	 */
 	public FarmItem sellItem(int type) {
-		FarmItem item = getItem(type);
+		FarmItem item = null;
+		switch (type) {
+		case 1:
+			item = new Fertilizer();
+			break;
+		case 2:
+			item = new Compost();
+			break;
+		case 3:
+			item = new Hoe();
+			break;
+		case 4:
+			item = new Steroid();
+			break;
+		case 5:
+			item = new Grain();
+			break;
+		case 6:
+			item = new Silage();
+			break;
+		case 7:
+			item = new Rice();
+			break;
+		case 8:
+			item = new Wheat();
+			break;
+		case 9:
+			item = new Cotton();
+			break;
+		case 10:
+			item = new Coffee();
+			break;
+		case 11:
+			item = new Olive();
+			break;
+		case 12:
+			item = new Avocado();
+			break;
+		case 13:
+			item = new Chicken();
+			break;
+		case 14:
+			item = new Pig();
+			break;
+		case 15:
+			item = new Horse();
+			break;
+		}
 		return item;
 	}
 

@@ -74,11 +74,11 @@ public class GameEnvironment {
 	 */
 	public String getGameInstructions() {
 		return "Welcome to 'Mowing Before Hoeing'.\n\n"
-				+ "The goal of 'Mowing before Hoeing' is to earn as much money as possible \n"
-				+ "whilst keeping your animals happy and healthy.\n\n"
-				+ "Money can be earned from harvesting crops or owning crops and animals at the end of the game.\n"
-				+ "At the end of each day a bonus is given based on the health and happiness of animals.\n\n"
-				+ "Let's set up the farm before we get to work.";
+				+ "The goal of this game is to maximise profit and asset aquisition whilst keeping your animals happy and healthy.\n\n"
+				+ "Money can be earned during the day from harvesting crops.\nAt the end of each day bonus money is given based "
+				+ "on the health and happiness of animals.\n\n" + "Your final score is based on game duration, money, number of crops "
+				+ "and animals, and animal status.\n\n"
+				+ "Let's set up the farm before we get to work!";
 	}
 
 	/**
@@ -575,7 +575,7 @@ public class GameEnvironment {
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
 		// Check withdrawal was successful
 		if (payment != 0) {
-			crop = generalStore.getItem(itemId);
+			crop = generalStore.sellItem(itemId);
 			this.farm.addCrop(crop);
 		}
 		return crop;
@@ -668,7 +668,7 @@ public class GameEnvironment {
 	public String getSuccessMessage(FarmItem item) {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return "Congratulations, " + this.farm.getFarmer().getName() + "!\n" + "Your purchase is completed"
-				+ "and your new item has been modified according to your farm type.\n\n"
+				+ " and your new item has been modified according to your farm type.\n\n"
 				+ "You are now the new owner of:\n" + item.toString() + "\n\nYour remaining balance is $"
 				+ df.format(this.farm.getBalance());
 	}
