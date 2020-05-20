@@ -145,8 +145,8 @@ public class Farm {
 	}
 
 	/**
-	 * Adds to monetary balance of the farm.
-	 * Throws an exception is money is attempted to be deducted.
+	 * Adds to monetary balance of the farm. Throws an exception is money is
+	 * attempted to be deducted.
 	 * 
 	 * @param amount Amount of money to add.
 	 */

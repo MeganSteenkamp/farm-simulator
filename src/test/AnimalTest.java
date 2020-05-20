@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import farm.simulator.Animal;
-import farm.simulator.Chicken;
-import farm.simulator.Horse;
-import farm.simulator.Pig;
 
 /**
  * This class performs unit tests on the Animal class. It also checks the
@@ -92,34 +89,6 @@ class AnimalTest {
 	@Test
 	void testGetHealths() {
 		assertEquals(tHealth, testAnimal.getHealth());
-	}
-
-	// Validate creation of animal subclasses
-	/**
-	 * Test the chicken subclass of animal gets constructed correctly
-	 */
-	@Test
-	void testChicken() {
-		Animal c = new Chicken();
-		assertEquals("Chicken", c.getType());
-	}
-
-	/**
-	 * Test the pig subclass of animal gets constructed correctly
-	 */
-	@Test
-	void testPig() {
-		Animal p = new Pig();
-		assertEquals("Pig", p.getType());
-	}
-
-	/**
-	 * Test the horse subclass of animal gets constructed correctly
-	 */
-	@Test
-	void testHorse() {
-		Animal h = new Horse();
-		assertEquals("Horse", h.getType());
 	}
 
 	// Validate setters

@@ -23,7 +23,7 @@ class FarmTest {
 
 	// Initialize values used for test objects
 	Farm testFarm;
-	String tType= "Test";
+	String tType = "Test";
 	float tBalance = 1000.00f;
 	int tCropGrowthFactor = 0;
 	int tAnimalHappinessFactor = 0;
@@ -317,7 +317,7 @@ class FarmTest {
 		assertTrue((status).contains(c.toString()));
 		assertTrue((status).contains(a.toString()));
 	}
-	
+
 	/**
 	 * Test the crop growth factor of a farm changes the growth of a crop added
 	 */
@@ -329,9 +329,10 @@ class FarmTest {
 		Crop returned = (Crop) testFarm.getCrop(c.getId());
 		assertEquals(cropDaysToGrow + 2, returned.getDaysToGrow());
 	}
-	
+
 	/**
-	 * Test the animal happiness factor of a farm changes the happiness of an animal added
+	 * Test the animal happiness factor of a farm changes the happiness of an animal
+	 * added
 	 */
 	void testAnimalHappinessFactor() {
 		int animalHappiness = 2;
