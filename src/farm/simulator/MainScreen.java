@@ -8,13 +8,25 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/**
+ * This application window displays the main screen that the user navigates the
+ * game from.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
 public class MainScreen {
 
 	private JFrame window;
 	private ApplicationManager manager;
 	private GameEnvironment game;
 
+	/**
+	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
+	 */
 	public MainScreen(ApplicationManager application, GameEnvironment g) {
 		game = g;
 		manager = application;
@@ -23,11 +35,22 @@ public class MainScreen {
 		window.setVisible(true);
 	}
 
+	/**
+	 * Close the window, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
 	public GameEnvironment closeWindow() {
 		window.dispose();
 		return game;
 	}
 
+	/**
+	 * Calls the window manager to close this screen.
+	 * 
+	 * @param nextScreen the next window to be opened depending on the button
+	 *                   clicked by the user.
+	 */
 	public void finishedWindow(String nextScreen) {
 		manager.closeMainScreen(this, nextScreen);
 	}
@@ -52,8 +75,9 @@ public class MainScreen {
 			finishedWindow("Final");
 		} else {
 			JOptionPane.showMessageDialog(window, game.getDailyBonus(), "Daily bonus", JOptionPane.INFORMATION_MESSAGE);
-			refreshWindow(); //Updates labels without observers
-			JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day", JOptionPane.INFORMATION_MESSAGE);
+			refreshWindow(); // Updates labels without observers
+			JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), "New day",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

@@ -15,6 +15,13 @@ import java.util.regex.Pattern;
 import java.awt.Font;
 import javax.swing.UIManager;
 
+/**
+ * This application window displays first screen that sets up the game with
+ * input from the user.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
 public class SetupScreen {
 
 	private JFrame window;
@@ -32,6 +39,9 @@ public class SetupScreen {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
 	 */
 	public SetupScreen(ApplicationManager application, GameEnvironment g) {
 		game = g;
@@ -41,29 +51,47 @@ public class SetupScreen {
 		JOptionPane.showMessageDialog(window, game.getGameInstructions(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	/**
+	 * Close the window, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
 	public GameEnvironment closeWindow() {
 		window.dispose();
 		return game;
 	}
 
+	/**
+	 * Calls the window manager to close this screen.
+	 */
 	public void finishedWindow() {
 		manager.closeSetupScreen(this);
 	}
-	
+
+	/**
+	 * Validates the names given by a user. Used to validate the farmer name and the
+	 * name of the farm.
+	 * 
+	 * @param inputString The string to be validated.
+	 * @param fieldName   The field for which the input has been given.
+	 * @return The string capitalized if it is valid. Else, an exception will be
+	 *         thrown.
+	 */
 	private String validateName(String inputString, String fieldName) {
 		// Regex to check for no numbers of special characters
 		String pattern = "^[a-zA-Z\\s]+$";
 		Pattern r = Pattern.compile(pattern);
-		
+
 		Matcher m = r.matcher(inputString);
 		if (m.matches()) {
-			if (! (inputString.length() >= 3 && inputString.length() <= 15)) {
+			if (!(inputString.length() >= 3 && inputString.length() <= 15)) {
 				if (fieldName.equals("farmer name")) {
 					nameInput.setText("");
 				} else {
 					farmNameInput.setText("");
 				}
-				throw new IllegalArgumentException("Please enter a " + fieldName + " that is between 3 and 15 characters long");
+				throw new IllegalArgumentException(
+						"Please enter a " + fieldName + " that is between 3 and 15 characters long");
 			}
 		} else {
 			if (fieldName.equals("farmer name")) {
@@ -71,13 +99,21 @@ public class SetupScreen {
 			} else {
 				farmNameInput.setText("");
 			}
-			throw new IllegalArgumentException("Please enter a " + fieldName + " that does not contain any special characters");
+			throw new IllegalArgumentException(
+					"Please enter a " + fieldName + " that does not contain any special characters");
 		}
-		
+
 		// Capitalize string
 		return inputString.substring(0, 1).toUpperCase() + inputString.substring(1);
 	}
 
+	/**
+	 * Validates the age input by a user.
+	 * 
+	 * @param number The age that has been input as a String.
+	 * @return The age as an integer if it is valid. Else, an exception will be
+	 *         thrown.
+	 */
 	public int validateAge(String number) {
 		try {
 			return Integer.parseInt(number);
@@ -87,15 +123,19 @@ public class SetupScreen {
 		}
 	}
 
+	/**
+	 * Validates that all required fields on the start up screen have been entered
+	 * before a user can progress to the next screen.
+	 */
 	public void validateInput() {
 		if (!(nameInput.getText().length() > 0 && ageInput.getText().length() > 0
-						&& farmNameInput.getText().length() > 0)) {
+				&& farmNameInput.getText().length() > 0)) {
 			throw new IllegalArgumentException("Please enter input for all fields");
 		}
 		if (!(farmType.length() > 0)) {
 			throw new IllegalArgumentException("Please select a farm");
 		}
-		
+
 		farmerName = validateName(nameInput.getText(), "farmer name");
 		farmName = validateName(farmNameInput.getText(), "farm name");
 		age = validateAge(ageInput.getText());
@@ -111,7 +151,8 @@ public class SetupScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 
-		JLabel welcomeLabel = new JLabel("Welcome to 'Mowing Before Hoeing'. Here you will begin a new life on a farm.");
+		JLabel welcomeLabel = new JLabel(
+				"Welcome to 'Mowing Before Hoeing'. Here you will begin a new life on a farm.");
 		welcomeLabel.setBounds(12, 12, 650, 15);
 		window.getContentPane().add(welcomeLabel);
 
@@ -126,7 +167,7 @@ public class SetupScreen {
 		JLabel numDaysLabel = new JLabel("How many days would you like the game to last?");
 		numDaysLabel.setBounds(12, 55, 403, 15);
 		window.getContentPane().add(numDaysLabel);
-		
+
 		JSlider numDaysSlider = new JSlider();
 		numDaysSlider.setPaintLabels(true);
 		numDaysSlider.setMajorTickSpacing(1);
@@ -152,7 +193,7 @@ public class SetupScreen {
 		farmDescription.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
 		farmDescription.setBounds(391, 223, 285, 66);
 		window.getContentPane().add(farmDescription);
-		
+
 		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
 		bonusesDescription.setVisible(false);
 		bonusesDescription.setWrapStyleWord(true);
@@ -171,12 +212,13 @@ public class SetupScreen {
 				try {
 					validateInput();
 					numDays = numDaysSlider.getValue();
-					
+
 					// Set up farm
 					game.setUpGame(numDays, farmType, farmerName, age, farmName);
-					JOptionPane.showMessageDialog(window, game.getWelcomeMessage(), "Welcome", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(window, game.getWelcomeMessage(), "Welcome",
+							JOptionPane.INFORMATION_MESSAGE);
 					game.beginNewDay();
-					
+
 					// Move on to main window
 					finishedWindow();
 				} catch (Exception exception) {

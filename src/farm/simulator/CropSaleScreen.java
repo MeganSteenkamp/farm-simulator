@@ -39,7 +39,7 @@ public class CropSaleScreen {
 	}
 
 	/**
-	 * Close the Crop sale screen, returning the game environment to the manager.
+	 * Close the window, returning the game environment to the manager.
 	 * 
 	 * @return The game environment.
 	 */
@@ -49,7 +49,7 @@ public class CropSaleScreen {
 	}
 
 	/**
-	 * Notify the window manager that the use of this window is finished.
+	 * Calls the window manager to close this screen.
 	 */
 	public void finishedWindow() {
 		manager.closeCropSaleScreen(this);

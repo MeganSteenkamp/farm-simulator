@@ -19,7 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.event.ListSelectionEvent;
 
 /**
- * This application window displays the crops for sale in the general store.
+ * This application window displays the available actions for a farmer to
+ * perform.
  * 
  * @author Megan Steenkamp
  * @version 1.0
@@ -64,7 +65,7 @@ public class FarmerActionScreen {
 	}
 
 	/**
-	 * Close the screen, returning the game environment to the manager.
+	 * Close the window, returning the game environment to the manager.
 	 * 
 	 * @return The game environment.
 	 */
@@ -74,7 +75,7 @@ public class FarmerActionScreen {
 	}
 
 	/**
-	 * Notify the window manager that the use of this window is finished.
+	 * Calls the window manager to close this screen.
 	 */
 	public void finishedWindow() {
 		manager.closeFarmerActionScreen(this);

@@ -3,7 +3,7 @@ package farm.simulator;
 import java.text.DecimalFormat;
 
 /**
- * This class instantiates a Chicken.
+ * This class implements a Chicken, which is a subclass of Animal.
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall

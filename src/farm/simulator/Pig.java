@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
+ * @version 1.0
  */
 public class Pig extends Animal {
 	private static int id = 14;
