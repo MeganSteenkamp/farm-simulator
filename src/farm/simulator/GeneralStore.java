@@ -78,6 +78,10 @@ public class GeneralStore {
 	 */
 	public String getItemDetails(int type) {
 		FarmItem item = getItem(type);
-		return item.toString();
+		if (item != null) {
+			return item.toString();
+		} else {
+			return "";
+		}
 	}
 }

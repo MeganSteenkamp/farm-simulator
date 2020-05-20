@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
  * @author Megan Steenkamp
  * @author Lewis Marshall
  * @version 1.0
- * @since 2020-04-25
  */
 public class AfricanFarm extends Farm {
 	private static String type = "African Farm";

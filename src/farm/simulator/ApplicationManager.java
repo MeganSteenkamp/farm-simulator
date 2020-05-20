@@ -6,7 +6,6 @@ package farm.simulator;
  * the state of the game between windows.
  * 
  * @author Megan Steenkamp
- * @since 2020-04-25
  */
 public class ApplicationManager {
 

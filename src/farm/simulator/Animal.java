@@ -40,7 +40,7 @@ public class Animal implements FarmItem {
 	 * @return description for an animal.
 	 */
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 	
 	/**

@@ -87,6 +87,38 @@ class FarmTest {
 	}
 
 	/**
+	 * Test valid with initialized farm
+	 */
+	@Test
+	void testToStringInit() {
+		String farm = testFarm.toString();
+		assertTrue((farm).contains(tType));
+	}
+
+	/**
+	 * Test valid with a named farm
+	 */
+	@Test
+	void testToStringWithName() {
+		testFarm.setName("Test name");
+		String farm = testFarm.toString();
+		assertTrue((farm).contains(tType));
+		assertTrue((farm).contains("Test name"));
+	}
+
+	/**
+	 * Test valid with a farmer
+	 */
+	@Test
+	void testToStringWithFarmer() {
+		Farmer f = new Farmer(farmerName, farmerAge);
+		testFarm.setFarmer(f);
+		String farm = testFarm.toString();
+		assertTrue((farm).contains(tType));
+		assertTrue((farm).contains(farmerName));
+	}
+
+	/**
 	 * Tests number of crop plots available. Should be 4 on initialization.
 	 */
 	@Test

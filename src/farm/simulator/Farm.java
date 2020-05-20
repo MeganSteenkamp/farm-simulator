@@ -44,11 +44,18 @@ public class Farm {
 	 */
 	@Override
 	public String toString() {
+		String str = "";
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Name: " + this.name + "\nType: " + this.type + "\n" + farmer.toString() + "\nBalance: $"
-				+ df.format(this.balance) + "\nCrop growth bonus: " + this.cropGrowthFactor
-				+ " days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor
+		if (name != null) {
+			str += "Name: " + this.name + "\n";
+		}
+		if (farmer != null) {
+			str += farmer.toString() + "\n";
+		}
+		str += "Type: " + this.type + "\nBalance: $" + df.format(this.balance) + "\nCrop growth bonus: "
+				+ this.cropGrowthFactor + " days(s)\nAnimal happiness bonus: " + this.animalHappinessFactor
 				+ " point(s)\nAvailable crop plots: " + this.numAvailableCrops;
+		return str;
 	}
 
 	/**

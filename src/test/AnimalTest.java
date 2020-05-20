@@ -129,6 +129,16 @@ class AnimalTest {
 			testAnimal.setHappiness(-1);
 		});
 	}
+	
+	/**
+	 * Test string contains initialized strings
+	 */
+	@Test
+	void testToString() {
+		String animal = testAnimal.toString();
+		assertTrue((animal).contains(tType));
+		assertTrue((animal).contains(tDescription));
+	}
 
 	/**
 	 * Test setting valid health.
