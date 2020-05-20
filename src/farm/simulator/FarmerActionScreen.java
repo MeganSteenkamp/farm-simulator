@@ -18,6 +18,12 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.event.ListSelectionEvent;
 
+/**
+ * This application window displays the crops for sale in the general store.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
 public class FarmerActionScreen {
 
 	private ApplicationManager manager;
@@ -46,6 +52,9 @@ public class FarmerActionScreen {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
 	 */
 	public FarmerActionScreen(ApplicationManager application, GameEnvironment g) {
 		game = g;
@@ -54,21 +63,41 @@ public class FarmerActionScreen {
 		window.setVisible(true);
 	}
 
+	/**
+	 * Close the screen, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
 	public GameEnvironment closeWindow() {
 		window.dispose();
 		return game;
 	}
 
+	/**
+	 * Notify the window manager that the use of this window is finished.
+	 */
 	public void finishedWindow() {
 		manager.closeFarmerActionScreen(this);
 	}
 
+	/**
+	 * Calls the game environment to implement feeding animals with food selected by
+	 * the player. On completion of the action, an information message will show the
+	 * user the status of their animals.
+	 * 
+	 * @param selectedFoodId The type ID associated with the selected food.
+	 */
 	public void feedAnimals(int selectedFoodId) {
 		String outcome = game.feedAnimals(selectedFoodId);
 		JOptionPane.showMessageDialog(window, outcome, "Action complete", JOptionPane.INFORMATION_MESSAGE);
 		finishedWindow();
 	}
 
+	/**
+	 * Used if a user wants to tend to crops. Makes the crop and item selection
+	 * lists visible so that a user can pick their crop and item of choice. Buttons
+	 * to confirm actions set to visible.
+	 */
 	public void displayTendToCrops() {
 		lblSelectCrop.setVisible(true);
 		cropList.setVisible(true);
@@ -78,6 +107,10 @@ public class FarmerActionScreen {
 		btnConfirmTending.setEnabled(false);
 	}
 
+	/**
+	 * Used if a user wants to feed animals. Makes the list of food and confirmation
+	 * button visible for a user to pick the food item to use.
+	 */
 	public void displayFeedAnimals() {
 		// Get user to select food item
 		lblSelectFood.setVisible(true);
@@ -86,6 +119,9 @@ public class FarmerActionScreen {
 		btnConfirmFood.setEnabled(false);
 	}
 
+	/**
+	 * Hides all specific lists on the GUI involved with a farming action.
+	 */
 	public void hideLists() {
 		lblSelectFood.setVisible(false);
 		foodList.setVisible(false);
@@ -97,6 +133,9 @@ public class FarmerActionScreen {
 		btnConfirmTending.setVisible(false);
 	}
 
+	/**
+	 * Resets all button background colors to their default color.
+	 */
 	public void revertButtonColours() {
 		btnTendToCrops.setBackground(null);
 		btnFeedAnimals.setBackground(null);
@@ -105,6 +144,10 @@ public class FarmerActionScreen {
 		btnTendToFarmland.setBackground(null);
 	}
 
+	/**
+	 * Enables the button to perform the tending to crops action once a crop and
+	 * item have been selected.
+	 */
 	public void confirmTending() {
 		if ((cropList.getSelectedIndex() != -1) && (itemList.getSelectedIndex() != -1)) {
 			btnConfirmTending.setEnabled(true);
@@ -285,7 +328,7 @@ public class FarmerActionScreen {
 		lblSelectAnItem.setBounds(315, 241, 310, 15);
 		lblSelectAnItem.setVisible(false);
 		window.getContentPane().add(lblSelectAnItem);
-		
+
 		DefaultListModel<String> listModelTools = new DefaultListModel<String>();
 		tools = game.getToolItems();
 		listModelTools.addElement("Water, Added crop growth: -1 day(s)");

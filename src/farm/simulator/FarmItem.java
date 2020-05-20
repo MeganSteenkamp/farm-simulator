@@ -1,10 +1,10 @@
 package farm.simulator;
 
 /**
- * This interface declares the functions that must be implemented by all farm items (animals, crops, items).
+ * This interface declares the functions that must be implemented by all Farm Items (Animals, Crops, Items).
  * 
  * @author Megan Steenkamp
- * @author Lewis Marshall
+ * @version 1.0
  */
 public interface FarmItem {
 	public String toString();

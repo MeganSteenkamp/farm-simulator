@@ -3,7 +3,8 @@ package farm.simulator;
 import java.util.ArrayList;
 
 /**
- * This class implements the General Store.
+ * This class implements the General Store, where various farming items can be
+ * viewed and purchased.
  * 
  * @author Megan Steenkamp
  * @author Lewis Marshall
@@ -14,8 +15,8 @@ public class GeneralStore {
 	private ArrayList<FarmItem> stock = new ArrayList<FarmItem>();
 
 	/**
-	 * Class constructor for the General Store class Begins with 2 of each Item,
-	 * Crop and Animal.
+	 * Class constructor for the General Store class. Stocks one instance of each
+	 * Item, Crop and Animal.
 	 */
 	public GeneralStore() {
 		// Items
@@ -41,11 +42,10 @@ public class GeneralStore {
 	}
 
 	/**
-	 * Gets an item of a given type, specified by an integer.
-	 * This method is also used for selling items as we are using 
-	 * a concept of unlimited stock.
+	 * Gets an item of a given type, specified by a type ID. This method is also
+	 * used for selling items as the concept of unlimited stock is used.
 	 * 
-	 * @param type Type of item, identified with an integer.
+	 * @param type Type ID of the item.
 	 * @return Item if it is in the list of items. Otherwise will return null.
 	 */
 	public FarmItem getItem(int type) {
@@ -60,11 +60,12 @@ public class GeneralStore {
 	}
 
 	/**
-	 * Sells an item and removes it from inventory.
+	 * Sells an item. As the concept of unlimited stock is used, this item is not
+	 * removed from the class.
 	 * 
-	 * @param type Type of item to be purchased.
+	 * @param type Type ID of item to be purchased.
 	 * @return The item that has been purchased. Returns a null object if the item
-	 *         is out of stock.
+	 *         type does not exist in the store.
 	 */
 	public FarmItem sellItem(int type) {
 		FarmItem item = getItem(type);
@@ -72,9 +73,10 @@ public class GeneralStore {
 	}
 
 	/**
-	 * Prints the details of a given farm item.
+	 * Returns the details of a given farm item.
 	 * 
 	 * @param type Type ID of farm item.
+	 * @return The details of the given item.
 	 */
 	public String getItemDetails(int type) {
 		FarmItem item = getItem(type);
