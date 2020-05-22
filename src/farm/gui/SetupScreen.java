@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.UIManager;
 
@@ -38,10 +39,18 @@ public class SetupScreen {
 	private GameEnvironment game;
 
 	private int numDays;
-	private String farmType = "";
+	private String farmType;
 	private int age;
 	private String farmerName;
 	private String farmName;
+
+	private JTextArea farmDescription;
+	private JTextArea bonusesDescription;
+	
+	private JButton btnNorthKorea;
+	private JButton btnAfrica;
+	private JButton btnMediterranean;
+	private JButton btnNewZealand;
 
 	/**
 	 * Create the application.
@@ -84,7 +93,7 @@ public class SetupScreen {
 	 *         thrown.
 	 */
 	private String validateName(String inputString, String fieldName) {
-		// Regex to check for no numbers of special characters
+		// Regular expression to check for no numbers of special characters
 		String pattern = "^[a-zA-Z\\s]+$";
 		Pattern r = Pattern.compile(pattern);
 
@@ -148,6 +157,29 @@ public class SetupScreen {
 	}
 
 	/**
+	 * Updates the screen to show the user the details of the farm they have
+	 * selected with definitions of the meaning of the bonuses.
+	 * 
+	 * @param selectedFarm The farm type selected.
+	 */
+	private void updateSelectedFarm(String selectedFarm) {
+		farmType = selectedFarm;
+		farmDescription.setVisible(true);
+		bonusesDescription.setVisible(true);
+		farmDescription.setText(game.getFarmDescription(farmType));
+	}
+	
+	/**
+	 * Resets all button background colors to their default color.
+	 */
+	public void revertButtonColours() {
+		btnNorthKorea.setBackground(null);
+		btnAfrica.setBackground(null);
+		btnMediterranean.setBackground(null);
+		btnNewZealand.setBackground(null);
+	}
+
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -191,7 +223,7 @@ public class SetupScreen {
 		farmSelectLabel.setBounds(12, 196, 339, 15);
 		window.getContentPane().add(farmSelectLabel);
 
-		JTextArea farmDescription = new JTextArea("");
+		farmDescription = new JTextArea("");
 		farmDescription.setWrapStyleWord(true);
 		farmDescription.setLineWrap(true);
 		farmDescription.setEditable(false);
@@ -200,7 +232,7 @@ public class SetupScreen {
 		farmDescription.setBounds(391, 223, 285, 66);
 		window.getContentPane().add(farmDescription);
 
-		JTextArea bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
+		bonusesDescription = new JTextArea(GameEnvironment.getBonusesDescription());
 		bonusesDescription.setVisible(false);
 		bonusesDescription.setWrapStyleWord(true);
 		bonusesDescription.setFont(new Font("Dialog", Font.PLAIN, 10));
@@ -235,49 +267,45 @@ public class SetupScreen {
 		btnBeginGame.setBounds(559, 438, 117, 25);
 		window.getContentPane().add(btnBeginGame);
 
-		JButton btnNorthKorea = new JButton("North Korea");
+		btnNorthKorea = new JButton("North Korea");
 		btnNorthKorea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				farmDescription.setVisible(true);
-				bonusesDescription.setVisible(true);
-				farmDescription.setText(NorthKoreanFarm.getTypeDescription());
-				farmType = "North Korea";
+				revertButtonColours();
+				btnNorthKorea.setBackground(Color.GREEN);
+				updateSelectedFarm("North Korea");
 			}
 		});
 		btnNorthKorea.setBounds(12, 223, 156, 104);
 		window.getContentPane().add(btnNorthKorea);
 
-		JButton btnAfrica = new JButton("Africa");
+		btnAfrica = new JButton("Africa");
 		btnAfrica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				farmDescription.setVisible(true);
-				bonusesDescription.setVisible(true);
-				farmDescription.setText(AfricanFarm.getTypeDescription());
-				farmType = "Africa";
+				revertButtonColours();
+				btnAfrica.setBackground(Color.GREEN);
+				updateSelectedFarm("Africa");
 			}
 		});
 		btnAfrica.setBounds(193, 223, 158, 104);
 		window.getContentPane().add(btnAfrica);
 
-		JButton btnMediterranean = new JButton("Mediterranean");
+		btnMediterranean = new JButton("Mediterranean");
 		btnMediterranean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				farmDescription.setVisible(true);
-				bonusesDescription.setVisible(true);
-				farmDescription.setText(MediterraneanFarm.getTypeDescription());
-				farmType = "Mediterranean";
+				revertButtonColours();
+				btnMediterranean.setBackground(Color.GREEN);
+				updateSelectedFarm("Mediterranean");
 			}
 		});
 		btnMediterranean.setBounds(12, 354, 156, 104);
 		window.getContentPane().add(btnMediterranean);
 
-		JButton btnNewZealand = new JButton("New Zealand");
+		btnNewZealand = new JButton("New Zealand");
 		btnNewZealand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				farmDescription.setVisible(true);
-				bonusesDescription.setVisible(true);
-				farmDescription.setText(NewZealandFarm.getTypeDescription());
-				farmType = "New Zealand";
+				revertButtonColours();
+				btnNewZealand.setBackground(Color.GREEN);
+				updateSelectedFarm("New Zealand");
 			}
 		});
 		btnNewZealand.setBounds(193, 354, 158, 103);

@@ -43,6 +43,25 @@ public class GameEnvironment {
 		Farmer farmer = new Farmer(name, age);
 		return farmer;
 	}
+	
+	public String getFarmDescription(String farmType) {
+		String str = "";
+		switch(farmType) {
+		case "Africa":
+			str += AfricanFarm.getTypeDescription();
+			break;
+		case "Mediterranean":
+			str += MediterraneanFarm.getTypeDescription();
+			break;
+		case "New Zealand":
+			str += NewZealandFarm.getTypeDescription();
+			break;
+		case "North Korea":
+			str += NorthKoreanFarm.getTypeDescription();
+			break;
+		}
+		return str;
+	}
 
 	/**
 	 * Returns the description of how crop growth delay bonuses and animal happiness
