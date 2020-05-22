@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import farm.simulator.Animal;
-import farm.simulator.Crop;
-import farm.simulator.Farm;
-import farm.simulator.FarmItem;
-import farm.simulator.Farmer;
+import farm.game.Animal;
+import farm.game.Crop;
+import farm.game.Farm;
+import farm.game.FarmItem;
+import farm.game.Farmer;
 
 /**
  * This class performs unit tests on the Farm class. It also checks the

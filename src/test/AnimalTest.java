@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import farm.simulator.Animal;
+import farm.game.Animal;
 
 /**
  * This class performs unit tests on the Animal class. It also checks the

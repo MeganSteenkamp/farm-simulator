@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import farm.simulator.FarmItem;
-import farm.simulator.GeneralStore;
+import farm.game.FarmItem;
+import farm.game.GeneralStore;
 
 /**
  * This class performs unit tests on the GeneralStore class.
