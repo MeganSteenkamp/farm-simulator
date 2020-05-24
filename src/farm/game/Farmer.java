@@ -67,9 +67,9 @@ public class Farmer {
 	}
 
 	/**
-	 * Sets the name of the farmer
+	 * Sets the age of the farmer
 	 *
-	 * @param name of the farmer
+	 * @param age of the farmer
 	 */
 	public void setAge(int age) {
 		this.age = age;
