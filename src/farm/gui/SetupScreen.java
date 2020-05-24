@@ -16,11 +16,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.UIManager;
 
-import farm.game.AfricanFarm;
 import farm.game.GameEnvironment;
-import farm.game.MediterraneanFarm;
-import farm.game.NewZealandFarm;
-import farm.game.NorthKoreanFarm;
 
 /**
  * This application window displays first screen that sets up the game with
