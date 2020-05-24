@@ -2,10 +2,13 @@ package test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import farm.game.FarmItem;
 import farm.game.Farmer;
+import farm.game.Item;
 
 /**
  * This class performs unit tests on the Farmer class.
@@ -18,13 +21,25 @@ public class FarmerTest {
   private Farmer testFarmer;
   private String tName = "John";
   private int tAge = 45;
+  
+  private int tId = 1;
+  private String itemName = "Special Test Juice";
+  private String tDescription = "An item for testing";
+  private float tPrice = 400.0f;
+  private int tCropGrowthFactor = -2;
+  private int tAnimalHealthFactor = 0;
 
   /**
    * Create a test farmer and defines expected attributes.
    */
   @BeforeEach
   void init() {
-    testFarmer = new Farmer(tName, tAge)
+    testFarmer = new Farmer(tName, tAge);
+  }
+  
+  FarmItem initItem() {
+	  FarmItem testItem = new Item(tId, tName, tDescription, tPrice, tCropGrowthFactor, tAnimalHealthFactor);
+	  return testItem;
   }
 
   /**
@@ -55,6 +70,7 @@ public class FarmerTest {
   /**
    * Test setting invalid farmer age
    */
+  @Test
   void testSetAgeInvalid() {
     assertThrows(IllegalArgumentException.class, () -> {
       testFarmer.setAge(-1);
@@ -62,4 +78,15 @@ public class FarmerTest {
   }
 
   // TODO: FarmItem testing in the Farmer class
+  @Test
+  void testAddItem() {
+	  FarmItem testItem = initItem();
+	  //Get a list for assertions as that is what get items returns
+	  ArrayList<FarmItem> testItems = new ArrayList<FarmItem>();
+	  testItems.add(testItem);
+	  
+	  testFarmer.addItem(testItem);
+	  assertEquals(testItems, testFarmer.getItems());
+  }
+  
 }

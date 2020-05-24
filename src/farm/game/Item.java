@@ -3,13 +3,13 @@ package farm.game;
 import java.text.DecimalFormat;
 
 /**
- * The abstract class implementing the base class for all items.
+ * The class implementing the base class for all items.
  *
  * @author Lewis Marshall
  * @author Megan Steenkamp
  */
 
-public abstract class Item implements FarmItem {
+public class Item implements FarmItem {
 	private int id;
 	private String name;
 	private String description;

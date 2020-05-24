@@ -2,6 +2,11 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.DecimalFormat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import farm.game.Item;
 
 /**
@@ -142,6 +147,6 @@ public class ItemTest {
     String testItemString = testItem.toString();
     assertTrue((testItemString).contains(tName));
     assertTrue((testItemString).contains(tDescription));
-    assertTrue((testItemString).contains(df.format(tPrice));
+    assertTrue((testItemString).contains(df.format(tPrice)));
   }
 }
