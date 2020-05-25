@@ -574,7 +574,7 @@ public class GameEnvironment {
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
 		// Check withdrawal was successful
 		if (payment != 0) {
-			animal = generalStore.getItem(itemId);
+			animal = generalStore.sellItem(itemId);
 			this.farm.addAnimal(animal);
 		}
 		return animal;
@@ -614,7 +614,7 @@ public class GameEnvironment {
 		float payment = this.farm.withdrawMoney(generalStore.getItem(itemId).getPurchasePrice());
 		// Check withdrawal was successful
 		if (payment != 0) {
-			item = generalStore.getItem(itemId);
+			item = generalStore.sellItem(itemId);
 			this.farm.getFarmer().addItem(item);
 		}
 		return item;
