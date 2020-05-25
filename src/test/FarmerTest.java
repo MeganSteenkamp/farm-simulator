@@ -29,7 +29,6 @@ public class FarmerTest {
   private int tAge = 45;
   
   private int tId = 1;
-  private String itemName = "Special Test Juice";
   private String tDescription = "An item for testing";
   private float tPrice = 400.0f;
   private int tCropGrowthFactor = -2;
@@ -93,7 +92,7 @@ public class FarmerTest {
     testItems.add(testItem);
 
     testFarmer.setItems(testItems);
-    assertEquals(testItems, testFarmer.getItems())
+    assertEquals(testItems, testFarmer.getItems());
   }
 
   /**
