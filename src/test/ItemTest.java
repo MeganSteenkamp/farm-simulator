@@ -110,32 +110,12 @@ public class ItemTest {
   }
 
   /**
-   * Test setting invalid Crop Growth Factor of the item.
-   */
-  @Test
-  void testSetCropGrowthFactorInvalid() {
-    assertThrows(IllegalArgumentException.class, () -> {
-      testItem.setCropGrowthFactor("Negative two");
-    });
-  }
-
-  /**
    * Test setting valid Animal Health Factor of the item.
    */
   @Test
   void testSetAnimalHealthFactorValid() {
     testItem.setAnimalHealthFactor(2);
     assertEquals(2, testItem.getPurchasePrice());
-  }
-
-  /**
-   * Test setting invalid Animal Health Factor of the item.
-   */
-  @Test
-  void testSetAnimalHealthFactorInvalid() {
-    assertThrows(IllegalArgumentException.class, () -> {
-      testItem.setCropGrowthFactor("Two");
-    });
   }
 
   /**

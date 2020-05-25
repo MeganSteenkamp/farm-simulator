@@ -8,7 +8,6 @@ import javax.swing.SwingConstants;
 import farm.game.GameEnvironment;
 
 import java.awt.Font;
-import javax.swing.ImageIcon;
 
 /**
  * This application window displays the final score at the cessation of a game.
@@ -70,7 +69,7 @@ public class FinalScreen {
 		textFinalScore.setWrapStyleWord(true);
 		textFinalScore.setLineWrap(true);
 		textFinalScore.setEditable(false);
-		textFinalScore.setBounds(83, 58, 361, 191);
+		textFinalScore.setBounds(169, 59, 361, 191);
 		textFinalScore.setText(game.getFinalResults());
 		window.getContentPane().add(textFinalScore);
 
@@ -79,10 +78,5 @@ public class FinalScreen {
 		lblFinalScore.setFont(new Font("Dialog", Font.BOLD, 19));
 		lblFinalScore.setBounds(0, 250, 700, 42);
 		window.getContentPane().add(lblFinalScore);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(FinalScreen.class.getResource("/images/pig.jpg")));
-		lblNewLabel.setBounds(462, 58, 165, 191);
-		window.getContentPane().add(lblNewLabel);
 	}
 }
