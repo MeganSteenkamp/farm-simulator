@@ -25,6 +25,7 @@ public class Wheat extends Crop {
 
 	/**
 	 * Prints a description of the crop without being instantiated.
+	 * @return description of wheat.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

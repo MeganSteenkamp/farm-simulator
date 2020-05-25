@@ -26,6 +26,7 @@ public class Pig extends Animal {
 	
 	/**
 	 * Returns a default description of a Pig.
+	 * @return Description of a pig.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

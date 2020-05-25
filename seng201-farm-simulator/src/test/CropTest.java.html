@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CropTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">CropTest.java</span></div><h1>CropTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import farm.game.Crop;
+
+<span class="fc" id="L9">public class CropTest {</span>
+	private Crop testCrop;
+<span class="fc" id="L11">	private int tId = 1;</span>
+<span class="fc" id="L12">	private String tName = &quot;Special test beans&quot;;</span>
+<span class="fc" id="L13">	private String tDescription = &quot;A crop for testing&quot;;</span>
+<span class="fc" id="L14">	private float tPurchasePrice = 10.0f;</span>
+<span class="fc" id="L15">	private float tSellingPrice = 50.0f;</span>
+<span class="fc" id="L16">	private int tDaysToGrow = 3;</span>
+<span class="fc" id="L17">	private int tDaysGrowing = 0;</span>
+
+	/**
+	 * Create a test crop and define expected attributes.
+	 */
+	@BeforeEach
+	void init() {
+<span class="fc" id="L24">		testCrop = new Crop(tId, tName, tDescription, tPurchasePrice, tSellingPrice, tDaysToGrow);</span>
+<span class="fc" id="L25">	}</span>
+
+	/**
+	 * Test getting crop ID.
+	 */
+	@Test
+	void testGetId() {
+<span class="fc" id="L32">		assertEquals(tId, testCrop.getId());</span>
+<span class="fc" id="L33">	}</span>
+
+	/**
+	 * Test getting crop name.
+	 */
+	@Test
+	void testGetName() {
+<span class="fc" id="L40">		assertEquals(tName, testCrop.getName());</span>
+<span class="fc" id="L41">	}</span>
+
+	/**
+	 * Test getting crop description.
+	 */
+	@Test
+	void testGetDescription() {
+<span class="fc" id="L48">		assertEquals(tDescription, testCrop.getDescription());</span>
+<span class="fc" id="L49">	}</span>
+
+	/**
+	 * Test getting crop purchase price.
+	 */
+	@Test
+	void testGetPurchasePrice() {
+<span class="fc" id="L56">		assertEquals(tPurchasePrice, testCrop.getPurchasePrice());</span>
+<span class="fc" id="L57">	}</span>
+
+	/**
+	 * Test getting crop selling price.
+	 */
+	@Test
+	void testGetSellingPrice() {
+<span class="fc" id="L64">		assertEquals(tSellingPrice, testCrop.getSellingPrice());</span>
+<span class="fc" id="L65">	}</span>
+
+	/**
+	 * Test getting crop's number of days taken for growth.
+	 */
+	@Test
+	void testGetDaysToGrow() {
+<span class="fc" id="L72">		assertEquals(tDaysToGrow, testCrop.getDaysToGrow());</span>
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * Test getting crop's number of days it has been growing for.
+	 */
+	@Test
+	void testGetDaysGrowing() {
+<span class="fc" id="L80">		assertEquals(tDaysGrowing, testCrop.getDaysGrowing());</span>
+<span class="fc" id="L81">	}</span>
+
+	/**
+   * Test getting crop's number of days remaining when tDaysGrowing &lt; tDaysToGrow.
+   */
+  @Test
+  void testGetTimeUnitlHarvestRemains() {
+<span class="fc" id="L88">    testCrop.updateCropGrowth(1);</span>
+<span class="fc" id="L89">    assertEquals(2, testCrop.getTimeUntilHarvest());</span>
+<span class="fc" id="L90">  }</span>
+
+	/**
+   * Test getting crop's number of days remaining when tDaysGrowing &gt; tDaysToGrow, .
+   */
+  @Test
+  void testGetNoTimeUnitlHarvestRemains() {
+<span class="fc" id="L97">    testCrop.updateCropGrowth(5);</span>
+<span class="fc" id="L98">    assertEquals(0, testCrop.getTimeUntilHarvest());</span>
+<span class="fc" id="L99">  }</span>
+
+	/**
+	 * Test setting valid purchase price of crop.
+	 */
+	@Test
+	void testSetPurchasePriceValid() {
+<span class="fc" id="L106">		testCrop.setPurchasePrice(50.0f);</span>
+<span class="nc" id="L107">		assertEquals(550.0f, testCrop.getPurchasePrice());</span>
+<span class="nc" id="L108">	}</span>
+
+	/**
+	 * Test setting invalid purchase price of crop.
+	 */
+	@Test
+	void testSetPurchasePriceInvalid() {
+<span class="nc" id="L115">		assertThrows(IllegalArgumentException.class, () -&gt; {</span>
+<span class="fc" id="L116">			testCrop.setPurchasePrice(-50.0f);</span>
+<span class="fc" id="L117">		});</span>
+<span class="nc" id="L118">	}</span>
+
+	/**
+	 * Test setting valid selling price of crop.
+	 */
+	@Test
+	void testSetSellingPriceValid() {
+<span class="fc" id="L125">		testCrop.setSellingPrice(50.0f);</span>
+<span class="nc" id="L126">		assertEquals(550.0f, testCrop.getSellingPrice());</span>
+<span class="nc" id="L127">	}</span>
+
+	/**
+	 * Test setting invalid selling price of crop.
+	 */
+	@Test
+	void testSetSellingPriceInvalid() {
+<span class="nc" id="L134">		assertThrows(IllegalArgumentException.class, () -&gt; {</span>
+<span class="fc" id="L135">			testCrop.setSellingPrice(-50.0f);</span>
+<span class="fc" id="L136">		});</span>
+<span class="nc" id="L137">	}</span>
+
+	/**
+	 * Test adding positive days to crop's days to grow count.
+	 */
+	@Test
+	void testAddToDaysToGrow() {
+<span class="fc" id="L144">		testCrop.addDaysToGrow(3);</span>
+<span class="fc" id="L145">		assertEquals(tDaysToGrow + 3, testCrop.getDaysToGrow());</span>
+<span class="fc" id="L146">	}</span>
+
+	/**
+	 * Test deducting an amount of days smaller than crop's days to grow count.
+	 */
+	@Test
+	void testSmallDeductDaysToGrow() {
+<span class="fc" id="L153">		testCrop.addDaysToGrow(-2);</span>
+<span class="fc" id="L154">		assertEquals(tDaysToGrow - 2, testCrop.getDaysToGrow());</span>
+<span class="fc" id="L155">	}</span>
+
+	/**
+	 * Test deducting an amount of days larger than crop's days to grow count.
+	 */
+	@Test
+	void testLargeDeductDaysToGrow() {
+<span class="fc" id="L162">		testCrop.addDaysToGrow(-10);</span>
+<span class="nc" id="L163">		assertEquals(0, testCrop.getDaysToGrow());</span>
+<span class="nc" id="L164">	}</span>
+
+	/**
+	 * Test adding an amount of days to crop's current growth time
+	 */
+	@Test
+	void testAddToDaysGrowing() {
+<span class="fc" id="L171">		testCrop.updateCropGrowth(3);</span>
+<span class="fc" id="L172">		assertEquals(tDaysGrowing + 3, testCrop.getDaysGrowing());</span>
+<span class="fc" id="L173">	}</span>
+
+	/**
+	 * Test string contains initialized and calculated strings
+	 */  
+  @Test
+  void testToString() {
+<span class="fc" id="L180">    String testCropString = testCrop.toString();</span>
+<span class="fc" id="L181">    assertTrue((testCropString).contains(tName));</span>
+<span class="fc" id="L182">    assertTrue((testCropString).contains(Integer.toString(tDaysGrowing)));</span>
+<span class="fc" id="L183">    assertTrue((testCropString).contains(Integer.toString(testCrop.getTimeUntilHarvest())));</span>
+<span class="fc" id="L184">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

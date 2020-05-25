@@ -25,6 +25,7 @@ public class Compost extends Item {
 	
 	/**
 	 * Returns a default description of the item type.
+	 * @return Description of compost
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

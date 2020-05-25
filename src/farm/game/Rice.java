@@ -25,6 +25,7 @@ public class Rice extends Crop {
 	
 	/**
 	 * Prints a description of the crop without being instantiated.
+	 * @return Description of a rice crop.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Compost.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.game</a> &gt; <span class="el_source">Compost.java</span></div><h1>Compost.java</h1><pre class="source lang-java linenums">package farm.game;
+
+import java.text.DecimalFormat;
+
+/**
+ * Implements Compost.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ */
+public class Compost extends Item {
+<span class="fc" id="L12">	private static int id = 2;</span>
+<span class="fc" id="L13">	private static String name = &quot;Compost&quot;;</span>
+<span class="fc" id="L14">	private static String description = &quot;Take one day off the growth of a type of crop.&quot;;</span>
+<span class="fc" id="L15">	private static float price = 20.00f;</span>
+<span class="fc" id="L16">	private static int cropGrowthFactor = -1;</span>
+<span class="fc" id="L17">	private static int animalHealthFactor = 0;</span>
+	
+	/**
+	 * Instantiate Compost.
+	 */
+	public Compost() {
+<span class="fc" id="L23">		super(id, name, description, price, cropGrowthFactor, animalHealthFactor);</span>
+<span class="fc" id="L24">	}</span>
+	
+	/**
+	 * Returns a default description of the item type.
+	 */
+	public static String getTypeDescription() {
+<span class="nc" id="L30">		DecimalFormat df = new DecimalFormat(&quot;#.00&quot;);</span>
+<span class="nc" id="L31">		return &quot;Name: &quot; + name + &quot;\nPrice: $&quot; + df.format(price) + &quot;\nDescription: &quot; + description + </span>
+<span class="nc" id="L32">				&quot;\nCrop growth bonus: &quot; + cropGrowthFactor + &quot; day(s)&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

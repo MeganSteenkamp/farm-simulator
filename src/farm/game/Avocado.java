@@ -25,6 +25,7 @@ public class Avocado extends Crop {
 	
 	/**
 	 * Prints a description of the crop without being instantiated.
+	 * @return Description of crop.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

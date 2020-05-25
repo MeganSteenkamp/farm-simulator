@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FarmTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">FarmTest.java</span></div><h1>FarmTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import farm.game.Animal;
+import farm.game.Crop;
+import farm.game.Farm;
+import farm.game.FarmItem;
+import farm.game.Farmer;
+
+/**
+ * This class performs unit tests on the Farm class. It also checks the
+ * initialization of Farm's subclasses work as intended.
+ * 
+ * @author Megan Steenkamp
+ *
+ */
+<span class="fc" id="L22">class FarmTest {</span>
+
+	// Initialize values used for test objects
+	Farm testFarm;
+<span class="fc" id="L26">	String tType = &quot;Test&quot;;</span>
+<span class="fc" id="L27">	float tBalance = 1000.00f;</span>
+<span class="fc" id="L28">	int tCropGrowthFactor = 0;</span>
+<span class="fc" id="L29">	int tAnimalHappinessFactor = 0;</span>
+
+<span class="fc" id="L31">	String farmerName = &quot;Farmer&quot;;</span>
+<span class="fc" id="L32">	int farmerAge = 24;</span>
+
+<span class="fc" id="L34">	int cropId = 1;</span>
+<span class="fc" id="L35">	String cropName = &quot;Crop&quot;;</span>
+<span class="fc" id="L36">	String cropDescription = &quot;A test crop&quot;;</span>
+<span class="fc" id="L37">	float cropPurchasePrice = 100.00f;</span>
+<span class="fc" id="L38">	float cropSellingPrice = 200.00f;</span>
+<span class="fc" id="L39">	int cropDaysToGrow = 2;</span>
+
+<span class="fc" id="L41">	int animalId = 1;</span>
+<span class="fc" id="L42">	float animalPrice = 20.0f;</span>
+<span class="fc" id="L43">	String animalType = &quot;Test&quot;;</span>
+<span class="fc" id="L44">	String animalDescription = &quot;An animal for testing&quot;;</span>
+<span class="fc" id="L45">	int animalHealth = 5;</span>
+<span class="fc" id="L46">	int animalHappiness = 5;</span>
+
+	/**
+	 * Create a test farm and define expected attributes.
+	 */
+	@BeforeEach
+	void init() {
+<span class="fc" id="L53">		testFarm = new Farm(tType, tBalance, tCropGrowthFactor, tAnimalHappinessFactor);</span>
+<span class="fc" id="L54">	}</span>
+
+	/**
+	 * Initializes a default crop for testing
+	 */
+	Crop initCrop() {
+<span class="fc" id="L60">		return new Crop(cropId, cropName, cropDescription, cropPurchasePrice, cropSellingPrice, cropDaysToGrow);</span>
+	}
+
+	/**
+	 * Initializes a default animal for testing
+	 */
+	Animal initAnimal() {
+<span class="fc" id="L67">		return new Animal(animalId, animalPrice, animalType, animalDescription, animalHealth, animalHappiness);</span>
+	}
+
+	/**
+	 * Test farm name is set as intended.
+	 */
+	@Test
+	void testSetName() {
+<span class="fc" id="L75">		testFarm.setName(&quot;Test name&quot;);</span>
+<span class="fc" id="L76">		assertEquals(&quot;Test name&quot;, testFarm.getName());</span>
+<span class="fc" id="L77">	}</span>
+
+	/**
+	 * Create and set the farmer. Assert returned farmer equals set farmer.
+	 */
+	@Test
+	void testSetandGetFarmer() {
+<span class="fc" id="L84">		Farmer f = new Farmer(farmerName, farmerAge);</span>
+<span class="fc" id="L85">		testFarm.setFarmer(f);</span>
+<span class="fc" id="L86">		assertEquals(f, testFarm.getFarmer());</span>
+<span class="fc" id="L87">	}</span>
+
+	/**
+	 * Test valid with initialized farm
+	 */
+	@Test
+	void testToStringInit() {
+<span class="fc" id="L94">		String farm = testFarm.toString();</span>
+<span class="fc" id="L95">		assertTrue((farm).contains(tType));</span>
+<span class="fc" id="L96">	}</span>
+
+	/**
+	 * Test valid with a named farm
+	 */
+	@Test
+	void testToStringWithName() {
+<span class="fc" id="L103">		testFarm.setName(&quot;Test name&quot;);</span>
+<span class="fc" id="L104">		String farm = testFarm.toString();</span>
+<span class="fc" id="L105">		assertTrue((farm).contains(tType));</span>
+<span class="fc" id="L106">		assertTrue((farm).contains(&quot;Test name&quot;));</span>
+<span class="fc" id="L107">	}</span>
+
+	/**
+	 * Test valid with a farmer
+	 */
+	@Test
+	void testToStringWithFarmer() {
+<span class="fc" id="L114">		Farmer f = new Farmer(farmerName, farmerAge);</span>
+<span class="fc" id="L115">		testFarm.setFarmer(f);</span>
+<span class="fc" id="L116">		String farm = testFarm.toString();</span>
+<span class="fc" id="L117">		assertTrue((farm).contains(tType));</span>
+<span class="fc" id="L118">		assertTrue((farm).contains(farmerName));</span>
+<span class="fc" id="L119">	}</span>
+
+	/**
+	 * Tests number of crop plots available. Should be 4 on initialization.
+	 */
+	@Test
+	void testGetNumAvailableCropsInit() {
+<span class="fc" id="L126">		assertEquals(4, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L127">	}</span>
+
+	/**
+	 * Check there are no crops on initialization
+	 */
+	@Test
+	void testGetCropsInit() {
+<span class="fc" id="L134">		assertEquals(0, testFarm.getCrops().size());</span>
+<span class="fc" id="L135">	}</span>
+
+	/**
+	 * Test adding one crop to a new farm is valid. Check get crops returns the crop
+	 */
+	@Test
+	void testAddAndGetCropValid() {
+<span class="fc" id="L142">		Crop c = initCrop();</span>
+<span class="fc" id="L143">		testFarm.addCrop(c);</span>
+<span class="fc" id="L144">		assertTrue((testFarm.getCrops()).contains(c));</span>
+<span class="fc" id="L145">	}</span>
+
+	/**
+	 * Test adding more crops than plots available
+	 */
+	@Test
+	void testAddCropInvalid() {
+<span class="fc" id="L152">		assertEquals(4, testFarm.getNumAvailableCrops());</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (int i = 0; i &lt; 4; i++) {</span>
+<span class="fc" id="L154">			testFarm.addCrop(initCrop());</span>
+		}
+<span class="fc" id="L156">		assertThrows(IllegalArgumentException.class, () -&gt; {</span>
+<span class="nc" id="L157">			testFarm.addCrop(initCrop());</span>
+<span class="nc" id="L158">		});</span>
+<span class="fc" id="L159">	}</span>
+
+	/**
+	 * Check available crop plots decrease when a crop is added.
+	 */
+	@Test
+	void testGetNumAvailableCropsDecrease() {
+<span class="fc" id="L166">		assertEquals(4, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L167">		testFarm.addCrop(initCrop());</span>
+<span class="fc" id="L168">		assertEquals(3, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L169">	}</span>
+
+	/**
+	 * Test validly adding to available crop plots.
+	 */
+	@Test
+	void testAddToAvailableCropsValid() {
+<span class="fc" id="L176">		assertEquals(4, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L177">		testFarm.addToAvailableCrops(1);</span>
+<span class="fc" id="L178">		assertEquals(5, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L179">	}</span>
+
+	/**
+	 * Test invalid add to available crop plots. This function should not accept a
+	 * negative number
+	 */
+	@Test
+	void testAddToAvailableCropsInvalid() {
+<span class="fc" id="L187">		assertEquals(4, testFarm.getNumAvailableCrops());</span>
+<span class="fc" id="L188">		assertThrows(IllegalArgumentException.class, () -&gt; {</span>
+<span class="nc" id="L189">			testFarm.addToAvailableCrops(-1);</span>
+<span class="nc" id="L190">		});</span>
+<span class="fc" id="L191">	}</span>
+
+	/**
+	 * Get valid crop status containing added crop
+	 */
+	@Test
+	void testGetCropStatus() {
+<span class="fc" id="L198">		Crop c = initCrop();</span>
+<span class="fc" id="L199">		testFarm.addCrop(c);</span>
+<span class="fc" id="L200">		String status = testFarm.getCropStatus();</span>
+<span class="fc" id="L201">		assertTrue((status).contains(c.toString()));</span>
+<span class="fc" id="L202">	}</span>
+
+	/**
+	 * Remove a crop that exists in the farm.
+	 */
+	@Test
+	void testRemoveCropValid() {
+<span class="fc" id="L209">		Crop c = initCrop();</span>
+<span class="fc" id="L210">		testFarm.addCrop(c);</span>
+<span class="fc" id="L211">		Crop returned = (Crop) testFarm.getCrop(c.getId());</span>
+<span class="fc" id="L212">		assertEquals(c, returned);</span>
+<span class="fc" id="L213">	}</span>
+
+	/**
+	 * Remove a crop that does not exist in the farm.
+	 */
+	@Test
+	void testRemoveCropInvalid() {
+<span class="fc" id="L220">		Crop c = initCrop();</span>
+<span class="fc" id="L221">		assertThrows(RuntimeException.class, () -&gt; {</span>
+<span class="nc" id="L222">			testFarm.removeCrop(c);</span>
+<span class="nc" id="L223">		});</span>
+<span class="fc" id="L224">	}</span>
+
+	/**
+	 * Check ownership of a crop that has been added
+	 */
+	@Test
+	void testOwnsCropTrue() {
+<span class="fc" id="L231">		Crop c = initCrop();</span>
+<span class="fc" id="L232">		testFarm.addCrop(c);</span>
+<span class="fc" id="L233">		assertTrue(testFarm.ownsCrop(c.getId()));</span>
+<span class="fc" id="L234">	}</span>
+
+	/**
+	 * Check ownership of a crop that has not been added
+	 */
+	@Test
+	void testOwnsCropFalse() {
+<span class="fc" id="L241">		Crop c = initCrop();</span>
+<span class="fc" id="L242">		assertFalse(testFarm.ownsCrop(c.getId()));</span>
+<span class="fc" id="L243">	}</span>
+
+	/**
+	 * Add a crop that has 0 days left to grow. Expect to be returned.
+	 */
+	@Test
+	void testGetCropsReadyForHarvestOne() {
+<span class="fc" id="L250">		Crop c = new Crop(cropId, cropName, cropDescription, cropPurchasePrice, cropSellingPrice, 0);</span>
+<span class="fc" id="L251">		testFarm.addCrop(c);</span>
+<span class="fc" id="L252">		String readyCrops = testFarm.getCropsReadyForHarvest();</span>
+<span class="fc" id="L253">		String cropString = c.toString();</span>
+<span class="fc" id="L254">		assertTrue((readyCrops).contains(cropString));</span>
+<span class="fc" id="L255">	}</span>
+
+	/**
+	 * Add a crop that has &gt; 0 days left to grow. Expect to be returned.
+	 */
+	@Test
+	void testGetCropsReadyForHarvestNone() {
+<span class="fc" id="L262">		Crop c = initCrop();</span>
+<span class="fc" id="L263">		testFarm.addCrop(c);</span>
+<span class="fc" id="L264">		String readyCrops = testFarm.getCropsReadyForHarvest();</span>
+<span class="fc" id="L265">		String cropString = c.toString();</span>
+<span class="fc" id="L266">		assertFalse((readyCrops).contains(cropString));</span>
+<span class="fc" id="L267">	}</span>
+
+	/**
+	 * Test getting balance set on initialization
+	 */
+	@Test
+	void testGetBalance() {
+<span class="fc" id="L274">		assertEquals(tBalance, testFarm.getBalance());</span>
+<span class="fc" id="L275">	}</span>
+
+	/**
+	 * Test withdrawing an amount less than balance
+	 */
+	@Test
+	void testWithdrawMoneyValid() {
+<span class="fc" id="L282">		float withdrawalAmount = tBalance / 2.0f;</span>
+<span class="fc" id="L283">		float money = testFarm.withdrawMoney(withdrawalAmount);</span>
+<span class="fc" id="L284">		assertEquals(withdrawalAmount, money);</span>
+<span class="fc" id="L285">	}</span>
+
+	/**
+	 * Test withdrawing an amount more than balance Expect to return no money for
+	 * payment
+	 */
+	@Test
+	void testWithdrawMoneyInvalid() {
+<span class="fc" id="L293">		float withdrawalAmount = tBalance * 2;</span>
+<span class="fc" id="L294">		float money = testFarm.withdrawMoney(withdrawalAmount);</span>
+<span class="fc" id="L295">		assertEquals(0, money);</span>
+<span class="fc" id="L296">	}</span>
+
+	/**
+	 * Add a positive balance to the account
+	 */
+	@Test
+	void testAddToBalanceValid() {
+<span class="fc" id="L303">		float amount = 100.0f;</span>
+<span class="fc" id="L304">		assertEquals(tBalance + amount, testFarm.addToBalance(amount));</span>
+<span class="fc" id="L305">	}</span>
+
+	/**
+	 * Add a negative balance to the account. Expected to throw an exception
+	 */
+	@Test
+	void testAddToBalanceInvalid() {
+<span class="fc" id="L312">		assertThrows(RuntimeException.class, () -&gt; {</span>
+<span class="nc" id="L313">			testFarm.addToBalance(-100.0f);</span>
+<span class="nc" id="L314">		});</span>
+<span class="fc" id="L315">	}</span>
+
+	/**
+	 * Test valid adding an animal then getting animals
+	 */
+	@Test
+	void testAddAndGetAnimal() {
+<span class="fc" id="L322">		Animal a = initAnimal();</span>
+<span class="fc" id="L323">		testFarm.addAnimal(a);</span>
+<span class="fc" id="L324">		assertTrue((testFarm.getAnimals()).contains(a));</span>
+<span class="fc" id="L325">	}</span>
+
+	/**
+	 * Get valid animal status containing added animal
+	 */
+	@Test
+	void testGetAnimalStatus() {
+<span class="fc" id="L332">		Animal a = initAnimal();</span>
+<span class="fc" id="L333">		testFarm.addAnimal(a);</span>
+<span class="fc" id="L334">		String status = testFarm.getAnimalStatus();</span>
+<span class="fc" id="L335">		assertTrue((status).contains(a.toString()));</span>
+<span class="fc" id="L336">	}</span>
+
+	/**
+	 * Test getting status of a crop and an animal
+	 */
+	@Test
+	void testGetCropAndAnimalStatus() {
+<span class="fc" id="L343">		Crop c = initCrop();</span>
+<span class="fc" id="L344">		Animal a = initAnimal();</span>
+<span class="fc" id="L345">		testFarm.addCrop(c);</span>
+<span class="fc" id="L346">		testFarm.addAnimal(a);</span>
+
+<span class="fc" id="L348">		String status = testFarm.getCropAndAnimalStatus();</span>
+<span class="fc" id="L349">		assertTrue((status).contains(c.toString()));</span>
+<span class="fc" id="L350">		assertTrue((status).contains(a.toString()));</span>
+<span class="fc" id="L351">	}</span>
+
+	/**
+	 * Test the crop growth factor of a farm changes the growth of a crop added
+	 */
+	void testCropGrowthFactor() {
+<span class="nc" id="L357">		int cropGrowthFactor = 2;</span>
+<span class="nc" id="L358">		testFarm = new Farm(tType, tBalance, cropGrowthFactor, tAnimalHappinessFactor);</span>
+<span class="nc" id="L359">		Crop c = initCrop();</span>
+<span class="nc" id="L360">		testFarm.addCrop(c);</span>
+<span class="nc" id="L361">		Crop returned = (Crop) testFarm.getCrop(c.getId());</span>
+<span class="nc" id="L362">		assertEquals(cropDaysToGrow + 2, returned.getDaysToGrow());</span>
+<span class="nc" id="L363">	}</span>
+
+	/**
+	 * Test the animal happiness factor of a farm changes the happiness of an animal
+	 * added
+	 */
+	void testAnimalHappinessFactor() {
+<span class="nc" id="L370">		int animalHappiness = 2;</span>
+<span class="nc" id="L371">		testFarm = new Farm(tType, tBalance, tCropGrowthFactor, animalHappiness);</span>
+<span class="nc" id="L372">		Animal a = initAnimal();</span>
+<span class="nc" id="L373">		a.addToHappiness(2);</span>
+<span class="nc" id="L374">		testFarm.addAnimal(a);</span>
+<span class="nc" id="L375">		ArrayList&lt;FarmItem&gt; status = testFarm.getAnimals();</span>
+<span class="nc" id="L376">		assertTrue((status).contains(a));</span>
+<span class="nc" id="L377">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

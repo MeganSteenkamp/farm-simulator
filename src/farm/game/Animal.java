@@ -70,7 +70,7 @@ public class Animal implements FarmItem {
 	 * Sets the price of an animal. Throws an exception if the given price is
 	 * negative.
 	 * 
-	 * @param Price of the animal.
+	 * @param price of the animal.
 	 */
 	public void setPrice(float price) {
 		if (price > 0) {
@@ -111,7 +111,7 @@ public class Animal implements FarmItem {
 	/**
 	 * Sets the happiness of an animal, which must be positive.
 	 * 
-	 * @param Happiness of the animal.
+	 * @param happiness Happiness of the animal.
 	 */
 	public void setHappiness(int happiness) {
 		if (happiness > 0) {
@@ -133,7 +133,7 @@ public class Animal implements FarmItem {
 	/**
 	 * Sets the health of an animal, which must be positive.
 	 * 
-	 * @param Health of the animal.
+	 * @param health Health of the animal.
 	 */
 	public void setHealth(int health) {
 		if (health > 0) {

@@ -21,7 +21,6 @@ public class Farmer {
 	 *
 	 * @param name  The name of the farmer
 	 * @param age   The age of the farmer
-	 * @param items The items the farmer is in possession of
 	 */
 	public Farmer(String name, int age) {
 		this.name = name;
@@ -87,7 +86,7 @@ public class Farmer {
 	/**
 	 * Sets the items owned by the farmer.
 	 * 
-	 * @param items
+	 * @param items The items the farmer will own.
 	 */
 	public void setItems(ArrayList<FarmItem> items) {
 		this.items = items;
@@ -113,6 +112,7 @@ public class Farmer {
 
 	/**
 	 * Returns a stock count of currently owned items
+	 * @return String of currently owned items.
 	 */
 	public String getItemStock() {
 		String str = "";
@@ -167,7 +167,7 @@ public class Farmer {
 	/**
 	 * Tend to crop using 'water'. This will decrease crop growth by one day.
 	 * 
-	 * @param variety Variety of crop to be tended to.
+	 * @param cropType Type ID of crop to be tended to.
 	 */
 	public void tendToCrop(int cropType) {
 		for (FarmItem crop : this.farm.getCrops()) {
@@ -182,7 +182,8 @@ public class Farmer {
 	 * Tend to crop using an item. This will decrease crop growth by the factor
 	 * given by the item.
 	 * 
-	 * @param variety Variety of crop to be tended to.
+	 * @param cropType Type ID of crop to be tended to.
+	 * @param item Item to be used to tend to crop.
 	 */
 	public void tendToCrop(int cropType, Item item) {
 		for (FarmItem crop : this.farm.getCrops()) {

@@ -25,6 +25,7 @@ public class Silage extends Item {
 	
 	/**
 	 * Returns a default description of the item type.
+	 * @return Description of silage.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

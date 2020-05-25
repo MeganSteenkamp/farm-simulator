@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MainScreen.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.gui</a> &gt; <span class="el_source">MainScreen.java</span></div><h1>MainScreen.java</h1><pre class="source lang-java linenums">package farm.gui;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import farm.game.GameEnvironment;
+
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+/**
+ * This application window displays the main screen that the user navigates the
+ * game from.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
+public class MainScreen {
+
+	private JFrame window;
+	private ApplicationManager manager;
+	private GameEnvironment game;
+
+	/**
+	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
+	 */
+<span class="nc" id="L33">	public MainScreen(ApplicationManager application, GameEnvironment g) {</span>
+<span class="nc" id="L34">		game = g;</span>
+<span class="nc" id="L35">		manager = application;</span>
+
+<span class="nc" id="L37">		initialize();</span>
+<span class="nc" id="L38">		window.setVisible(true);</span>
+<span class="nc" id="L39">	}</span>
+
+	/**
+	 * Close the window, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
+	public GameEnvironment closeWindow() {
+<span class="nc" id="L47">		window.dispose();</span>
+<span class="nc" id="L48">		return game;</span>
+	}
+
+	/**
+	 * Calls the window manager to close this screen.
+	 * 
+	 * @param nextScreen the next window to be opened depending on the button
+	 *                   clicked by the user.
+	 */
+	public void finishedWindow(String nextScreen) {
+<span class="nc" id="L58">		manager.closeMainScreen(this, nextScreen);</span>
+<span class="nc" id="L59">	}</span>
+
+	public void refreshWindow() {
+<span class="nc" id="L62">		window.dispose();</span>
+<span class="nc" id="L63">		initialize();</span>
+<span class="nc" id="L64">		window.setVisible(true);</span>
+<span class="nc" id="L65">	}</span>
+
+	private String getScreenTitle() {
+<span class="nc" id="L68">		return &quot;Main Screen - Day &quot; + game.getCurrentDay() + &quot;/&quot; + game.getDaysTotal();</span>
+	}
+
+	private String getRemainingActions() {
+<span class="nc" id="L72">		return &quot;Number of actions remaining: &quot; + game.getNumActions();</span>
+	}
+
+	private void moveToNextDay() {
+<span class="nc" id="L76">		boolean gameOngoing = game.moveToNextDay();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (!gameOngoing) {</span>
+<span class="nc" id="L78">			finishedWindow(&quot;Final&quot;);</span>
+<span class="nc" id="L79">		} else {</span>
+<span class="nc" id="L80">			JOptionPane.showMessageDialog(window, game.getDailyBonus(), &quot;Daily bonus&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L81">			refreshWindow(); // Updates labels without observers</span>
+<span class="nc" id="L82">			JOptionPane.showMessageDialog(window, game.getDayWelcomeMessage(), &quot;New day&quot;,</span>
+<span class="nc" id="L83">					JOptionPane.INFORMATION_MESSAGE);</span>
+		}
+<span class="nc" id="L85">	}</span>
+
+	private void processNextDay() {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (game.getNumActions() &gt; 0) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (JOptionPane.showConfirmDialog(window,</span>
+<span class="nc" id="L90">					&quot;WARNING: You still have &quot; + game.getNumActions() + &quot; action(s) remaining today.&quot;</span>
+<span class="nc" id="L91">							+ &quot;\nAre you sure you want to continue?&quot;,</span>
+<span class="nc" id="L92">					&quot;Warning&quot;, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L93">				moveToNextDay();</span>
+<span class="nc" id="L94">			} else {</span>
+<span class="nc" id="L95">				return;</span>
+			}
+		} else {
+<span class="nc" id="L98">			moveToNextDay();</span>
+		}
+<span class="nc" id="L100">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L106">		window = new JFrame();</span>
+<span class="nc" id="L107">		window.setTitle(getScreenTitle());</span>
+<span class="nc" id="L108">		window.setBounds(100, 100, 700, 500);</span>
+<span class="nc" id="L109">		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L110">		window.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L112">		JButton btnGeneralStore = new JButton(&quot;Visit the general store&quot;);</span>
+<span class="nc" id="L113">		btnGeneralStore.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L115">				finishedWindow(&quot;General Store&quot;);</span>
+<span class="nc" id="L116">			}</span>
+		});
+<span class="nc" id="L118">		btnGeneralStore.setBounds(364, 64, 303, 344);</span>
+<span class="nc" id="L119">		window.getContentPane().add(btnGeneralStore);</span>
+
+<span class="nc" id="L121">		JButton btnViewCropAndAnimals = new JButton(&quot;View crop and animal status&quot;);</span>
+<span class="nc" id="L122">		btnViewCropAndAnimals.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L124">				JOptionPane.showMessageDialog(window, game.getCropAndAnimalStatus(), &quot;Crops and Animal Status&quot;,</span>
+<span class="nc" id="L125">						JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L126">			}</span>
+		});
+<span class="nc" id="L128">		btnViewCropAndAnimals.setBounds(35, 64, 291, 97);</span>
+<span class="nc" id="L129">		window.getContentPane().add(btnViewCropAndAnimals);</span>
+
+<span class="nc" id="L131">		JButton btnViewFarmStatus = new JButton(&quot;View farm status&quot;);</span>
+<span class="nc" id="L132">		btnViewFarmStatus.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L134">				JOptionPane.showMessageDialog(window, game.getFarmStatus(), &quot;Farm Status&quot;,</span>
+<span class="nc" id="L135">						JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L136">			}</span>
+		});
+<span class="nc" id="L138">		btnViewFarmStatus.setBounds(35, 187, 291, 97);</span>
+<span class="nc" id="L139">		window.getContentPane().add(btnViewFarmStatus);</span>
+
+<span class="nc" id="L141">		JButton btnNextDay = new JButton(&quot;Move to next day&quot;);</span>
+<span class="nc" id="L142">		btnNextDay.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L144">				processNextDay();</span>
+<span class="nc" id="L145">			}</span>
+		});
+<span class="nc" id="L147">		btnNextDay.setBounds(483, 428, 184, 25);</span>
+<span class="nc" id="L148">		window.getContentPane().add(btnNextDay);</span>
+
+<span class="nc" id="L150">		JLabel mainScreenDescription = new JLabel(&quot;Select a button to find out more.&quot;);</span>
+<span class="nc" id="L151">		mainScreenDescription.setBounds(35, 28, 291, 15);</span>
+<span class="nc" id="L152">		window.getContentPane().add(mainScreenDescription);</span>
+
+<span class="nc" id="L154">		JButton btnPerformAnAction = new JButton(&quot;Perform an action on the farm*&quot;);</span>
+<span class="nc" id="L155">		btnPerformAnAction.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L157">				finishedWindow(&quot;Farm Action&quot;);</span>
+<span class="nc" id="L158">			}</span>
+		});
+<span class="nc" id="L160">		btnPerformAnAction.setBounds(35, 311, 291, 97);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (game.getNumActions() == 0) {</span>
+<span class="nc" id="L162">			btnPerformAnAction.setEnabled(false);</span>
+		}
+<span class="nc" id="L164">		window.getContentPane().add(btnPerformAnAction);</span>
+
+<span class="nc" id="L166">		JLabel lblActionsWarning = new JLabel(&quot;*These actions count towards a daily action&quot;);</span>
+<span class="nc" id="L167">		lblActionsWarning.setFont(new Font(&quot;Dialog&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L168">		lblActionsWarning.setBounds(35, 420, 291, 15);</span>
+<span class="nc" id="L169">		window.getContentPane().add(lblActionsWarning);</span>
+
+<span class="nc" id="L171">		JLabel lblNumActions = new JLabel(getRemainingActions());</span>
+<span class="nc" id="L172">		lblNumActions.setFont(new Font(&quot;Dialog&quot;, Font.PLAIN, 12));</span>
+<span class="nc" id="L173">		lblNumActions.setBounds(35, 435, 291, 15);</span>
+<span class="nc" id="L174">		window.getContentPane().add(lblNumActions);</span>
+<span class="nc" id="L175">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

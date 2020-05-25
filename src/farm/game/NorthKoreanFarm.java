@@ -26,6 +26,7 @@ public class NorthKoreanFarm extends Farm {
 
 	/**
 	 * Returns a default description of the North Korean farm type.
+	 * @return Description of a North Korean farm.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

@@ -19,8 +19,6 @@ public class NewZealandFarm extends Farm {
 
 	/**
 	 * Constructs a New Zealand Farm.
-	 * 
-	 * @param name Name of farm.
 	 */
 	public NewZealandFarm() {
 		super(type, balance, cropDelay, animalHappinessBonus);
@@ -28,6 +26,7 @@ public class NewZealandFarm extends Farm {
 
 	/**
 	 * Returns a default description of the New Zealand farm type.
+	 * @return Description of a New Zealand farm.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

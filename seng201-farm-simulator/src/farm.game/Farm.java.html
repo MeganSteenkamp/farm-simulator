@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Farm.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.game</a> &gt; <span class="el_source">Farm.java</span></div><h1>Farm.java</h1><pre class="source lang-java linenums">package farm.game;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+/**
+ * This class implements the base class for all farms. A farm has a name, a type
+ * and farmer and contains a list of crops, a lost of animals, and the amount of
+ * money the farm currently has. The subclass of Farm instantiated will
+ * determine the crop growing speed and the animal bonuses.
+ * 
+ * @author Megan Steenkamp
+ * @author Lewis Marshall
+ * @version 1.0
+ */
+public class Farm {
+	private String name;
+	private String type;
+	private Farmer farmer;
+	private float balance;
+<span class="fc" id="L21">	private int numAvailableCrops = 4;</span>
+<span class="fc" id="L22">	private ArrayList&lt;FarmItem&gt; crops = new ArrayList&lt;FarmItem&gt;();</span>
+<span class="fc" id="L23">	private ArrayList&lt;FarmItem&gt; animals = new ArrayList&lt;FarmItem&gt;();</span>
+	private int cropGrowthFactor;
+	private int animalHappinessFactor;
+
+	/**
+	 * Class constructor for the Farm class
+	 * 
+	 * @param type                  Type of farm, based on geographical location.
+	 * @param balance               Starting monetary balance for farm.
+	 * @param cropGrowthFactor      Scale factor to add to the growth time of crops
+	 *                              on purchase.
+	 * @param animalHappinessFactor Scale factor to add to the happiness of animals
+	 *                              on purchase.
+	 */
+<span class="fc" id="L37">	public Farm(String type, float balance, int cropGrowthFactor, int animalHappinessFactor) {</span>
+<span class="fc" id="L38">		this.type = type;</span>
+<span class="fc" id="L39">		this.balance = balance;</span>
+<span class="fc" id="L40">		this.cropGrowthFactor = cropGrowthFactor;</span>
+<span class="fc" id="L41">		this.animalHappinessFactor = animalHappinessFactor;</span>
+<span class="fc" id="L42">	}</span>
+
+	/**
+	 * String representation of a farm.
+	 * 
+	 * @return String representation of farm attributes.
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L51">		String str = &quot;&quot;;</span>
+<span class="fc" id="L52">		DecimalFormat df = new DecimalFormat(&quot;#.00&quot;);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (name != null) {</span>
+<span class="fc" id="L54">			str += &quot;Name: &quot; + this.name + &quot;\n&quot;;</span>
+		}
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (farmer != null) {</span>
+<span class="fc" id="L57">			str += farmer.toString() + &quot;\n&quot;;</span>
+		}
+<span class="fc" id="L59">		str += &quot;Type: &quot; + this.type + &quot;\nBalance: $&quot; + df.format(this.balance) + &quot;\nCrop growth bonus: &quot;</span>
+<span class="fc" id="L60">				+ this.cropGrowthFactor + &quot; days(s)\nAnimal happiness bonus: &quot; + this.animalHappinessFactor</span>
+<span class="fc" id="L61">				+ &quot; point(s)\nAvailable crop plots: &quot; + this.numAvailableCrops;</span>
+<span class="fc" id="L62">		return str;</span>
+	}
+
+	/**
+	 * Sets the name of the farm.
+	 * 
+	 * @param name Name of farm.
+	 */
+	public void setName(String name) {
+<span class="fc" id="L71">		this.name = name;</span>
+<span class="fc" id="L72">	}</span>
+
+	/**
+	 * Sets the farmer of the farm.
+	 * 
+	 * @param farmer Farmer object representing the farmer.
+	 */
+	public void setFarmer(Farmer farmer) {
+<span class="fc" id="L80">		this.farmer = farmer;</span>
+<span class="fc" id="L81">	}</span>
+
+	/**
+	 * Returns the farmer of the farm.
+	 * 
+	 * @return farmer Farmer object associated with farm.
+	 */
+	public Farmer getFarmer() {
+<span class="fc" id="L89">		return this.farmer;</span>
+	}
+
+	/**
+	 * Returns the number of available crop plots
+	 * 
+	 * @return Number of available crop plots
+	 */
+	public int getNumAvailableCrops() {
+<span class="fc" id="L98">		return this.numAvailableCrops;</span>
+	}
+
+	/**
+	 * Adds to the number of free crops available on the farm. Only accepts positive
+	 * parameters.
+	 * 
+	 * @param num The number of newly available crops.
+	 */
+	public void addToAvailableCrops(int num) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (num &gt; 0) {</span>
+<span class="fc" id="L109">			this.numAvailableCrops += num;</span>
+<span class="fc" id="L110">		} else {</span>
+<span class="fc" id="L111">			throw new IllegalArgumentException(&quot;Available crops cannot be deducted from.&quot;);</span>
+		}
+
+<span class="fc" id="L114">	}</span>
+
+	/**
+	 * Returns the status of the farm's crops and animals. This includes viewing a
+	 * crop's time growing, the time left until crop's harvest and an animal's
+	 * happiness and health levels.
+	 * 
+	 * @return The status of all crops and animals.
+	 */
+	public String getCropAndAnimalStatus() {
+<span class="fc" id="L124">		return getCropStatus() + getAnimalStatus();</span>
+	}
+
+	/**
+	 * Returns the name of a farm.
+	 * 
+	 * @return Name of the farm.
+	 */
+	public String getName() {
+<span class="fc" id="L133">		return this.name;</span>
+	}
+
+	/**
+	 * Returns the balance of a farm.
+	 * 
+	 * @return Monetary balance of the farm.
+	 */
+	public float getBalance() {
+<span class="fc" id="L142">		return this.balance;</span>
+	}
+
+	/**
+	 * Withdraws money from the farm's balance and returns it. If the amount to be
+	 * withdrawn exceeds that of the balance, no money will be returned.
+	 * 
+	 * @param amount Amount of money to be withdrawn.
+	 * @return Money withdrawn.
+	 */
+	public float withdrawMoney(float amount) {
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		if (amount &lt;= getBalance() &amp;&amp; amount &gt;= 0) {</span>
+<span class="fc" id="L154">			this.balance -= amount;</span>
+<span class="fc" id="L155">			return amount;</span>
+		} else {
+<span class="fc" id="L157">			return 0;</span>
+		}
+	}
+
+	/**
+	 * Adds to monetary balance of the farm. Throws an exception is money is
+	 * attempted to be deducted.
+	 * 
+	 * @param amount Amount of money to add.
+	 * @return The current balance of the farm.
+	 */
+	public float addToBalance(float amount) {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (amount &gt;= 0) {</span>
+<span class="fc" id="L170">			this.balance += amount;</span>
+<span class="fc" id="L171">			return this.balance;</span>
+		} else {
+<span class="fc" id="L173">			throw new IllegalArgumentException(</span>
+<span class="fc" id="L174">					&quot;Cannot add a negative amount to balance. Use withdrawMoney() function.&quot;);</span>
+		}
+	}
+
+	/**
+	 * Adds a new crop to the farm if there is a plot available. Throws an exception
+	 * if there are no available crop plots left.
+	 * 
+	 * @param crop Crop to be added.
+	 */
+	public void addCrop(FarmItem crop) {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (this.numAvailableCrops &gt; 0) {</span>
+			// Scale crop growth according to farm
+<span class="fc" id="L187">			((Crop) crop).addDaysToGrow(this.cropGrowthFactor);</span>
+<span class="fc" id="L188">			this.crops.add(crop);</span>
+<span class="fc" id="L189">			this.numAvailableCrops -= 1;</span>
+<span class="fc" id="L190">		} else {</span>
+<span class="fc" id="L191">			throw new IllegalArgumentException(&quot;Crops cannot be added to a farm with no available plots.&quot;);</span>
+		}
+<span class="fc" id="L193">	}</span>
+
+	/**
+	 * Removes a crop from the farm. This function is used if a crop is harvested.
+	 * If the crop given does not exist on the farm an exception will be thrown.
+	 * 
+	 * @param crop Crop to be removed.
+	 */
+	public void removeCrop(Crop crop) {
+<span class="fc" id="L202">		boolean removedCrop = false;</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		for (int i = 0; i &lt; crops.size(); i++) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			if (crops.get(i) == crop) {</span>
+<span class="nc" id="L205">				removedCrop = true;</span>
+<span class="nc" id="L206">				crops.remove(i);</span>
+<span class="nc" id="L207">				break;</span>
+			}
+		}
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (removedCrop == false) {</span>
+<span class="fc" id="L211">			throw new RuntimeException(&quot;Given crop does not exist in the farm&quot;);</span>
+		}
+<span class="nc" id="L213">	}</span>
+
+	/**
+	 * Adds a new animal to the farm.
+	 * 
+	 * @param animal Animal to be added.
+	 */
+	public void addAnimal(FarmItem animal) {
+<span class="fc" id="L221">		((Animal) animal).addToHappiness(animalHappinessFactor);</span>
+<span class="fc" id="L222">		this.animals.add(animal);</span>
+<span class="fc" id="L223">	}</span>
+
+	/**
+	 * Returns a list of the farm's crops.
+	 * 
+	 * @return the farm's crops.
+	 */
+	public ArrayList&lt;FarmItem&gt; getCrops() {
+<span class="fc" id="L231">		return this.crops;</span>
+	}
+
+	/**
+	 * Returns a list of the farm's animals.
+	 * 
+	 * @return the farm's animals.
+	 */
+	public ArrayList&lt;FarmItem&gt; getAnimals() {
+<span class="fc" id="L240">		return this.animals;</span>
+	}
+
+	/**
+	 * Returns the details of all animals on the farm.
+	 * 
+	 * @return The animals the farm owns.
+	 */
+	public String getAnimalStatus() {
+<span class="fc" id="L249">		String s = &quot;Number of animals owned: &quot; + this.animals.size() + &quot;\n&quot;;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (FarmItem a : animals) {</span>
+<span class="fc" id="L251">			s += a.toString() + &quot;\n\n&quot;;</span>
+		}
+<span class="fc" id="L253">		return s;</span>
+	}
+
+	/**
+	 * Returns the details of all crops on the farm.
+	 * 
+	 * @return The crops the farm owns.
+	 */
+	public String getCropStatus() {
+<span class="fc" id="L262">		String s = &quot;Number of crops owned: &quot; + this.crops.size() + &quot;\n&quot;;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		for (FarmItem c : crops) {</span>
+<span class="fc" id="L264">			s += c.toString() + &quot;\n\n&quot;;</span>
+		}
+<span class="fc" id="L266">		return s;</span>
+	}
+
+	/**
+	 * Returns the details of all crops ready for harvest. If no crops are ready to
+	 * be harvested, an empty string will be returned.
+	 * 
+	 * @return The crops that are ready for harvest.
+	 */
+	public String getCropsReadyForHarvest() {
+<span class="fc" id="L276">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		for (FarmItem c : crops) {</span>
+<span class="fc" id="L278">			int time = ((Crop) c).getTimeUntilHarvest();</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">			if (time == 0) {</span>
+<span class="fc" id="L280">				s += c.toString() + &quot;\n\n&quot;;</span>
+			}
+		}
+<span class="fc" id="L283">		return s;</span>
+	}
+
+	/**
+	 * Gets an crop of a given type, specified the type ID.
+	 * 
+	 * @param type Type of crop, identified by an ID number.
+	 * @return Crop if it is in the list of crops. Otherwise will return null.
+	 */
+	public FarmItem getCrop(int type) {
+<span class="fc" id="L293">		FarmItem crop = null;</span>
+<span class="pc bfc" id="L294" title="All 2 branches covered.">		for (int i = 0; i &lt; crops.size(); i++) {</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">			if (crops.get(i).getId() == type) {</span>
+<span class="fc" id="L296">				crop = crops.get(i);</span>
+<span class="fc" id="L297">				break;</span>
+			}
+		}
+<span class="fc" id="L300">		return crop;</span>
+	}
+
+	/**
+	 * Whether the farm has a crop of a given type.
+	 * 
+	 * @param type ID number of the crop type.
+	 * @return True if crop is in stock. Else false.
+	 */
+	public boolean ownsCrop(int type) {
+<span class="fc" id="L310">		FarmItem crop = getCrop(type);</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">		if (crop == null) {</span>
+<span class="fc" id="L312">			return false;</span>
+		}
+<span class="fc" id="L314">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

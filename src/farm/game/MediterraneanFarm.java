@@ -26,6 +26,7 @@ public class MediterraneanFarm extends Farm {
 
 	/**
 	 * Returns a default description of the Mediterranean farm type.
+	 * @return Description of a Mediterranean farm.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

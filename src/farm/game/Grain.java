@@ -25,6 +25,7 @@ public class Grain extends Item {
 	
 	/**
 	 * Returns a default description of the item type.
+	 * @return Description of grain.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

@@ -26,6 +26,7 @@ public class Horse extends Animal {
 
 	/**
 	 * Returns a default description of a Horse.
+	 * @return Description of a horse.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

@@ -26,6 +26,7 @@ public class Coffee extends Crop {
 	
 	/**
 	 * Prints a description of the crop without being instantiated.
+	 * @return Description of Coffee crop.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

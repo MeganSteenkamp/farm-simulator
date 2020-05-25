@@ -25,6 +25,7 @@ public class Olive extends Crop {
 	
 	/**
 	 * Prints a description of the crop without being instantiated.
+	 * @return Description of an Olive crop.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

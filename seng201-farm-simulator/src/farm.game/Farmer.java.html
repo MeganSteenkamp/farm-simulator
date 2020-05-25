@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Farmer.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.game</a> &gt; <span class="el_source">Farmer.java</span></div><h1>Farmer.java</h1><pre class="source lang-java linenums">package farm.game;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * This class implements a farmer, the user's character.
+ *
+ * @author Lewis Marshall
+ * @author Megan Steenkamp
+ */
+
+public class Farmer {
+	private String name;
+	private int age;
+	private Farm farm;
+	private ArrayList&lt;FarmItem&gt; items;
+
+	/**
+	 * Class constructor for the Farmer class
+	 *
+	 * @param name  The name of the farmer
+	 * @param age   The age of the farmer
+	 * @param items The items the farmer is in possession of
+	 */
+<span class="fc" id="L26">	public Farmer(String name, int age) {</span>
+<span class="fc" id="L27">		this.name = name;</span>
+<span class="fc" id="L28">		this.age = age;</span>
+<span class="fc" id="L29">		this.items = new ArrayList&lt;FarmItem&gt;();</span>
+<span class="fc" id="L30">	}</span>
+
+	/**
+	 * String representation of a farm.
+	 * 
+	 * @return String representation of farm attributes.
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L39">		return &quot;Farmer: &quot; + this.name + &quot; (&quot; + this.age + &quot;)&quot;;</span>
+	}
+
+	/**
+	 * Set the farm that the farmer has.
+	 * 
+	 * @param farm The farm that the farmer is a part of.
+	 */
+	public void setFarm(Farm farm) {
+<span class="nc" id="L48">		this.farm = farm;</span>
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Sets the name of the farmer
+	 *
+	 * @param name of the farmer
+	 */
+	public void setName(String name) {
+<span class="nc" id="L57">		this.name = name;</span>
+<span class="nc" id="L58">	}</span>
+
+	/**
+	 * Returns the name of a farmer.
+	 *
+	 * @return name of the farmer
+	 */
+	public String getName() {
+<span class="fc" id="L66">		return name;</span>
+	}
+
+	/**
+	 * Sets the age of the farmer
+	 *
+	 * @param age of the farmer
+	 */
+	public void setAge(int age) {
+<span class="fc" id="L75">		this.age = age;</span>
+<span class="fc" id="L76">	}</span>
+
+	/**
+	 * Returns the age of a farmer.
+	 *
+	 * @return age of the farmer
+	 */
+	public int getAge() {
+<span class="fc" id="L84">		return age;</span>
+	}
+
+	/**
+	 * Sets the items owned by the farmer.
+	 * 
+	 * @param items
+	 */
+	public void setItems(ArrayList&lt;FarmItem&gt; items) {
+<span class="fc" id="L93">		this.items = items;</span>
+<span class="fc" id="L94">	}</span>
+
+	/**
+	 * Add an item to the items owned.
+	 * 
+	 * @param item The item to be added.
+	 */
+	public void addItem(FarmItem item) {
+<span class="fc" id="L102">		this.items.add(item);</span>
+<span class="fc" id="L103">	}</span>
+
+	/**
+	 * Returns the inventory of the farmer's items.
+	 *
+	 * @return the items the farmer owns.
+	 */
+	public ArrayList&lt;FarmItem&gt; getItems() {
+<span class="fc" id="L111">		return items;</span>
+	}
+
+	/**
+	 * Returns a stock count of currently owned items
+	 */
+	public String getItemStock() {
+<span class="fc" id="L118">		String str = &quot;&quot;;</span>
+<span class="fc" id="L119">		int fertilizer = 0;</span>
+<span class="fc" id="L120">		int compost = 0;</span>
+<span class="fc" id="L121">		int hoe = 0;</span>
+<span class="fc" id="L122">		int steroids = 0;</span>
+<span class="fc" id="L123">		int grain = 0;</span>
+<span class="fc" id="L124">		int silage = 0;</span>
+
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (FarmItem item : items) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (Fertilizer.class.isInstance(item)) {</span>
+<span class="fc" id="L128">				fertilizer += 1;</span>
+			}
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (Compost.class.isInstance(item)) {</span>
+<span class="fc" id="L131">				compost += 1;</span>
+			}
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (Hoe.class.isInstance(item)) {</span>
+<span class="fc" id="L134">				hoe += 1;</span>
+			}
+<span class="fc bfc" id="L136" title="All 2 branches covered.">			if (Steroid.class.isInstance(item)) {</span>
+<span class="fc" id="L137">				steroids += 1;</span>
+			}
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (Grain.class.isInstance(item)) {</span>
+<span class="fc" id="L140">				grain += 1;</span>
+			}
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (Silage.class.isInstance(item)) {</span>
+<span class="fc" id="L143">				silage += 1;</span>
+			}
+		}
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (fertilizer &gt; 0) {</span>
+<span class="fc" id="L147">			str += &quot;Fertilizer: &quot; + fertilizer + &quot;\n&quot;;</span>
+		}
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (compost &gt; 0) {</span>
+<span class="fc" id="L150">			str += &quot;Compost: &quot; + compost + &quot;\n&quot;;</span>
+		}
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (hoe &gt; 0) {</span>
+<span class="fc" id="L153">			str += &quot;Hoes: &quot; + hoe + &quot;\n&quot;;</span>
+		}
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (steroids &gt; 0) {</span>
+<span class="fc" id="L156">			str += &quot;Steriods:&quot; + steroids + &quot;\n&quot;;</span>
+		}
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (grain &gt; 0) {</span>
+<span class="fc" id="L159">			str += &quot;Grain:&quot; + grain + &quot;\n&quot;;</span>
+		}
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (silage &gt; 0) {</span>
+<span class="fc" id="L162">			str += &quot;Silage:&quot; + silage + &quot;\n&quot;;</span>
+		}
+<span class="fc" id="L164">		return str;</span>
+	}
+
+	/**
+	 * Tend to crop using 'water'. This will decrease crop growth by one day.
+	 * 
+	 * @param variety Variety of crop to be tended to.
+	 */
+	public void tendToCrop(int cropType) {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (FarmItem crop : this.farm.getCrops()) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (crop.getId() == cropType) {</span>
+				// Decrease the days to grow by one
+<span class="nc" id="L176">				((Crop) crop).addDaysToGrow(-1);</span>
+			}
+		}
+<span class="nc" id="L179">	}</span>
+
+	/**
+	 * Tend to crop using an item. This will decrease crop growth by the factor
+	 * given by the item.
+	 * 
+	 * @param variety Variety of crop to be tended to.
+	 */
+	public void tendToCrop(int cropType, Item item) {
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		for (FarmItem crop : this.farm.getCrops()) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			if (crop.getId() == cropType) {</span>
+				// Add to the growth based on the growth factor
+<span class="nc" id="L191">				((Crop) crop).addDaysToGrow(item.getCropGrowthFactor());</span>
+			}
+		}
+<span class="nc" id="L194">	}</span>
+
+	/**
+	 * Feed all animals in the farm using an item, adding to the animal's health.
+	 * 
+	 * @param item Item used to feed the animal.
+	 */
+	public void feedAnimals(Item item) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		for (FarmItem animal : this.farm.getAnimals()) {</span>
+<span class="nc" id="L203">			((Animal) animal).addToHealth(item.getAnimalHealthFactor());</span>
+		}
+<span class="nc" id="L205">	}</span>
+
+	/**
+	 * Adds one point to each animal's happiness as the farmer plays with the
+	 * animals.
+	 */
+	public void playWithAnimals() {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (FarmItem animal : this.farm.getAnimals()) {</span>
+<span class="nc" id="L213">			((Animal) animal).addToHappiness(1);</span>
+		}
+<span class="nc" id="L215">	}</span>
+
+	/**
+	 * Harvests crops. Crops are sold for their selling price property. Allows
+	 * another crop to become available on the farm.
+	 * 
+	 * @return Money earned from harvesting crops.
+	 */
+	public float harvestCrops() {
+<span class="nc" id="L224">		float moneyEarned = 0.0f;</span>
+<span class="nc" id="L225">		ArrayList&lt;Crop&gt; cropsToHarvest = new ArrayList&lt;Crop&gt;();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (FarmItem crop : this.farm.getCrops()) {</span>
+<span class="nc" id="L227">			Crop c = (Crop) crop;</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (c.getTimeUntilHarvest() == 0) {</span>
+<span class="nc" id="L229">				moneyEarned += c.getSellingPrice();</span>
+<span class="nc" id="L230">				cropsToHarvest.add(c);</span>
+			}
+		}
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		for (Crop crop : cropsToHarvest) {</span>
+<span class="nc" id="L234">			this.farm.removeCrop(crop);</span>
+			// Free a plot up for a new crop to be planted
+<span class="nc" id="L236">			this.farm.addToAvailableCrops(1);</span>
+		}
+<span class="nc" id="L238">		return moneyEarned;</span>
+	}
+
+	/**
+	 * Increase the number of crops available on the farm by 1 and increase the
+	 * happiness of all animals by 1.
+	 */
+	public void tendToFarmland() {
+<span class="nc" id="L246">		this.farm.addToAvailableCrops(1);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		for (FarmItem animal : this.farm.getAnimals()) {</span>
+<span class="nc" id="L248">			((Animal) animal).addToHappiness(1);</span>
+		}
+<span class="nc" id="L250">	}</span>
+
+	/**
+	 * Gets an item of a given type, specified by an integer.
+	 * 
+	 * @param type Type of item, identified with an integer.
+	 * @return Item if it is in the list of crops. Otherwise will return null.
+	 */
+	public FarmItem getItem(int type) {
+<span class="nc" id="L259">		FarmItem item = null;</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (items.get(i).getId() == type) {</span>
+<span class="nc" id="L262">				item = items.get(i);</span>
+<span class="nc" id="L263">				break;</span>
+			}
+		}
+<span class="nc" id="L266">		return item;</span>
+	}
+
+	/**
+	 * Whether the farmer has a item of a given type.
+	 * 
+	 * @param type Identifier of item type.
+	 * @return True if item is owned. Else false.
+	 */
+	public boolean ownsItem(int type) {
+<span class="nc" id="L276">		FarmItem item = getItem(type);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		if (item == null) {</span>
+<span class="nc" id="L278">			return false;</span>
+		}
+<span class="nc" id="L280">		return true;</span>
+	}
+
+	/**
+	 * Gets an item of a given type and removes it from the available items.
+	 * 
+	 * @param type Type of item, identified with an integer.
+	 * @return Item if it is in the list of items. Otherwise will return null.
+	 */
+	public FarmItem removeItem(int type) {
+<span class="nc" id="L290">		FarmItem item = null;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (items.get(i).getId() == type) {</span>
+<span class="nc" id="L293">				item = items.remove(i);</span>
+<span class="nc" id="L294">				break;</span>
+			}
+		}
+<span class="nc" id="L297">		return item;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

@@ -25,6 +25,7 @@ public class Steroid extends Item {
 	
 	/**
 	 * Returns a default description of the item type.
+	 * @return description of steroids.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

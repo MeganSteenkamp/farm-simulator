@@ -25,7 +25,6 @@ public class Crop implements FarmItem {
 	 * @param purchasePrice cost of crop to purchase
 	 * @param sellingPrice  price received for the sale of crop
 	 * @param daysToGrow    amount of days a crop takes to fully grow
-	 * @param daysGrowing   the number of days the crop has been growing for
 	 */
 	public Crop(int id, String name, String description, float purchasePrice, float sellingPrice, int daysToGrow) {
 		this.id = id;

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GeneralStoreTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">GeneralStoreTest.java</span></div><h1>GeneralStoreTest.java</h1><pre class="source lang-java linenums">package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import farm.game.FarmItem;
+import farm.game.GeneralStore;
+
+/**
+ * This class performs unit tests on the GeneralStore class.
+ * 
+ * @author Megan Steenkamp
+ */
+<span class="fc" id="L16">class GeneralStoreTest {</span>
+	
+	GeneralStore g;
+	
+	/**
+	 * Initialize a new general store before each test
+	 */
+	@BeforeEach
+	void init() {
+<span class="fc" id="L25">		g = new GeneralStore();</span>
+<span class="fc" id="L26">	}</span>
+
+	/**
+	 * Test with a valid item type ID. Expect an item to be returned.
+	 */
+	@Test
+	void testGetItemValid() {
+<span class="fc" id="L33">		FarmItem item = g.getItem(1);</span>
+<span class="fc" id="L34">		assertNotNull(item);</span>
+<span class="fc" id="L35">	}</span>
+	
+	/**
+	 * Test with an invalid item type ID. Expect to get null.
+	 */
+	@Test
+	void testGetItemInvalid() {
+<span class="fc" id="L42">		FarmItem item = g.getItem(-1);</span>
+<span class="fc" id="L43">		assertNull(item);</span>
+<span class="fc" id="L44">	}</span>
+
+	/**
+	 * Test with a valid item type ID. Expect an item to be returned.
+	 */
+	@Test
+	void testSellItemValid() {
+<span class="fc" id="L51">		FarmItem item = g.sellItem(1);</span>
+<span class="fc" id="L52">		assertNotNull(item);</span>
+<span class="fc" id="L53">	}</span>
+	
+	/**
+	 * Test with an invalid item type ID. Expect to get null.
+	 */
+	@Test
+	void testSellItemInvalid() {
+<span class="fc" id="L60">		FarmItem item = g.sellItem(-1);</span>
+<span class="fc" id="L61">		assertNull(item);</span>
+<span class="fc" id="L62">	}</span>
+
+
+	/**
+	 * Test with a valid item type ID. Expect an item to be returned.
+	 */
+	@Test
+	void testGetItemDetailsValid() {
+<span class="fc" id="L70">		String details = g.getItemDetails(1);</span>
+<span class="fc" id="L71">		assertNotNull(details);</span>
+<span class="fc" id="L72">	}</span>
+	
+	/**
+	 * Test with an invalid item type ID. Expect to get null.
+	 */
+	@Test
+	void testGetItemDetailsInvalid() {
+<span class="fc" id="L79">		String details = g.getItemDetails(-1);</span>
+<span class="fc" id="L80">		assertEquals(&quot;&quot;, details);</span>
+<span class="fc" id="L81">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

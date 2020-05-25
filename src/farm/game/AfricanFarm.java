@@ -26,6 +26,7 @@ public class AfricanFarm extends Farm {
 	
 	/**
 	 * Returns a default description of an African farm.
+	 * @return African farm description.
 	 */
 	public static String getTypeDescription() {
 		DecimalFormat df = new DecimalFormat("#.00");

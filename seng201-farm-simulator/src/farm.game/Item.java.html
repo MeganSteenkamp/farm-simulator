@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.game</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">package farm.game;
+
+import java.text.DecimalFormat;
+
+/**
+ * The class implementing the base class for all items.
+ *
+ * @author Lewis Marshall
+ * @author Megan Steenkamp
+ */
+
+public class Item implements FarmItem {
+	private int id;
+	private String name;
+	private String description;
+	private float price;
+	private int cropGrowthFactor;
+	private int animalHealthFactor;
+
+	/**
+	 * Class constructor for the Item class
+	 *
+	 * @param id 				 identification number of item type
+	 * @param name               name of the item
+	 * @param description        description of the item
+	 * @param price              price of the item
+	 * @param cropGrowthFactor   scaling factor for crop growth
+	 * @param animalHealthFactor scaling factor for animal health
+	 * 
+	 */
+<span class="fc" id="L31">	public Item(int id, String name, String description, float price, int cropGrowthFactor, int animalHealthFactor) {</span>
+<span class="fc" id="L32">		this.id = id;</span>
+<span class="fc" id="L33">		this.name = name;</span>
+<span class="fc" id="L34">		this.description = description;</span>
+<span class="fc" id="L35">		this.price = price;</span>
+<span class="fc" id="L36">		this.cropGrowthFactor = cropGrowthFactor;</span>
+<span class="fc" id="L37">		this.animalHealthFactor = animalHealthFactor;</span>
+<span class="fc" id="L38">	}</span>
+
+	/**
+	 * String representation of an item.
+	 * 
+	 * @return String representation of item attributes.
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L47">		DecimalFormat df = new DecimalFormat(&quot;#.00&quot;);</span>
+<span class="fc" id="L48">		String s = &quot;Name: &quot; + this.name + &quot;\nDescription: &quot; + this.description + &quot;\nPrice: $&quot; + df.format(this.price);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (this.cropGrowthFactor != 0) {</span>
+<span class="fc" id="L50">			s += &quot;\nAdded crop growth: &quot; + this.cropGrowthFactor + &quot; day(s)&quot;;</span>
+		}
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (this.animalHealthFactor != 0) {</span>
+<span class="nc" id="L53">			s += &quot;\nAnimal health bonus: &quot;+ this.animalHealthFactor + &quot; point(s)&quot;;</span>
+		}
+<span class="fc" id="L55">		return s;</span>
+	}
+	
+	/**
+	 * Returns the id of a given type of item.
+	 * @return Id of item type.
+	 */
+	public int getId() {
+<span class="fc" id="L63">		return this.id;</span>
+	}
+
+	/**
+	 * Sets the price of an item.
+	 *
+	 * @param price of an item.
+	 */
+	public void setPrice(float price) {
+<span class="fc" id="L72">		this.price = price;</span>
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * Returns the price of an item.
+	 *
+	 * @return price of an item.
+	 */
+	public float getPurchasePrice() {
+<span class="fc" id="L81">		return price;</span>
+	}
+
+	/**
+	 * Sets the name of an item.
+	 *
+	 * @param name of an item.
+	 */
+	public void setName(String name) {
+<span class="nc" id="L90">		this.name = name;</span>
+<span class="nc" id="L91">	}</span>
+
+	/**
+	 * Returns the name of an item.
+	 *
+	 * @return name of an item.
+	 */
+	public String getName() {
+<span class="fc" id="L99">		return name;</span>
+	}
+
+	/**
+	 * Sets the factor for scaling crop growth for an item.
+	 *
+	 * @param cropGrowthFactor of an item.
+	 */
+	public void setCropGrowthFactor(int cropGrowthFactor) {
+<span class="fc" id="L108">		this.cropGrowthFactor = cropGrowthFactor;</span>
+<span class="fc" id="L109">	}</span>
+
+	/**
+	 * Returns the factor to scale crop growth time by when using an item.
+	 *
+	 * @return cropGrowthFactor of an item.
+	 */
+	public int getCropGrowthFactor() {
+<span class="fc" id="L117">		return cropGrowthFactor;</span>
+	}
+
+	/**
+	 * Sets the factor for scaling animal health for an item.
+	 *
+	 * @param animalHealthFactor of an item.
+	 */
+	public void setAnimalHealthFactor(int animalHealthFactor) {
+<span class="fc" id="L126">		this.animalHealthFactor = animalHealthFactor;</span>
+<span class="fc" id="L127">	}</span>
+
+	/**
+	 * Returns the factor to scale animal health by when using an item.
+	 *
+	 * @return animalHealthFactor of an item.
+	 */
+	public int getAnimalHealthFactor() {
+<span class="fc" id="L135">		return animalHealthFactor;</span>
+	}
+
+	/**
+	 * Sets the description for an item.
+	 *
+	 * @param description for an item.
+	 */
+	public void setDescription(String description) {
+<span class="nc" id="L144">		this.description = description;</span>
+<span class="nc" id="L145">	}</span>
+
+	/**
+	 * Returns the description for an item.
+	 *
+	 * @return description for an item.
+	 */
+	public String getDescription() {
+<span class="fc" id="L153">		return description;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>

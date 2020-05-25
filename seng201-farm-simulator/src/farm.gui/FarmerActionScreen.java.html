@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FarmerActionScreen.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (25/05/2020 2:19:44 PM)</a> &gt; <a href="../../index.html" class="el_group">seng201-farm-simulator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">farm.gui</a> &gt; <span class="el_source">FarmerActionScreen.java</span></div><h1>FarmerActionScreen.java</h1><pre class="source lang-java linenums">package farm.gui;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+
+import farm.game.Crop;
+import farm.game.FarmItem;
+import farm.game.GameEnvironment;
+import farm.game.Item;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.event.ListSelectionEvent;
+
+/**
+ * This application window displays the available actions for a farmer to
+ * perform.
+ * 
+ * @author Megan Steenkamp
+ * @version 1.0
+ */
+public class FarmerActionScreen {
+
+	private ApplicationManager manager;
+	private GameEnvironment game;
+	private JFrame window;
+
+	// Buttons
+	private JButton btnTendToCrops;
+	private JButton btnFeedAnimals;
+	private JButton btnPlayWithAnimals;
+	private JButton btnHarvestCrops;
+	private JButton btnTendToFarmland;
+
+	// Items for actions
+	ArrayList&lt;FarmItem&gt; food;
+	ArrayList&lt;FarmItem&gt; tools;
+	ArrayList&lt;FarmItem&gt; crops;
+	private JList&lt;String&gt; foodList;
+	private JLabel lblSelectFood;
+	private JLabel lblSelectCrop;
+	private JList&lt;String&gt; cropList;
+	private JLabel lblSelectAnItem;
+	private JList&lt;String&gt; itemList;
+	private JButton btnConfirmFood;
+	private JButton btnConfirmTending;
+
+	/**
+	 * Create the application.
+	 * 
+	 * @param application The application managing windows
+	 * @param g           The game environment
+	 */
+<span class="nc" id="L65">	public FarmerActionScreen(ApplicationManager application, GameEnvironment g) {</span>
+<span class="nc" id="L66">		game = g;</span>
+<span class="nc" id="L67">		manager = application;</span>
+<span class="nc" id="L68">		initialize();</span>
+<span class="nc" id="L69">		window.setVisible(true);</span>
+<span class="nc" id="L70">	}</span>
+
+	/**
+	 * Close the window, returning the game environment to the manager.
+	 * 
+	 * @return The game environment.
+	 */
+	public GameEnvironment closeWindow() {
+<span class="nc" id="L78">		window.dispose();</span>
+<span class="nc" id="L79">		return game;</span>
+	}
+
+	/**
+	 * Calls the window manager to close this screen.
+	 */
+	public void finishedWindow() {
+<span class="nc" id="L86">		manager.closeFarmerActionScreen(this);</span>
+<span class="nc" id="L87">	}</span>
+
+	/**
+	 * Calls the game environment to implement feeding animals with food selected by
+	 * the player. On completion of the action, an information message will show the
+	 * user the status of their animals.
+	 * 
+	 * @param selectedFoodId The type ID associated with the selected food.
+	 */
+	public void feedAnimals(int selectedFoodId) {
+<span class="nc" id="L97">		String outcome = game.feedAnimals(selectedFoodId);</span>
+<span class="nc" id="L98">		JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L99">		finishedWindow();</span>
+<span class="nc" id="L100">	}</span>
+
+	/**
+	 * Used if a user wants to tend to crops. Makes the crop and item selection
+	 * lists visible so that a user can pick their crop and item of choice. Buttons
+	 * to confirm actions set to visible.
+	 */
+	public void displayTendToCrops() {
+<span class="nc" id="L108">		lblSelectCrop.setVisible(true);</span>
+<span class="nc" id="L109">		cropList.setVisible(true);</span>
+<span class="nc" id="L110">		lblSelectAnItem.setVisible(true);</span>
+<span class="nc" id="L111">		itemList.setVisible(true);</span>
+<span class="nc" id="L112">		btnConfirmTending.setVisible(true);</span>
+<span class="nc" id="L113">		btnConfirmTending.setEnabled(false);</span>
+<span class="nc" id="L114">	}</span>
+
+	/**
+	 * Used if a user wants to feed animals. Makes the list of food and confirmation
+	 * button visible for a user to pick the food item to use.
+	 */
+	public void displayFeedAnimals() {
+		// Get user to select food item
+<span class="nc" id="L122">		lblSelectFood.setVisible(true);</span>
+<span class="nc" id="L123">		foodList.setVisible(true);</span>
+<span class="nc" id="L124">		btnConfirmFood.setVisible(true);</span>
+<span class="nc" id="L125">		btnConfirmFood.setEnabled(false);</span>
+<span class="nc" id="L126">	}</span>
+
+	/**
+	 * Hides all specific lists on the GUI involved with a farming action.
+	 */
+	public void hideLists() {
+<span class="nc" id="L132">		lblSelectFood.setVisible(false);</span>
+<span class="nc" id="L133">		foodList.setVisible(false);</span>
+<span class="nc" id="L134">		lblSelectCrop.setVisible(false);</span>
+<span class="nc" id="L135">		cropList.setVisible(false);</span>
+<span class="nc" id="L136">		lblSelectAnItem.setVisible(false);</span>
+<span class="nc" id="L137">		itemList.setVisible(false);</span>
+<span class="nc" id="L138">		btnConfirmFood.setVisible(false);</span>
+<span class="nc" id="L139">		btnConfirmTending.setVisible(false);</span>
+<span class="nc" id="L140">	}</span>
+
+	/**
+	 * Resets all button background colors to their default color.
+	 */
+	public void revertButtonColours() {
+<span class="nc" id="L146">		btnTendToCrops.setBackground(null);</span>
+<span class="nc" id="L147">		btnFeedAnimals.setBackground(null);</span>
+<span class="nc" id="L148">		btnPlayWithAnimals.setBackground(null);</span>
+<span class="nc" id="L149">		btnHarvestCrops.setBackground(null);</span>
+<span class="nc" id="L150">		btnTendToFarmland.setBackground(null);</span>
+<span class="nc" id="L151">	}</span>
+
+	/**
+	 * Enables the button to perform the tending to crops action once a crop and
+	 * item have been selected.
+	 */
+	public void confirmTending() {
+<span class="nc bnc" id="L158" title="All 4 branches missed.">		if ((cropList.getSelectedIndex() != -1) &amp;&amp; (itemList.getSelectedIndex() != -1)) {</span>
+<span class="nc" id="L159">			btnConfirmTending.setEnabled(true);</span>
+		}
+<span class="nc" id="L161">	}</span>
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L167">		window = new JFrame();</span>
+<span class="nc" id="L168">		window.setTitle(&quot;Farmer Actions&quot;);</span>
+<span class="nc" id="L169">		window.setBounds(100, 100, 700, 500);</span>
+<span class="nc" id="L170">		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L171">		window.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L173">		JButton btnReturnToMain = new JButton(&quot;Return to main screen&quot;);</span>
+<span class="nc" id="L174">		btnReturnToMain.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L176">				finishedWindow();</span>
+<span class="nc" id="L177">			}</span>
+		});
+<span class="nc" id="L179">		btnReturnToMain.setBounds(24, 438, 213, 25);</span>
+<span class="nc" id="L180">		window.getContentPane().add(btnReturnToMain);</span>
+
+<span class="nc" id="L182">		btnTendToCrops = new JButton(&quot;Tend to crops&quot;);</span>
+<span class="nc" id="L183">		btnTendToCrops.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L185">				hideLists();</span>
+<span class="nc" id="L186">				revertButtonColours();</span>
+<span class="nc" id="L187">				btnTendToCrops.setBackground(Color.GREEN);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window, game.getCropTendingDescription(), &quot;Decide Action&quot;,</span>
+<span class="nc" id="L189">						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L190">					displayTendToCrops();</span>
+				}
+<span class="nc" id="L192">			}</span>
+		});
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (!game.canTendToCrops()) {</span>
+<span class="nc" id="L195">			btnTendToCrops.setEnabled(false);</span>
+		}
+<span class="nc" id="L197">		btnTendToCrops.setBounds(24, 27, 240, 59);</span>
+<span class="nc" id="L198">		window.getContentPane().add(btnTendToCrops);</span>
+
+<span class="nc" id="L200">		btnFeedAnimals = new JButton(&quot;Feed animals&quot;);</span>
+<span class="nc" id="L201">		btnFeedAnimals.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L203">				hideLists();</span>
+<span class="nc" id="L204">				revertButtonColours();</span>
+<span class="nc" id="L205">				btnFeedAnimals.setBackground(Color.GREEN);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window, game.getFeedingAnimalsDescription(), &quot;Decide Action&quot;,</span>
+<span class="nc" id="L207">						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L208">					displayFeedAnimals();</span>
+				}
+<span class="nc" id="L210">			}</span>
+		});
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (!game.canFeedAnimals()) {</span>
+<span class="nc" id="L213">			btnFeedAnimals.setEnabled(false);</span>
+		}
+<span class="nc" id="L215">		btnFeedAnimals.setBounds(24, 105, 240, 59);</span>
+<span class="nc" id="L216">		window.getContentPane().add(btnFeedAnimals);</span>
+
+<span class="nc" id="L218">		btnPlayWithAnimals = new JButton(&quot;Play with animals&quot;);</span>
+<span class="nc" id="L219">		btnPlayWithAnimals.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L221">				hideLists();</span>
+<span class="nc" id="L222">				revertButtonColours();</span>
+<span class="nc" id="L223">				btnPlayWithAnimals.setBackground(Color.GREEN);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window, game.getPlayWithAnimalsDescription(), &quot;Decide Action&quot;,</span>
+<span class="nc" id="L225">						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L226">					String outcome = game.playWithAnimals();</span>
+<span class="nc" id="L227">					JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L228">					finishedWindow();</span>
+				}
+<span class="nc" id="L230">			}</span>
+		});
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (!game.canPlayWithAnimals()) {</span>
+<span class="nc" id="L233">			btnPlayWithAnimals.setEnabled(false);</span>
+		}
+<span class="nc" id="L235">		btnPlayWithAnimals.setBounds(24, 190, 240, 59);</span>
+<span class="nc" id="L236">		window.getContentPane().add(btnPlayWithAnimals);</span>
+
+<span class="nc" id="L238">		btnHarvestCrops = new JButton(&quot;Harvest crops&quot;);</span>
+<span class="nc" id="L239">		btnHarvestCrops.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L241">				hideLists();</span>
+<span class="nc" id="L242">				revertButtonColours();</span>
+<span class="nc" id="L243">				btnHarvestCrops.setBackground(Color.GREEN);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window, game.getHarvestCropsDescription(), &quot;Decide Action&quot;,</span>
+<span class="nc" id="L245">						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L246">					btnHarvestCrops.setBackground(Color.GREEN);</span>
+<span class="nc" id="L247">					String outcome = game.harvestCrops();</span>
+<span class="nc" id="L248">					JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L249">					finishedWindow();</span>
+				}
+<span class="nc" id="L251">			}</span>
+		});
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (!game.canHarvestCrops()) {</span>
+<span class="nc" id="L254">			btnHarvestCrops.setEnabled(false);</span>
+		}
+<span class="nc" id="L256">		btnHarvestCrops.setBounds(24, 277, 240, 59);</span>
+<span class="nc" id="L257">		window.getContentPane().add(btnHarvestCrops);</span>
+
+<span class="nc" id="L259">		btnTendToFarmland = new JButton(&quot;Tend to farm land&quot;);</span>
+<span class="nc" id="L260">		btnTendToFarmland.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L262">				hideLists();</span>
+<span class="nc" id="L263">				revertButtonColours();</span>
+<span class="nc" id="L264">				btnTendToFarmland.setBackground(Color.GREEN);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window, game.getTendToFarmLandDescription(), &quot;Decide Action&quot;,</span>
+<span class="nc" id="L266">						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+<span class="nc" id="L267">					btnTendToFarmland.setBackground(Color.GREEN);</span>
+<span class="nc" id="L268">					String outcome = game.tendToFarmland();</span>
+<span class="nc" id="L269">					JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L270">					finishedWindow();</span>
+				}
+<span class="nc" id="L272">			}</span>
+		});
+<span class="nc" id="L274">		btnTendToFarmland.setBounds(24, 356, 240, 59);</span>
+<span class="nc" id="L275">		window.getContentPane().add(btnTendToFarmland);</span>
+
+		// Initialize and hide lists that might be needed to pick items
+		// Food list for feeding animals
+<span class="nc" id="L279">		DefaultListModel&lt;String&gt; listModelFood = new DefaultListModel&lt;String&gt;();</span>
+<span class="nc" id="L280">		food = game.getFoodItems();</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">		for (FarmItem f : food) {</span>
+<span class="nc" id="L282">			listModelFood.addElement(</span>
+<span class="nc" id="L283">					f.getName() + &quot;, Bonus health: &quot; + ((Item) f).getAnimalHealthFactor() + &quot; point(s)&quot;);</span>
+		}
+<span class="nc" id="L285">		foodList = new JList&lt;String&gt;(listModelFood);</span>
+<span class="nc" id="L286">		foodList.addListSelectionListener(new ListSelectionListener() {</span>
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">				if (foodList.getValueIsAdjusting()) {</span>
+<span class="nc" id="L289">					btnConfirmFood.setEnabled(true);</span>
+				}
+<span class="nc" id="L291">			}</span>
+		});
+<span class="nc" id="L293">		foodList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L294">		foodList.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L295">		foodList.setBounds(320, 102, 316, 313);</span>
+<span class="nc" id="L296">		foodList.setVisible(false);</span>
+<span class="nc" id="L297">		window.getContentPane().add(foodList);</span>
+
+<span class="nc" id="L299">		lblSelectFood = new JLabel(&quot;Select a food item to use:&quot;);</span>
+<span class="nc" id="L300">		lblSelectFood.setBounds(320, 71, 240, 15);</span>
+<span class="nc" id="L301">		lblSelectFood.setVisible(false);</span>
+<span class="nc" id="L302">		window.getContentPane().add(lblSelectFood);</span>
+
+		// List of crops that can be tended to
+<span class="nc" id="L305">		lblSelectCrop = new JLabel(&quot;Select a crop variety:&quot;);</span>
+<span class="nc" id="L306">		lblSelectCrop.setBounds(315, 71, 310, 15);</span>
+<span class="nc" id="L307">		lblSelectCrop.setVisible(false);</span>
+<span class="nc" id="L308">		window.getContentPane().add(lblSelectCrop);</span>
+
+<span class="nc" id="L310">		DefaultListModel&lt;String&gt; listModelCrop = new DefaultListModel&lt;String&gt;();</span>
+		// Change to hash set and back to array to get unique crop types
+<span class="nc" id="L312">		HashSet&lt;FarmItem&gt; uniqueCrops = new HashSet&lt;FarmItem&gt;(game.getCrops());</span>
+<span class="nc" id="L313">		crops = new ArrayList&lt;FarmItem&gt;(uniqueCrops);</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		for (FarmItem c : crops) {</span>
+<span class="nc" id="L315">			listModelCrop.addElement(</span>
+<span class="nc" id="L316">					c.getName() + &quot;, Time until harvest: &quot; + ((Crop) c).getTimeUntilHarvest() + &quot; day(s)&quot;);</span>
+		}
+<span class="nc" id="L318">		cropList = new JList&lt;String&gt;(listModelCrop);</span>
+<span class="nc" id="L319">		cropList.addListSelectionListener(new ListSelectionListener() {</span>
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc bnc" id="L321" title="All 2 branches missed.">				if (cropList.getValueIsAdjusting()) {</span>
+<span class="nc" id="L322">					confirmTending();</span>
+				}
+<span class="nc" id="L324">			}</span>
+		});
+<span class="nc" id="L326">		cropList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L327">		cropList.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L328">		cropList.setBounds(315, 103, 337, 126);</span>
+<span class="nc" id="L329">		cropList.setVisible(false);</span>
+<span class="nc" id="L330">		window.getContentPane().add(cropList);</span>
+
+		// List of items for use
+<span class="nc" id="L333">		lblSelectAnItem = new JLabel(&quot;Select an item to use:&quot;);</span>
+<span class="nc" id="L334">		lblSelectAnItem.setBounds(315, 241, 310, 15);</span>
+<span class="nc" id="L335">		lblSelectAnItem.setVisible(false);</span>
+<span class="nc" id="L336">		window.getContentPane().add(lblSelectAnItem);</span>
+
+<span class="nc" id="L338">		DefaultListModel&lt;String&gt; listModelTools = new DefaultListModel&lt;String&gt;();</span>
+<span class="nc" id="L339">		tools = game.getToolItems();</span>
+<span class="nc" id="L340">		listModelTools.addElement(&quot;Water, Added crop growth: -1 day(s)&quot;);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		for (FarmItem i : tools) {</span>
+<span class="nc" id="L342">			listModelTools.addElement(</span>
+<span class="nc" id="L343">					((Item) i).getName() + &quot;, Added crop growth: &quot; + ((Item) i).getCropGrowthFactor() + &quot; day(s)&quot;);</span>
+		}
+<span class="nc" id="L345">		itemList = new JList&lt;String&gt;(listModelTools);</span>
+<span class="nc" id="L346">		itemList.addListSelectionListener(new ListSelectionListener() {</span>
+			public void valueChanged(ListSelectionEvent e) {
+<span class="nc bnc" id="L348" title="All 2 branches missed.">				if (itemList.getValueIsAdjusting()) {</span>
+<span class="nc" id="L349">					confirmTending();</span>
+				}
+<span class="nc" id="L351">			}</span>
+		});
+<span class="nc" id="L353">		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="nc" id="L354">		itemList.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L355">		itemList.setBounds(315, 277, 337, 141);</span>
+<span class="nc" id="L356">		itemList.setVisible(false);</span>
+<span class="nc" id="L357">		window.getContentPane().add(itemList);</span>
+
+<span class="nc" id="L359">		btnConfirmFood = new JButton(&quot;Confirm Selection&quot;);</span>
+<span class="nc" id="L360">		btnConfirmFood.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L362" title="All 2 branches missed.">				if (JOptionPane.showConfirmDialog(window,</span>
+<span class="nc" id="L363">						&quot;Would you like to feed the animals with this item?\n\n&quot;</span>
+<span class="nc" id="L364">								+ food.get(foodList.getSelectedIndex()),</span>
+<span class="nc" id="L365">						&quot;Confirm Action&quot;, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+					// Get food item
+<span class="nc" id="L367">					feedAnimals(food.get(foodList.getSelectedIndex()).getId());</span>
+				}
+<span class="nc" id="L369">			}</span>
+		});
+<span class="nc" id="L371">		btnConfirmFood.setBounds(480, 438, 172, 25);</span>
+<span class="nc" id="L372">		btnConfirmFood.setVisible(false);</span>
+<span class="nc" id="L373">		window.getContentPane().add(btnConfirmFood);</span>
+
+<span class="nc" id="L375">		btnConfirmTending = new JButton(&quot;Confirm Selection&quot;);</span>
+<span class="nc" id="L376">		btnConfirmTending.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L378">				Crop crop = (Crop) crops.get(cropList.getSelectedIndex());</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">				if (itemList.getSelectedIndex() == 0) {</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">					if (JOptionPane.showConfirmDialog(</span>
+<span class="nc" id="L381">							window, &quot;Please confirm your action:\nCrop to tend to: &quot; + crop.getName()</span>
+<span class="nc" id="L382">									+ &quot;\nItem used: Water&quot; + &quot;\n\n&quot;,</span>
+<span class="nc" id="L383">							&quot;Confirm Action&quot;, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+
+						// Perform action
+<span class="nc" id="L386">						String outcome = game.tendToCrops(crop.getId());</span>
+<span class="nc" id="L387">						JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;,</span>
+<span class="nc" id="L388">								JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L389">						finishedWindow();</span>
+					}
+<span class="nc" id="L391">				} else {</span>
+<span class="nc" id="L392">					Item item = (Item) tools.get(itemList.getSelectedIndex() - 1);</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">					if (JOptionPane.showConfirmDialog(window,</span>
+<span class="nc" id="L394">							&quot;Please confirm your action:\nCrop to tend to: &quot; + crop.getName() + &quot;\nItem used: &quot;</span>
+<span class="nc" id="L395">									+ item.getName() + &quot;\n\n&quot;,</span>
+<span class="nc" id="L396">							&quot;Confirm Action&quot;, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {</span>
+
+						// Perform action
+<span class="nc" id="L399">						String outcome = game.tendToCrops(crop.getId(), item.getId());</span>
+<span class="nc" id="L400">						JOptionPane.showMessageDialog(window, outcome, &quot;Action complete&quot;,</span>
+<span class="nc" id="L401">								JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L402">						finishedWindow();</span>
+					}
+				}
+<span class="nc" id="L405">			}</span>
+		});
+<span class="nc" id="L407">		btnConfirmTending.setBounds(480, 438, 172, 25);</span>
+<span class="nc" id="L408">		btnConfirmTending.setVisible(false);</span>
+<span class="nc" id="L409">		window.getContentPane().add(btnConfirmTending);</span>
+<span class="nc" id="L410">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>src (25/05/2020 2:19:44 PM)</div></body></html>
